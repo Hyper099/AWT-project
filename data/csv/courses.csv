@@ -1,0 +1,31 @@
+course_id,course_code,course_title,department_id,course_type_category,credits,weekly_hours,needs_lab,room_type_required,course_type,slot_family,expected_enrollment,active_status
+CS001,23CP307T,Artificial Intelligence,CSE,Core,3,3,no,Lecture,theory,THEORY_3,60,active
+CS002,23CP308T,Advanced Web Technology,CSE,Core,1,1,no,Lecture,theory,THEORY_1,60,active
+CS003,23CP309T,Big Data Analytics,CSE,Core,3,3,no,Lecture,theory,THEORY_3,60,active
+CS004,23CP310T,Cyber Security,CSE,Core,3,3,no,Lecture,theory,THEORY_3,60,active
+CS005,23CP314T,Cryptography and Network Security,CSE,Core,3,3,no,Lecture,theory,THEORY_3,60,active
+CS006,23CP316T,Cloud Computing,CSE,Core,3,3,no,Lecture,theory,THEORY_3,60,active
+CS007,23CP307P,Artificial Intelligence Lab,CSE,Core,1,2,yes,Lab,lab,LAB_1,30,active
+CS008,23CP308P,Advanced Web Technology Lab,CSE,Core,1,2,yes,Lab,lab,LAB_1,30,active
+CS009,23CP309P,Big Data Analytics Lab,CSE,Core,1,2,yes,Lab,lab,LAB_1,30,active
+CS010,23CP310P,Cyber Security Lab,CSE,Core,1,2,yes,Lab,lab,LAB_1,30,active
+CS011,23CP314P,Cryptography and Network Security Lab,CSE,Core,1,2,yes,Lab,lab,LAB_1,30,active
+CS012,23CP316P,Cloud Computing Lab,CSE,Core,1,2,yes,Lab,lab,LAB_1,30,active
+CS013,22BEE301T,Basics of Electric Vehicles,EE,Open Elective,3,3,no,Lecture,theory,THEORY_3,60,active
+CS014,20CV329T,Environmental Impact Assessment,CV,Open Elective,3,3,no,Lecture,theory,THEORY_3,60,active
+CS015,CS015,Image Processing for Engineers,ICT,Open Elective,3,3,no,Lecture,theory,THEORY_3,60,active
+CS016,CS016,Biomedical Informatics,Biotech,Open Elective,3,3,no,Lecture,theory,THEORY_3,60,active
+CS017,23BIO317T,Biosimilars Technology,Biotech,Open Elective,3,3,no,Lecture,theory,THEORY_3,60,active
+CS018,CS018,Corrosion Engineering,CSE,Open Elective,3,3,no,Lecture,theory,THEORY_3,60,active
+CS019,CS019,Disaster Management,CSE,Open Elective,3,3,no,Lecture,theory,THEORY_3,60,active
+CS020,23ECE304T,"Robotics: Controlling, Model and Application",ECE,Open Elective,3,3,no,Lecture,theory,THEORY_3,60,active
+CS021,CS021,Engineering Optimization,ME,Open Elective,3,3,no,Lecture,theory,THEORY_3,60,active
+CS022,CS022,Petroleum Production Engineering,PE,Open Elective,3,3,no,Lecture,theory,THEORY_3,60,active
+CS023,20IF201T,Mechanical,ME,Industry - 4.0,2,2,no,Lecture,theory,THEORY_2,60,active
+CS024,20IF201T,ICT,ICT,Industry - 4.0,2,2,no,Lecture,theory,THEORY_2,60,active
+CS025,20IF201T,Chemical,CE,Industry - 4.0,2,2,no,Lecture,theory,THEORY_2,60,active
+CS026,20IF201T,Electrical,EE,Industry - 4.0,2,2,no,Lecture,theory,THEORY_2,60,active
+CS027,20IF201P,Mechanical Lab,ME,Industry - 4.0,1,2,yes,Lab,lab,LAB_1,30,active
+CS028,20IF201P,ICT Lab,ICT,Industry - 4.0,1,2,yes,Lab,lab,LAB_1,30,active
+CS029,20IF201P,Chemical Lab,CE,Industry - 4.0,1,2,yes,Lab,lab,LAB_1,30,active
+CS030,20IF201P,Electrical Lab,EE,Industry - 4.0,1,2,yes,Lab,lab,LAB_1,30,active

@@ -1,0 +1,473 @@
+student_id,student_code,student_name,department_id,batch_id,semester,email,status,program_name,year_of_joining,branch_name,division_name,group_name,username
+23BCP001,23BCP001,Aayush Jayeshkumar Shah,CSE,CSE_2023_SEM5_DIV1,5,23bcp001@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp001
+23BCP002,23BCP002,Patel Princekumar Vasantkumar,CSE,CSE_2023_SEM5_DIV1,5,23bcp002@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp002
+23BCP003,23BCP003,Shreyas Jayantkumar Upadhyay,CSE,CSE_2023_SEM5_DIV1,5,23bcp003@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp003
+23BCP004,23BCP004,Jinal Rajeshkumar Amin,CSE,CSE_2023_SEM5_DIV1,5,23bcp004@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp004
+23BCP005,23BCP005,Mohammad Jehad Ahmad,CSE,CSE_2023_SEM5_DIV1,5,23bcp005@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp005
+23BCP006,23BCP006,Bhumi Chandreshbhai Popat,CSE,CSE_2023_SEM5_DIV1,5,23bcp006@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp006
+23BCP007,23BCP007,Darsh Balar,CSE,CSE_2023_SEM5_DIV1,5,23bcp007@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp007
+23BCP009,23BCP009,Ayush Jitendrakumar Patel,CSE,CSE_2023_SEM5_DIV1,5,23bcp009@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp009
+23BCP010,23BCP010,Pratik Mallik,CSE,CSE_2023_SEM5_DIV1,5,23bcp010@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp010
+23BCP011,23BCP011,Devisha Rudani,CSE,CSE_2023_SEM5_DIV1,5,23bcp011@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp011
+23BCP012,23BCP012,Hrishikesh Patel,CSE,CSE_2023_SEM5_DIV1,5,23bcp012@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp012
+23BCP013,23BCP013,Makwana Jeenil Motibhai,CSE,CSE_2023_SEM5_DIV1,5,23bcp013@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp013
+23BCP014,23BCP014,Aman Jain,CSE,CSE_2023_SEM5_DIV1,5,23bcp014@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp014
+23BCP015,23BCP015,Ayush Raj Sharma Chapagain,CSE,CSE_2023_SEM5_DIV1,5,23bcp015@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp015
+23BCP017,23BCP017,Parth Bhavin Bhai Oza,CSE,CSE_2023_SEM5_DIV1,5,23bcp017@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp017
+23BCP018,23BCP018,Soni Aatman Nishith,CSE,CSE_2023_SEM5_DIV1,5,23bcp018@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp018
+23BCP019,23BCP019,Nishan Subedi,CSE,CSE_2023_SEM5_DIV1,5,23bcp019@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp019
+23BCP020,23BCP020,Zalak Ashokkumar Ranpariya,CSE,CSE_2023_SEM5_DIV1,5,23bcp020@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp020
+23BCP021,23BCP021,Harsh Nyati,CSE,CSE_2023_SEM5_DIV1,5,23bcp021@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp021
+23BCP022,23BCP022,Aayushkumar Shaileshbhai Kotadiya,CSE,CSE_2023_SEM5_DIV1,5,23bcp022@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp022
+23BCP023,23BCP023,Neel Godhaniya,CSE,CSE_2023_SEM5_DIV1,5,23bcp023@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp023
+23BCP024,23BCP024,Axat Naginbhai Vaghela,CSE,CSE_2023_SEM5_DIV1,5,23bcp024@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp024
+23BCP027,23BCP027,Jaimeet Nirmal Patel,CSE,CSE_2023_SEM5_DIV1,5,23bcp027@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp027
+23BCP028,23BCP028,Parmar Mitraj Bhaveshbhai,CSE,CSE_2023_SEM5_DIV1,5,23bcp028@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp028
+23BCP029,23BCP029,Shrey Nilesh Brahmbhatt,CSE,CSE_2023_SEM5_DIV1,5,23bcp029@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp029
+23BCP030,23BCP030,Vasani Karm Jerambhai,CSE,CSE_2023_SEM5_DIV1,5,23bcp030@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp030
+23BCP031,23BCP031,Het Hasitbhai Shah,CSE,CSE_2023_SEM5_DIV1,5,23bcp031@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp031
+23BCP032,23BCP032,Apurv,CSE,CSE_2023_SEM5_DIV1,5,23bcp032@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp032
+23BCP033,23BCP033,Het Amishbhai Chaniyara,CSE,CSE_2023_SEM5_DIV1,5,23bcp033@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp033
+23BCP034,23BCP034,Het Satish Soni,CSE,CSE_2023_SEM5_DIV1,5,23bcp034@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp034
+23BCP035,23BCP035,Smit Bhaveshkumar Makavana,CSE,CSE_2023_SEM5_DIV1,5,23bcp035@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp035
+23BCP036,23BCP036,Dev Vijaybhai Viradiya,CSE,CSE_2023_SEM5_DIV1,5,23bcp036@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp036
+23BCP037,23BCP037,Patel Devarsh Rajendrakumar,CSE,CSE_2023_SEM5_DIV1,5,23bcp037@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp037
+23BCP038,23BCP038,Nagar Vanshal Maheshkumar,CSE,CSE_2023_SEM5_DIV1,5,23bcp038@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp038
+23BCP040,23BCP040,Karm Gautambhai Dobariya,CSE,CSE_2023_SEM5_DIV1,5,23bcp040@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp040
+23BCP041,23BCP041,Tisa Vipulbhai Boda,CSE,CSE_2023_SEM5_DIV1,5,23bcp041@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp041
+23BCP042,23BCP042,Maurya Manishkumar Darji,CSE,CSE_2023_SEM5_DIV1,5,23bcp042@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp042
+23BCP043,23BCP043,Rhythm Nehalkumar Gandhi,CSE,CSE_2023_SEM5_DIV1,5,23bcp043@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp043
+23BCP044,23BCP044,Shah Nemil Kirankumar,CSE,CSE_2023_SEM5_DIV1,5,23bcp044@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp044
+23BCP045,23BCP045,Patel Krisha Jatinbhai,CSE,CSE_2023_SEM5_DIV1,5,23bcp045@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp045
+23BCP046,23BCP046,Aarushi Ketan Patel,CSE,CSE_2023_SEM5_DIV1,5,23bcp046@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp046
+23BCP048,23BCP048,Yug Ronak Brahmbhatt,CSE,CSE_2023_SEM5_DIV1,5,23bcp048@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp048
+23BCP049,23BCP049,Joy Kirankumar Patel,CSE,CSE_2023_SEM5_DIV1,5,23bcp049@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp049
+23BCP050,23BCP050,Vaimeek Jayswal,CSE,CSE_2023_SEM5_DIV1,5,23bcp050@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp050
+23BCP052,23BCP052,Vini Riteshkumar Prajapati,CSE,CSE_2023_SEM5_DIV1,5,23bcp052@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp052
+23BCP054,23BCP054,Kunj Devang Shah,CSE,CSE_2023_SEM5_DIV1,5,23bcp054@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp054
+23BCP055,23BCP055,Rhythm Karki,CSE,CSE_2023_SEM5_DIV1,5,23bcp055@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp055
+23BCP056,23BCP056,Hit Lathiya,CSE,CSE_2023_SEM5_DIV1,5,23bcp056@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp056
+23BCP057,23BCP057,Patel Meet Vijaykumar,CSE,CSE_2023_SEM5_DIV1,5,23bcp057@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp057
+23BCP058,23BCP058,Joshi Bhavya Nareshbhai,CSE,CSE_2023_SEM5_DIV1,5,23bcp058@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp058
+23BCP059,23BCP059,Hritik Anil Shah,CSE,CSE_2023_SEM5_DIV1,5,23bcp059@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp059
+23BCP060,23BCP060,Pujara Krish Dilipkumar,CSE,CSE_2023_SEM5_DIV1,5,23bcp060@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp060
+23BCP061,23BCP061,Manit Chabhadiya,CSE,CSE_2023_SEM5_DIV1,5,23bcp061@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp061
+23BCP064,23BCP064,Tavish Gupta,CSE,CSE_2023_SEM5_DIV1,5,23bcp064@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp064
+23BCP065,23BCP065,Dhruv Chittora,CSE,CSE_2023_SEM5_DIV1,5,23bcp065@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp065
+23BCP066,23BCP066,Harsh Utpal Desai,CSE,CSE_2023_SEM5_DIV1,5,23bcp066@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp066
+23BCP067,23BCP067,Shashank Upadhyay,CSE,CSE_2023_SEM5_DIV1,5,23bcp067@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp067
+23BCP068,23BCP068,Vrund Pranav Patel,CSE,CSE_2023_SEM5_DIV1,5,23bcp068@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp068
+23BCP069,23BCP069,Biswal Shubam Pabitra,CSE,CSE_2023_SEM5_DIV1,5,23bcp069@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp069
+23BCP070,23BCP070,Manas Joshi,CSE,CSE_2023_SEM5_DIV1,5,23bcp070@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp070
+23BCP071,23BCP071,Maalav Kalpesh Patadiya,CSE,CSE_2023_SEM5_DIV2,5,23bcp071@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp071
+23BCP072,23BCP072,Om Nilesh Deshmukh,CSE,CSE_2023_SEM5_DIV2,5,23bcp072@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp072
+23BCP073,23BCP073,Vishakha Sharma,CSE,CSE_2023_SEM5_DIV2,5,23bcp073@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp073
+23BCP074,23BCP074,Fatema Mufaddal Shakir,CSE,CSE_2023_SEM5_DIV2,5,23bcp074@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp074
+23BCP075,23BCP075,Sagar Malla,CSE,CSE_2023_SEM5_DIV2,5,23bcp075@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp075
+23BCP076,23BCP076,Kundariya Urval Sanjaykumar,CSE,CSE_2023_SEM5_DIV2,5,23bcp076@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp076
+23BCP077,23BCP077,Marakana Aesha Girishbhai,CSE,CSE_2023_SEM5_DIV2,5,23bcp077@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp077
+23BCP078,23BCP078,Tanisha Jayant Kulkarni,CSE,CSE_2023_SEM5_DIV2,5,23bcp078@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp078
+23BCP080,23BCP080,Bhalala Zankarben Pareshbhai,CSE,CSE_2023_SEM5_DIV2,5,23bcp080@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp080
+23BCP081,23BCP081,Raghav Saxena,CSE,CSE_2023_SEM5_DIV2,5,23bcp081@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp081
+23BCP082,23BCP082,Nitishkumar Gopalbhai Talpada,CSE,CSE_2023_SEM5_DIV2,5,23bcp082@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp082
+23BCP083,23BCP083,Parth Dharmesh Parekh,CSE,CSE_2023_SEM5_DIV2,5,23bcp083@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp083
+23BCP084,23BCP084,Vatsal Rameshkumar Khant,CSE,CSE_2023_SEM5_DIV2,5,23bcp084@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp084
+23BCP085,23BCP085,Rajvi Shashikant Solanki,CSE,CSE_2023_SEM5_DIV2,5,23bcp085@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp085
+23BCP086,23BCP086,Randeria Vama Dhawal,CSE,CSE_2023_SEM5_DIV2,5,23bcp086@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp086
+23BCP088,23BCP088,Kunj Naranbhai Patel,CSE,CSE_2023_SEM5_DIV2,5,23bcp088@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp088
+23BCP089,23BCP089,Shreyash Shardanand Shukla,CSE,CSE_2023_SEM5_DIV2,5,23bcp089@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp089
+23BCP090,23BCP090,Veer Anjan Mehta,CSE,CSE_2023_SEM5_DIV2,5,23bcp090@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp090
+23BCP091,23BCP091,Svenam Dharmendra Kumar Patel,CSE,CSE_2023_SEM5_DIV2,5,23bcp091@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp091
+23BCP092,23BCP092,Prajinraj Bhavesh Ranawat,CSE,CSE_2023_SEM5_DIV2,5,23bcp092@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp092
+23BCP093,23BCP093,Meet Vishal Jain,CSE,CSE_2023_SEM5_DIV2,5,23bcp093@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp093
+23BCP094,23BCP094,Simran,CSE,CSE_2023_SEM5_DIV2,5,23bcp094@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp094
+23BCP095,23BCP095,Satani Nayan Sureshbhai,CSE,CSE_2023_SEM5_DIV2,5,23bcp095@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp095
+23BCP096,23BCP096,Moksh Jagdishlalwani,CSE,CSE_2023_SEM5_DIV2,5,23bcp096@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp096
+23BCP097,23BCP097,Yash Maulik Bhansari,CSE,CSE_2023_SEM5_DIV2,5,23bcp097@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp097
+23BCP098,23BCP098,Tanishq Nayak,CSE,CSE_2023_SEM5_DIV2,5,23bcp098@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp098
+23BCP099,23BCP099,Momal Suresh Makwana,CSE,CSE_2023_SEM5_DIV2,5,23bcp099@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp099
+23BCP100,23BCP100,Krutarth Amardeep Nandani,CSE,CSE_2023_SEM5_DIV2,5,23bcp100@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp100
+23BCP101,23BCP101,Nisarg Mahendrabhai Chaudhary,CSE,CSE_2023_SEM5_DIV2,5,23bcp101@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp101
+23BCP102,23BCP102,Kathiya Luckyrajsinh Dipaksinh,CSE,CSE_2023_SEM5_DIV2,5,23bcp102@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp102
+23BCP105,23BCP105,Gabani Pratham Vijaybhai,CSE,CSE_2023_SEM5_DIV2,5,23bcp105@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp105
+23BCP106,23BCP106,Akshat Singh,CSE,CSE_2023_SEM5_DIV2,5,23bcp106@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp106
+23BCP107,23BCP107,Dhwani Bhut,CSE,CSE_2023_SEM5_DIV2,5,23bcp107@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp107
+23BCP108,23BCP108,Shashank Shekhar Sharma,CSE,CSE_2023_SEM5_DIV2,5,23bcp108@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp108
+23BCP109,23BCP109,Shubham Prakashbhai Pujara,CSE,CSE_2023_SEM5_DIV2,5,23bcp109@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp109
+23BCP110,23BCP110,Devsheta,CSE,CSE_2023_SEM5_DIV2,5,23bcp110@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp110
+23BCP111,23BCP111,Arman Singh,CSE,CSE_2023_SEM5_DIV2,5,23bcp111@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp111
+23BCP112,23BCP112,Subodh Kushwaha,CSE,CSE_2023_SEM5_DIV2,5,23bcp112@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp112
+23BCP113,23BCP113,Rana Harsh Pankajkumar,CSE,CSE_2023_SEM5_DIV2,5,23bcp113@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp113
+23BCP114,23BCP114,Gondaliya Ishvaben Mukeshbhai,CSE,CSE_2023_SEM5_DIV2,5,23bcp114@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp114
+23BCP115,23BCP115,Smit Riteshkumar Patel,CSE,CSE_2023_SEM5_DIV2,5,23bcp115@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp115
+23BCP116,23BCP116,Dhwani Vyas,CSE,CSE_2023_SEM5_DIV2,5,23bcp116@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp116
+23BCP117,23BCP117,Yash Nirav Patel,CSE,CSE_2023_SEM5_DIV2,5,23bcp117@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp117
+23BCP118,23BCP118,Jay Kiritkumar Patel,CSE,CSE_2023_SEM5_DIV2,5,23bcp118@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp118
+23BCP119,23BCP119,Nevil Ramesh Desai,CSE,CSE_2023_SEM5_DIV2,5,23bcp119@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp119
+23BCP121,23BCP121,Dhyey Dharmendrabhai Ramani,CSE,CSE_2023_SEM5_DIV2,5,23bcp121@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp121
+23BCP122,23BCP122,Mohammedasim Salim Patel,CSE,CSE_2023_SEM5_DIV2,5,23bcp122@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp122
+23BCP123,23BCP123,Rana Rishi Pravinkumar,CSE,CSE_2023_SEM5_DIV2,5,23bcp123@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp123
+23BCP124,23BCP124,Goswami Moksh Sanjaygiri,CSE,CSE_2023_SEM5_DIV2,5,23bcp124@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp124
+23BCP125,23BCP125,Parva Pankaj Patel,CSE,CSE_2023_SEM5_DIV2,5,23bcp125@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp125
+23BCP126,23BCP126,Divyang Omprakash Gadhavi,CSE,CSE_2023_SEM5_DIV2,5,23bcp126@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp126
+23BCP127,23BCP127,Rishi Chandresh Parekh,CSE,CSE_2023_SEM5_DIV2,5,23bcp127@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp127
+23BCP128,23BCP128,Aarya Yagnesh Prajapati,CSE,CSE_2023_SEM5_DIV2,5,23bcp128@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp128
+23BCP129,23BCP129,Pranav Mangesh Suradkar,CSE,CSE_2023_SEM5_DIV2,5,23bcp129@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp129
+23BCP130,23BCP130,Tarkesa Izan Parvezbhai,CSE,CSE_2023_SEM5_DIV2,5,23bcp130@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp130
+23BCP131,23BCP131,Munjal Prakash Patel,CSE,CSE_2023_SEM5_DIV2,5,23bcp131@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp131
+23BCP132,23BCP132,Jenish Chirag Upadhyay,CSE,CSE_2023_SEM5_DIV2,5,23bcp132@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp132
+23BCP133,23BCP133,Sujal Rahul Desai,CSE,CSE_2023_SEM5_DIV2,5,23bcp133@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp133
+23BCP134,23BCP134,Darshit Vikramsinh Vadher,CSE,CSE_2023_SEM5_DIV2,5,23bcp134@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp134
+23BCP135,23BCP135,Dhruv Jain,CSE,CSE_2023_SEM5_DIV2,5,23bcp135@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp135
+23BCP136,23BCP136,Arck Bani Gupta,CSE,CSE_2023_SEM5_DIV3,5,23bcp136@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp136
+23BCP137,23BCP137,Khushal Rasti Shroff,CSE,CSE_2023_SEM5_DIV3,5,23bcp137@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp137
+23BCP138,23BCP138,Aryan Ameet Gupta,CSE,CSE_2023_SEM5_DIV3,5,23bcp138@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp138
+23BCP140,23BCP140,Tanish Tarak Kinkhabwala,CSE,CSE_2023_SEM5_DIV3,5,23bcp140@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp140
+23BCP141,23BCP141,Patel Miral Dhansukhbhai,CSE,CSE_2023_SEM5_DIV3,5,23bcp141@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp141
+23BCP142,23BCP142,Rudra Pritesh Patel,CSE,CSE_2023_SEM5_DIV3,5,23bcp142@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp142
+23BCP143,23BCP143,Kansara Mukund Rajesh,CSE,CSE_2023_SEM5_DIV3,5,23bcp143@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp143
+23BCP144,23BCP144,Pratham Vinaykumar Mehta,CSE,CSE_2023_SEM5_DIV3,5,23bcp144@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp144
+23BCP145,23BCP145,Rishi Dharmeshkumar Mehta,CSE,CSE_2023_SEM5_DIV3,5,23bcp145@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp145
+23BCP146,23BCP146,Hemang Navhal,CSE,CSE_2023_SEM5_DIV3,5,23bcp146@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp146
+23BCP147,23BCP147,Krish Manish Sonpal,CSE,CSE_2023_SEM5_DIV3,5,23bcp147@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp147
+23BCP148,23BCP148,Mali Jaimin Jitendra,CSE,CSE_2023_SEM5_DIV3,5,23bcp148@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp148
+23BCP149,23BCP149,Kavan Mehulbhai Trivedi,CSE,CSE_2023_SEM5_DIV3,5,23bcp149@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp149
+23BCP150,23BCP150,Twinkal Ajmera,CSE,CSE_2023_SEM5_DIV3,5,23bcp150@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp150
+23BCP151,23BCP151,Ayush Dilipkumar Patel,CSE,CSE_2023_SEM5_DIV3,5,23bcp151@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp151
+23BCP152,23BCP152,Solanki Akshadipsinh Yogarajsinh,CSE,CSE_2023_SEM5_DIV3,5,23bcp152@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp152
+23BCP153,23BCP153,Vedesh Satyen Pandya,CSE,CSE_2023_SEM5_DIV3,5,23bcp153@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp153
+23BCP154,23BCP154,Hit Tejalkumar Sheth,CSE,CSE_2023_SEM5_DIV3,5,23bcp154@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp154
+23BCP155,23BCP155,Piyush Ashvinkumar Soni,CSE,CSE_2023_SEM5_DIV3,5,23bcp155@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp155
+23BCP156,23BCP156,Patel Shlok Tushar,CSE,CSE_2023_SEM5_DIV3,5,23bcp156@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp156
+23BCP158,23BCP158,Hammesh,CSE,CSE_2023_SEM5_DIV3,5,23bcp158@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp158
+23BCP160,23BCP160,Sudheer Pandey,CSE,CSE_2023_SEM5_DIV3,5,23bcp160@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp160
+23BCP161,23BCP161,Ayush Devani,CSE,CSE_2023_SEM5_DIV3,5,23bcp161@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp161
+23BCP162,23BCP162,Parv Desai,CSE,CSE_2023_SEM5_DIV3,5,23bcp162@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp162
+23BCP163,23BCP163,Samant Ritesh Rathod,CSE,CSE_2023_SEM5_DIV3,5,23bcp163@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp163
+23BCP164,23BCP164,Deep Patoliya,CSE,CSE_2023_SEM5_DIV3,5,23bcp164@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp164
+23BCP165,23BCP165,Gaurav Bishnoi,CSE,CSE_2023_SEM5_DIV3,5,23bcp165@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp165
+23BCP166,23BCP166,Patel Param Viralkumar,CSE,CSE_2023_SEM5_DIV3,5,23bcp166@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp166
+23BCP167,23BCP167,Harichand Loniya,CSE,CSE_2023_SEM5_DIV3,5,23bcp167@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp167
+23BCP168,23BCP168,Patel Moksh Rajeshbhai,CSE,CSE_2023_SEM5_DIV3,5,23bcp168@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp168
+23BCP170,23BCP170,Jeet Pravinbhai Zala,CSE,CSE_2023_SEM5_DIV3,5,23bcp170@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp170
+23BCP171,23BCP171,Meet Rushinkumar Vyas,CSE,CSE_2023_SEM5_DIV3,5,23bcp171@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp171
+23BCP172,23BCP172,Raj Hiteshkumar Gandhi,CSE,CSE_2023_SEM5_DIV3,5,23bcp172@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp172
+23BCP174,23BCP174,Ansh Manishkumar Soni,CSE,CSE_2023_SEM5_DIV3,5,23bcp174@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp174
+23BCP176,23BCP176,Pehel Mahavir Bagrecha,CSE,CSE_2023_SEM5_DIV3,5,23bcp176@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp176
+23BCP177,23BCP177,Hritik Jayesh Makwana,CSE,CSE_2023_SEM5_DIV3,5,23bcp177@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp177
+23BCP178,23BCP178,Mahek Kamol,CSE,CSE_2023_SEM5_DIV3,5,23bcp178@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp178
+23BCP179,23BCP179,Tailor Sujal Dharmeshkumar,CSE,CSE_2023_SEM5_DIV3,5,23bcp179@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp179
+23BCP180,23BCP180,Dhyani Kokil Dave,CSE,CSE_2023_SEM5_DIV3,5,23bcp180@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp180
+23BCP181,23BCP181,Maitree Kalpesh Mistry,CSE,CSE_2023_SEM5_DIV3,5,23bcp181@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp181
+23BCP182,23BCP182,Gadhiya Chetan Bhaveshbhai,CSE,CSE_2023_SEM5_DIV3,5,23bcp182@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp182
+23BCP183,23BCP183,Ruchit Rakeshkumar Agrawal,CSE,CSE_2023_SEM5_DIV3,5,23bcp183@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp183
+23BCP184,23BCP184,Diya Keyur Rokadia,CSE,CSE_2023_SEM5_DIV3,5,23bcp184@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp184
+23BCP186,23BCP186,Panth Sunilkumar Patel,CSE,CSE_2023_SEM5_DIV3,5,23bcp186@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp186
+23BCP187,23BCP187,Patel Mit Soneshbhai,CSE,CSE_2023_SEM5_DIV3,5,23bcp187@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp187
+23BCP188,23BCP188,Hem Bharatbhai Modi,CSE,CSE_2023_SEM5_DIV3,5,23bcp188@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp188
+23BCP190,23BCP190,Kaival Mahendrakumar Patel,CSE,CSE_2023_SEM5_DIV3,5,23bcp190@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp190
+23BCP191,23BCP191,Bikendra Lohar,CSE,CSE_2023_SEM5_DIV3,5,23bcp191@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp191
+23BCP192,23BCP192,Chauhan Het Rajesh,CSE,CSE_2023_SEM5_DIV3,5,23bcp192@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp192
+23BCP193,23BCP193,Vansh Hansraj Jain,CSE,CSE_2023_SEM5_DIV3,5,23bcp193@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp193
+23BCP194,23BCP194,Ravi Harshal Bhatt,CSE,CSE_2023_SEM5_DIV3,5,23bcp194@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp194
+23BCP195,23BCP195,Kalp Chetankumar Patel,CSE,CSE_2023_SEM5_DIV3,5,23bcp195@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp195
+23BCP197,23BCP197,Patel Naitikkumar Jagdishbhai,CSE,CSE_2023_SEM5_DIV3,5,23bcp197@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp197
+23BCP198,23BCP198,Krish Nileshkumar Mehta,CSE,CSE_2023_SEM5_DIV3,5,23bcp198@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp198
+23BCP199,23BCP199,Prajapati Vrajkumar Jitendrabhai,CSE,CSE_2023_SEM5_DIV3,5,23bcp199@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp199
+23BCP200,23BCP200,Malav Mevada,CSE,CSE_2023_SEM5_DIV3,5,23bcp200@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp200
+23BCP201,23BCP201,Dilip Kohar,CSE,CSE_2023_SEM5_DIV3,5,23bcp201@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp201
+23BCP202,23BCP202,Prince Rakeshkumar Koladiya,CSE,CSE_2023_SEM5_DIV3,5,23bcp202@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp202
+23BCP203,23BCP203,Priyank Patel,CSE,CSE_2023_SEM5_DIV3,5,23bcp203@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp203
+23BCP204,23BCP204,Krishna Nileshkumar Mehta,CSE,CSE_2023_SEM5_DIV3,5,23bcp204@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp204
+23BCP205,23BCP205,Naishal Sunil Patel,CSE,CSE_2023_SEM5_DIV4,5,23bcp205@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp205
+23BCP207,23BCP207,Meet Bhavin Patel,CSE,CSE_2023_SEM5_DIV4,5,23bcp207@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp207
+23BCP209,23BCP209,Prit Donga,CSE,CSE_2023_SEM5_DIV4,5,23bcp209@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp209
+23BCP211,23BCP211,Yug Tank,CSE,CSE_2023_SEM5_DIV4,5,23bcp211@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp211
+23BCP212,23BCP212,Gaurav Nareshbhai Vasava,CSE,CSE_2023_SEM5_DIV4,5,23bcp212@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp212
+23BCP213,23BCP213,Akshat Manoj Gupta,CSE,CSE_2023_SEM5_DIV4,5,23bcp213@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp213
+23BCP214,23BCP214,Shubham Manoj Kumar,CSE,CSE_2023_SEM5_DIV4,5,23bcp214@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp214
+23BCP215,23BCP215,Safikkhan Mujefarkhan Bihari,CSE,CSE_2023_SEM5_DIV4,5,23bcp215@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp215
+23BCP216,23BCP216,Virendra Ramakant Yadav,CSE,CSE_2023_SEM5_DIV4,5,23bcp216@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp216
+23BCP217,23BCP217,Patel Het Vasantkumar,CSE,CSE_2023_SEM5_DIV4,5,23bcp217@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp217
+23BCP219,23BCP219,Jadeja Hardipsinh,CSE,CSE_2023_SEM5_DIV4,5,23bcp219@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp219
+23BCP220,23BCP220,Mahir Patel,CSE,CSE_2023_SEM5_DIV4,5,23bcp220@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp220
+23BCP221,23BCP221,Vishvam Bahedia,CSE,CSE_2023_SEM5_DIV4,5,23bcp221@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp221
+23BCP222,23BCP222,Jotangiya Rudra Sandipbhai,CSE,CSE_2023_SEM5_DIV4,5,23bcp222@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp222
+23BCP223,23BCP223,Ansh Dharmeshkumar Prajapati,CSE,CSE_2023_SEM5_DIV4,5,23bcp223@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp223
+23BCP224,23BCP224,Nisargkumar Jayeshbhai Mulani,CSE,CSE_2023_SEM5_DIV4,5,23bcp224@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp224
+23BCP225,23BCP225,Shardul Jani,CSE,CSE_2023_SEM5_DIV4,5,23bcp225@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp225
+23BCP226,23BCP226,Pranjal Sharma,CSE,CSE_2023_SEM5_DIV4,5,23bcp226@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp226
+23BCP228,23BCP228,Darshil Vasantbhai Mendapara,CSE,CSE_2023_SEM5_DIV4,5,23bcp228@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp228
+23BCP229,23BCP229,Shabbir Iqbalbhai Mehtar,CSE,CSE_2023_SEM5_DIV4,5,23bcp229@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp229
+23BCP230,23BCP230,Thummar Vency Kamleshbhai,CSE,CSE_2023_SEM5_DIV4,5,23bcp230@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp230
+23BCP231,23BCP231,Devansh Sanjay Patel,CSE,CSE_2023_SEM5_DIV4,5,23bcp231@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp231
+23BCP232,23BCP232,Adityasinh Janmejaysinh Jadeja,CSE,CSE_2023_SEM5_DIV4,5,23bcp232@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp232
+23BCP233,23BCP233,Om Parekh,CSE,CSE_2023_SEM5_DIV4,5,23bcp233@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp233
+23BCP234,23BCP234,Jill Patel,CSE,CSE_2023_SEM5_DIV4,5,23bcp234@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp234
+23BCP235,23BCP235,Prassana P Vijh,CSE,CSE_2023_SEM5_DIV4,5,23bcp235@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp235
+23BCP237,23BCP237,Dev Bharatbhai Talpada,CSE,CSE_2023_SEM5_DIV4,5,23bcp237@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp237
+23BCP238,23BCP238,Tank Pavitra Kanulal,CSE,CSE_2023_SEM5_DIV4,5,23bcp238@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp238
+23BCP239,23BCP239,Prakash Dangi,CSE,CSE_2023_SEM5_DIV4,5,23bcp239@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp239
+23BCP240,23BCP240,Nidhi Baldaniya,CSE,CSE_2023_SEM5_DIV4,5,23bcp240@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp240
+23BCP241,23BCP241,Meet Rathod,CSE,CSE_2023_SEM5_DIV4,5,23bcp241@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp241
+23BCP242,23BCP242,Yug Jagdishchandra Patel,CSE,CSE_2023_SEM5_DIV4,5,23bcp242@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp242
+23BCP244,23BCP244,Param Vipulkumar Patel,CSE,CSE_2023_SEM5_DIV4,5,23bcp244@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp244
+23BCP245,23BCP245,Murtaza Akilbhai Patel,CSE,CSE_2023_SEM5_DIV4,5,23bcp245@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp245
+23BCP247,23BCP247,Bedanta Bista,CSE,CSE_2023_SEM5_DIV4,5,23bcp247@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp247
+23BCP248,23BCP248,Pearl Amitkumar Narbheram,CSE,CSE_2023_SEM5_DIV4,5,23bcp248@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp248
+23BCP249,23BCP249,Harshil Himanshubhai Khara,CSE,CSE_2023_SEM5_DIV4,5,23bcp249@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp249
+23BCP250,23BCP250,Mrugesh Thesiya,CSE,CSE_2023_SEM5_DIV4,5,23bcp250@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp250
+23BCP251,23BCP251,Harsh Umang Bhavsar,CSE,CSE_2023_SEM5_DIV4,5,23bcp251@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp251
+23BCP253,23BCP253,Maan Nitinkumar Patel,CSE,CSE_2023_SEM5_DIV4,5,23bcp253@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp253
+23BCP254,23BCP254,Bhavesh Malviya,CSE,CSE_2023_SEM5_DIV4,5,23bcp254@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp254
+23BCP255,23BCP255,Rhea Chirag Shah,CSE,CSE_2023_SEM5_DIV4,5,23bcp255@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp255
+23BCP256,23BCP256,Hir Nueshkumar Doshi,CSE,CSE_2023_SEM5_DIV4,5,23bcp256@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp256
+23BCP257,23BCP257,Mitul Narasimha Murthy Valli,CSE,CSE_2023_SEM5_DIV4,5,23bcp257@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp257
+23BCP258,23BCP258,Dhruv Kalpeshbhai Golakiya,CSE,CSE_2023_SEM5_DIV4,5,23bcp258@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp258
+23BCP259,23BCP259,Dobariya Dev Muneshbhai,CSE,CSE_2023_SEM5_DIV4,5,23bcp259@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp259
+23BCP260,23BCP260,Neera Nilesh Nakrani,CSE,CSE_2023_SEM5_DIV4,5,23bcp260@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp260
+23BCP261,23BCP261,Krish Vallabhbhai Kalola,CSE,CSE_2023_SEM5_DIV4,5,23bcp261@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp261
+23BCP262,23BCP262,Nishu Shukla,CSE,CSE_2023_SEM5_DIV4,5,23bcp262@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp262
+23BCP263,23BCP263,Mangrolia Dwarkesh Ghanshyambhai,CSE,CSE_2023_SEM5_DIV4,5,23bcp263@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp263
+23BCP264,23BCP264,Ayaan Goel,CSE,CSE_2023_SEM5_DIV4,5,23bcp264@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp264
+23BCP265,23BCP265,Prajapati Meet Ketankumar,CSE,CSE_2023_SEM5_DIV4,5,23bcp265@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp265
+23BCP266,23BCP266,Avi Akhilesh Mishra,CSE,CSE_2023_SEM5_DIV4,5,23bcp266@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp266
+23BCP269,23BCP269,Harshi Ravindrakumar Jain,CSE,CSE_2023_SEM5_DIV4,5,23bcp269@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp269
+23BCP270,23BCP270,Manthan Dadhania,CSE,CSE_2023_SEM5_DIV4,5,23bcp270@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp270
+23BCP271,23BCP271,Dhvani Prashant Vanzwala,CSE,CSE_2023_SEM5_DIV4,5,23bcp271@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp271
+23BCP272,23BCP272,Rudra Bhaveshbhai Kher,CSE,CSE_2023_SEM5_DIV4,5,23bcp272@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp272
+23BCP273,23BCP273,Suhani Lakhera,CSE,CSE_2023_SEM5_DIV4,5,23bcp273@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp273
+23BCP275,23BCP275,Kshiti Bhavsar,CSE,CSE_2023_SEM5_DIV4,5,23bcp275@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp275
+23BCP276,23BCP276,Ananya Gupta,CSE,CSE_2023_SEM5_DIV4,5,23bcp276@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp276
+23BCP277,23BCP277,Murli Hareshbhai Panara,CSE,CSE_2023_SEM5_DIV4,5,23bcp277@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp277
+23BCP278,23BCP278,Diya Jitendra Gor,CSE,CSE_2023_SEM5_DIV5,5,23bcp278@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp278
+23BCP280,23BCP280,Himanshi Daga,CSE,CSE_2023_SEM5_DIV5,5,23bcp280@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp280
+23BCP281,23BCP281,Ananya Trivedi,CSE,CSE_2023_SEM5_DIV5,5,23bcp281@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp281
+23BCP282,23BCP282,Makwana Prachi Rameshbhai,CSE,CSE_2023_SEM5_DIV5,5,23bcp282@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp282
+23BCP283,23BCP283,Kashish Sanjaykhan Thakor,CSE,CSE_2023_SEM5_DIV5,5,23bcp283@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp283
+23BCP284,23BCP284,Prasham Sargam Parmar,CSE,CSE_2023_SEM5_DIV5,5,23bcp284@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp284
+23BCP285,23BCP285,Radia Mitali Rakesh,CSE,CSE_2023_SEM5_DIV5,5,23bcp285@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp285
+23BCP286,23BCP286,Prem Ashwinbhai Mahesuriya,CSE,CSE_2023_SEM5_DIV5,5,23bcp286@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp286
+23BCP287,23BCP287,Muskan Paragbhai Dalsania,CSE,CSE_2023_SEM5_DIV5,5,23bcp287@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp287
+23BCP289,23BCP289,Anuj Sharma,CSE,CSE_2023_SEM5_DIV5,5,23bcp289@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp289
+23BCP290,23BCP290,Ishaan Nitingiri Goswami,CSE,CSE_2023_SEM5_DIV5,5,23bcp290@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp290
+23BCP291,23BCP291,Patel Shruti Nrupeshkumar,CSE,CSE_2023_SEM5_DIV5,5,23bcp291@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp291
+23BCP292,23BCP292,Dvij Amish Patel,CSE,CSE_2023_SEM5_DIV5,5,23bcp292@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp292
+23BCP293,23BCP293,Aayush Kumar Karn,CSE,CSE_2023_SEM5_DIV5,5,23bcp293@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp293
+23BCP294,23BCP294,Limbachiya Manav Ghanashyambhai,CSE,CSE_2023_SEM5_DIV5,5,23bcp294@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp294
+23BCP295,23BCP295,Chaudhari Jiya Smitalbhai,CSE,CSE_2023_SEM5_DIV5,5,23bcp295@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp295
+23BCP296,23BCP296,Vasu Bhoraniya,CSE,CSE_2023_SEM5_DIV5,5,23bcp296@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp296
+23BCP297,23BCP297,Rudra Parmar,CSE,CSE_2023_SEM5_DIV5,5,23bcp297@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp297
+23BCP298,23BCP298,Harshal Sharma,CSE,CSE_2023_SEM5_DIV5,5,23bcp298@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp298
+23BCP299,23BCP299,Vansh Sorathiya,CSE,CSE_2023_SEM5_DIV5,5,23bcp299@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp299
+23BCP300,23BCP300,Mohammad Yazan Mohammad Maher Nasri,CSE,CSE_2023_SEM5_DIV6,5,23bcp300@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp300
+23BCP301,23BCP301,Rudra Bhaveshkumar Joshi,CSE,CSE_2023_SEM5_DIV5,5,23bcp301@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp301
+23BCP304,23BCP304,Ved Rajanikant Shrimali,CSE,CSE_2023_SEM5_DIV5,5,23bcp304@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp304
+23BCP306,23BCP306,Dhruv Alpeshbhai Parsana,CSE,CSE_2023_SEM5_DIV5,5,23bcp306@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp306
+23BCP307,23BCP307,Aashna Manish Kanodia,CSE,CSE_2023_SEM5_DIV5,5,23bcp307@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp307
+23BCP308,23BCP308,Dev Ravindrabhai Mehta,CSE,CSE_2023_SEM5_DIV5,5,23bcp308@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp308
+23BCP309,23BCP309,Patel Kristi Sanjaykumar,CSE,CSE_2023_SEM5_DIV5,5,23bcp309@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp309
+23BCP310,23BCP310,Patel Shaivaxee Shaileshbhai,CSE,CSE_2023_SEM5_DIV5,5,23bcp310@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp310
+23BCP312,23BCP312,Savani Smith Nareshbhai,CSE,CSE_2023_SEM5_DIV5,5,23bcp312@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp312
+23BCP313,23BCP313,Zala Abhijitsinh Pratapsinh,CSE,CSE_2023_SEM5_DIV5,5,23bcp313@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp313
+23BCP314,23BCP314,Ronak Mukeshbahi Togadiya,CSE,CSE_2023_SEM5_DIV5,5,23bcp314@students.scheduler.local,active,BTech,2023,Computer,Div-5,G9,23bcp314
+23BCP315,23BCP315,Jenil Arvindbhai Savaliya,CSE,CSE_2023_SEM5_DIV5,5,23bcp315@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp315
+23BCP316,23BCP316,Mrunal Hemant Jadhav,CSE,CSE_2023_SEM5_DIV5,5,23bcp316@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp316
+23BCP317,23BCP317,Hiren Prajapati,CSE,CSE_2023_SEM5_DIV5,5,23bcp317@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp317
+23BCP319,23BCP319,Ishan Ashish Bhaiya,CSE,CSE_2023_SEM5_DIV5,5,23bcp319@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp319
+23BCP320,23BCP320,Tirth,CSE,CSE_2023_SEM5_DIV5,5,23bcp320@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp320
+23BCP321,23BCP321,Parth Hirenkumar Patel,CSE,CSE_2023_SEM5_DIV5,5,23bcp321@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp321
+23BCP322,23BCP322,Yagnesh Dhankecha,CSE,CSE_2023_SEM5_DIV5,5,23bcp322@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp322
+23BCP323,23BCP323,Aayushi Utpal Shah,CSE,CSE_2023_SEM5_DIV5,5,23bcp323@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp323
+23BCP324,23BCP324,Manan Kalpesh Chavda,CSE,CSE_2023_SEM5_DIV5,5,23bcp324@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp324
+23BCP326,23BCP326,Rachi Rakesh Vyas,CSE,CSE_2023_SEM5_DIV5,5,23bcp326@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp326
+23BCP327,23BCP327,Prabin Roy,CSE,CSE_2023_SEM5_DIV5,5,23bcp327@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp327
+23BCP328,23BCP328,Ved Vinodbhai Kuvadiya,CSE,CSE_2023_SEM5_DIV5,5,23bcp328@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp328
+23BCP329,23BCP329,Juhi Patel,CSE,CSE_2023_SEM5_DIV5,5,23bcp329@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp329
+23BCP330,23BCP330,Amanmani Tripathi,CSE,CSE_2023_SEM5_DIV5,5,23bcp330@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp330
+23BCP331,23BCP331,Diya Agrawal,CSE,CSE_2023_SEM5_DIV5,5,23bcp331@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp331
+23BCP332,23BCP332,Jayneel Mukeshkumar Mahival,CSE,CSE_2023_SEM5_DIV5,5,23bcp332@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp332
+23BCP333,23BCP333,Krunal Ghanshyambhai Prajapati,CSE,CSE_2023_SEM5_DIV5,5,23bcp333@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp333
+23BCP334,23BCP334,Shivam Bohra,CSE,CSE_2023_SEM5_DIV5,5,23bcp334@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp334
+23BCP335,23BCP335,Lisha Rathi,CSE,CSE_2023_SEM5_DIV5,5,23bcp335@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp335
+23BCP336,23BCP336,Kapkar Manan,CSE,CSE_2023_SEM5_DIV5,5,23bcp336@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp336
+23BCP337,23BCP337,Hriday,CSE,CSE_2023_SEM5_DIV5,5,23bcp337@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp337
+23BCP339,23BCP339,Tarek Nedal Rajab,CSE,CSE_2023_SEM5_DIV6,5,23bcp339@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp339
+23BCP340,23BCP340,Saumyakumar Anilkumar Thacker,CSE,CSE_2023_SEM5_DIV5,5,23bcp340@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp340
+23BCP341,23BCP341,Dhriti Kamleshbhai Sojitra,CSE,CSE_2023_SEM5_DIV5,5,23bcp341@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp341
+23BCP342,23BCP342,Mori Karansinh Rajendrasinh,CSE,CSE_2023_SEM5_DIV5,5,23bcp342@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp342
+23BCP344,23BCP344,Het Mukeshkumar Shah,CSE,CSE_2023_SEM5_DIV5,5,23bcp344@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp344
+23BCP345,23BCP345,Nevil Mitesh Shah,CSE,CSE_2023_SEM5_DIV5,5,23bcp345@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp345
+23BCP346,23BCP346,Chirag Amit Sinha,CSE,CSE_2023_SEM5_DIV5,5,23bcp346@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp346
+23BCP347,23BCP347,Paraj Rashesh Mehta,CSE,CSE_2023_SEM5_DIV5,5,23bcp347@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp347
+23BCP348,23BCP348,Yuv Balat,CSE,CSE_2023_SEM5_DIV5,5,23bcp348@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp348
+23BCP349,23BCP349,Akshat Suryavanshi,CSE,CSE_2023_SEM5_DIV5,5,23bcp349@students.scheduler.local,active,BTech,2023,Computer,Div-5,G10,23bcp349
+23BCP351,23BCP351,Yash Arvind Agrawal,CSE,CSE_2023_SEM5_DIV6,5,23bcp351@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp351
+23BCP352,23BCP352,Ayush Vaibhav,CSE,CSE_2023_SEM5_DIV6,5,23bcp352@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp352
+23BCP353,23BCP353,Patel Mili Sanjaykumar,CSE,CSE_2023_SEM5_DIV6,5,23bcp353@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp353
+23BCP354,23BCP354,Smit Sunilbhai Patel,CSE,CSE_2023_SEM5_DIV6,5,23bcp354@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp354
+23BCP355,23BCP355,Gunj Ardeshna,CSE,CSE_2023_SEM5_DIV6,5,23bcp355@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp355
+23BCP356,23BCP356,Mahek Vipal Shah,CSE,CSE_2023_SEM5_DIV6,5,23bcp356@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp356
+23BCP357,23BCP357,Vraj Priyadarshi,CSE,CSE_2023_SEM5_DIV6,5,23bcp357@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp357
+23BCP358,23BCP358,Rakshit Tejasbhai Pavagadhi,CSE,CSE_2023_SEM5_DIV6,5,23bcp358@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp358
+23BCP359,23BCP359,Himadri Anil Patel,CSE,CSE_2023_SEM5_DIV6,5,23bcp359@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp359
+23BCP360,23BCP360,Krupesh Hitesh Gandhi,CSE,CSE_2023_SEM5_DIV6,5,23bcp360@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp360
+23BCP361,23BCP361,Harpal Bhaveshkumar Patel,CSE,CSE_2023_SEM5_DIV6,5,23bcp361@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp361
+23BCP363,23BCP363,Vivang Shah,CSE,CSE_2023_SEM5_DIV6,5,23bcp363@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp363
+23BCP364,23BCP364,Subham Biswas,CSE,CSE_2023_SEM5_DIV6,5,23bcp364@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp364
+23BCP365,23BCP365,Tanish Jha,CSE,CSE_2023_SEM5_DIV6,5,23bcp365@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp365
+23BCP368,23BCP368,Rudra Dave,CSE,CSE_2023_SEM5_DIV6,5,23bcp368@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp368
+23BCP369,23BCP369,Maharshi Harshadkumar Gajjar,CSE,CSE_2023_SEM5_DIV6,5,23bcp369@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp369
+23BCP370,23BCP370,Umang Rajulbhai Panseriya,CSE,CSE_2023_SEM5_DIV6,5,23bcp370@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp370
+23BCP371,23BCP371,Veerbhadrasinh Jadeja,CSE,CSE_2023_SEM5_DIV6,5,23bcp371@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp371
+23BCP372,23BCP372,Rumit Shah,CSE,CSE_2023_SEM5_DIV6,5,23bcp372@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp372
+23BCP374,23BCP374,Hemil,CSE,CSE_2023_SEM5_DIV6,5,23bcp374@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp374
+23BCP375,23BCP375,Dishitaba Hiteshsinh Chudasama,CSE,CSE_2023_SEM5_DIV6,5,23bcp375@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp375
+23BCP376,23BCP376,Krishkumar Satishkumar Parejiya,CSE,CSE_2023_SEM5_DIV6,5,23bcp376@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp376
+23BCP377,23BCP377,Pradhyumansinh Hitendrasinh Chauhan,CSE,CSE_2023_SEM5_DIV6,5,23bcp377@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp377
+23BCP378,23BCP378,Het Rashminkumar Patel,CSE,CSE_2023_SEM5_DIV6,5,23bcp378@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp378
+23BCP379,23BCP379,Rahul Rakeshbhai Pal,CSE,CSE_2023_SEM5_DIV6,5,23bcp379@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp379
+23BCP380,23BCP380,Satya Prakash Ojha,CSE,CSE_2023_SEM5_DIV6,5,23bcp380@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp380
+23BCP381,23BCP381,Kachhot Mohammad Zaid Arifbhai,CSE,CSE_2023_SEM5_DIV6,5,23bcp381@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp381
+23BCP382,23BCP382,Dhruvin Dakshesh Panchal,CSE,CSE_2023_SEM5_DIV6,5,23bcp382@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp382
+23BCP384,23BCP384,Mohamad Owaish Mohamad Yusuf Khalak,CSE,CSE_2023_SEM5_DIV6,5,23bcp384@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp384
+23BCP385,23BCP385,Dhruti Bharatbhai Gajera,CSE,CSE_2023_SEM5_DIV6,5,23bcp385@students.scheduler.local,active,BTech,2023,Computer,Div-6,G11,23bcp385
+23BCP386,23BCP386,Ishant Solanki,CSE,CSE_2023_SEM5_DIV6,5,23bcp386@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp386
+23BCP387,23BCP387,Dhanya Amit Shah,CSE,CSE_2023_SEM5_DIV6,5,23bcp387@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp387
+23BCP388,23BCP388,Neal Priteshkumar Patel,CSE,CSE_2023_SEM5_DIV6,5,23bcp388@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp388
+23BCP389,23BCP389,Krish Anilbhai Vekariya,CSE,CSE_2023_SEM5_DIV6,5,23bcp389@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp389
+23BCP390,23BCP390,Ghadiya Jaykumar Babubhai,CSE,CSE_2023_SEM5_DIV6,5,23bcp390@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp390
+23BCP391,23BCP391,Supriyo Chaudhuri,CSE,CSE_2023_SEM5_DIV6,5,23bcp391@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp391
+23BCP392,23BCP392,Ibrahim Ahmad Haitham Jabri,CSE,CSE_2023_SEM5_DIV6,5,23bcp392@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp392
+23BCP393,23BCP393,Tirth Mitesh Sheth,CSE,CSE_2023_SEM5_DIV6,5,23bcp393@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp393
+23BCP394,23BCP394,Hemin Biren Modi,CSE,CSE_2023_SEM5_DIV6,5,23bcp394@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp394
+23BCP395,23BCP395,Mokshal Nijay Shah,CSE,CSE_2023_SEM5_DIV6,5,23bcp395@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp395
+23BCP396,23BCP396,Chaudhary Vishva Shaileshkumar,CSE,CSE_2023_SEM5_DIV6,5,23bcp396@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp396
+23BCP397,23BCP397,Patel Jil Miteshbhai,CSE,CSE_2023_SEM5_DIV6,5,23bcp397@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp397
+23BCP398,23BCP398,Patel Prince Shaileshkumar,CSE,CSE_2023_SEM5_DIV6,5,23bcp398@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp398
+23BCP399,23BCP399,Shashwat Sanjay Patel,CSE,CSE_2023_SEM5_DIV6,5,23bcp399@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp399
+23BCP400,23BCP400,Savaliya Abhishek Dineshbhai,CSE,CSE_2023_SEM5_DIV6,5,23bcp400@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp400
+23BCP401,23BCP401,Rudra Devendrabhai Patel,CSE,CSE_2023_SEM5_DIV6,5,23bcp401@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp401
+23BCP402,23BCP402,Manav,CSE,CSE_2023_SEM5_DIV6,5,23bcp402@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp402
+23BCP403,23BCP403,Kaushlendrasinh Himmatsinh Vaghela,CSE,CSE_2023_SEM5_DIV6,5,23bcp403@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp403
+23BCP405,23BCP405,Bhaumik Mukeshbhai Patel,CSE,CSE_2023_SEM5_DIV6,5,23bcp405@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp405
+23BCP406,23BCP406,Niva Haresh Amrutia,CSE,CSE_2023_SEM5_DIV6,5,23bcp406@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp406
+23BCP407,23BCP407,Mahi,CSE,CSE_2023_SEM5_DIV6,5,23bcp407@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp407
+23BCP408,23BCP408,Aditya Thakkar,CSE,CSE_2023_SEM5_DIV6,5,23bcp408@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp408
+23BCP409,23BCP409,Jenish Piyush Kumar Moghariya,CSE,CSE_2023_SEM5_DIV6,5,23bcp409@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp409
+23BCP410,23BCP410,Tarek Osama Altarabishi,CSE,CSE_2023_SEM5_DIV6,5,23bcp410@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp410
+23BCP411,23BCP411,Yana Jaysukhbhai Vaghani,CSE,CSE_2023_SEM5_DIV6,5,23bcp411@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp411
+23BCP412,23BCP412,Pratham Mahesh Mohta,CSE,CSE_2023_SEM5_DIV6,5,23bcp412@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp412
+23BCP413,23BCP413,Paun Vansh Jayantbhai,CSE,CSE_2023_SEM5_DIV6,5,23bcp413@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp413
+23BCP414,23BCP414,Makadiya Preet Atulbhai,CSE,CSE_2023_SEM5_DIV6,5,23bcp414@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp414
+23BCP416,23BCP416,Varun Shivakumar Iyer,CSE,CSE_2023_SEM5_DIV6,5,23bcp416@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp416
+23BCP417,23BCP417,Kathiriya Om Atulbhai,CSE,CSE_2023_SEM5_DIV6,5,23bcp417@students.scheduler.local,active,BTech,2023,Computer,Div-6,G12,23bcp417
+23BCP420,23BCP420,Sagar Thapa,CSE,CSE_2023_SEM5_DIV7,5,23bcp420@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp420
+23BCP421,23BCP421,Mitali,CSE,CSE_2023_SEM5_DIV7,5,23bcp421@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp421
+23BCP422,23BCP422,Samarth Rajendrasinh Vala,CSE,CSE_2023_SEM5_DIV7,5,23bcp422@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp422
+23BCP423,23BCP423,Hemang Dulange,CSE,CSE_2023_SEM5_DIV7,5,23bcp423@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp423
+23BCP424,23BCP424,Harsh Soni,CSE,CSE_2023_SEM5_DIV7,5,23bcp424@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp424
+23BCP425,23BCP425,Manav Bhadresh Patel,CSE,CSE_2023_SEM5_DIV7,5,23bcp425@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp425
+23BCP426,23BCP426,Yash Varshney,CSE,CSE_2023_SEM5_DIV7,5,23bcp426@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp426
+23BCP427,23BCP427,Subrat Acharya,CSE,CSE_2023_SEM5_DIV7,5,23bcp427@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp427
+23BCP428,23BCP428,Parmar Dhairyasinh Natubhai,CSE,CSE_2023_SEM5_DIV7,5,23bcp428@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp428
+23BCP429,23BCP429,Vatsal Vishnu Solanki,CSE,CSE_2023_SEM5_DIV7,5,23bcp429@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp429
+23BCP430,23BCP430,Payas Vaishnav,CSE,CSE_2023_SEM5_DIV7,5,23bcp430@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp430
+23BCP431,23BCP431,Krisha Desai,CSE,CSE_2023_SEM5_DIV7,5,23bcp431@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp431
+23BCP432,23BCP432,Aarav Malav Sheth,CSE,CSE_2023_SEM5_DIV7,5,23bcp432@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp432
+23BCP434,23BCP434,Rahul Shah,CSE,CSE_2023_SEM5_DIV7,5,23bcp434@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp434
+23BCP435,23BCP435,Heet Ashishkumar Patel,CSE,CSE_2023_SEM5_DIV7,5,23bcp435@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp435
+23BCP436,23BCP436,Rawat Ratish Rakesh,CSE,CSE_2023_SEM5_DIV7,5,23bcp436@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp436
+23BCP437,23BCP437,Parmar Keya Kamleshbhai,CSE,CSE_2023_SEM5_DIV7,5,23bcp437@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp437
+23BCP438,23BCP438,Surbhi Ketanbhai Dadhaniya,CSE,CSE_2023_SEM5_DIV7,5,23bcp438@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp438
+23BCP439,23BCP439,Jainil Puravkumar Vyas,CSE,CSE_2023_SEM5_DIV7,5,23bcp439@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp439
+23BCP440,23BCP440,Divyam Butala,CSE,CSE_2023_SEM5_DIV7,5,23bcp440@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp440
+23BCP441,23BCP441,Parmar Aditya Prakashkumar,CSE,CSE_2023_SEM5_DIV7,5,23bcp441@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp441
+23BCP442,23BCP442,Tirth Chandreshkumar Shripal,CSE,CSE_2023_SEM5_DIV7,5,23bcp442@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp442
+23BCP443,23BCP443,Diya Milanbhai Makwana,CSE,CSE_2023_SEM5_DIV7,5,23bcp443@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp443
+23BCP444,23BCP444,Prem Manishbhai Patel,CSE,CSE_2023_SEM5_DIV7,5,23bcp444@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp444
+23BCP445,23BCP445,Deep Patel,CSE,CSE_2023_SEM5_DIV7,5,23bcp445@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp445
+23BCP446,23BCP446,Manan Vinodkumar Thakkar,CSE,CSE_2023_SEM5_DIV7,5,23bcp446@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp446
+23BCP447,23BCP447,Het Kishor Barot,CSE,CSE_2023_SEM5_DIV7,5,23bcp447@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp447
+23BCP448,23BCP448,Krishika Vansh,CSE,CSE_2023_SEM5_DIV7,5,23bcp448@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp448
+23BCP449,23BCP449,Zeel Tapan Trivedi,CSE,CSE_2023_SEM5_DIV7,5,23bcp449@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp449
+23BCP450,23BCP450,Dev Pinkeshkumar Soni,CSE,CSE_2023_SEM5_DIV7,5,23bcp450@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp450
+23BCP451,23BCP451,Trivedi Dhruven Jigar,CSE,CSE_2023_SEM5_DIV7,5,23bcp451@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp451
+23BCP452,23BCP452,Smit Virani,CSE,CSE_2023_SEM5_DIV7,5,23bcp452@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp452
+23BCP453,23BCP453,Preet Jigneshbhai Sangani,CSE,CSE_2023_SEM5_DIV7,5,23bcp453@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp453
+23BCP454,23BCP454,Parthrajsinh Zala,CSE,CSE_2023_SEM5_DIV7,5,23bcp454@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp454
+23BCP456,23BCP456,Mahir Panchal,CSE,CSE_2023_SEM5_DIV7,5,23bcp456@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp456
+23BCP457,23BCP457,Kathiriya Vrushabh,CSE,CSE_2023_SEM5_DIV7,5,23bcp457@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp457
+23BCP458,23BCP458,Kathiriya Vedant,CSE,CSE_2023_SEM5_DIV7,5,23bcp458@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp458
+23BCP459,23BCP459,Dipesh Kunwar,CSE,CSE_2023_SEM5_DIV7,5,23bcp459@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp459
+23BCP460,23BCP460,Rahul Kumar Agrahari,CSE,CSE_2023_SEM5_DIV7,5,23bcp460@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp460
+23BCP461,23BCP461,Pratik Pandey,CSE,CSE_2023_SEM5_DIV7,5,23bcp461@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp461
+23BCP462,23BCP462,Samiran Yadav,CSE,CSE_2023_SEM5_DIV7,5,23bcp462@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp462
+23BCP463,23BCP463,Ganesh Kumar Koiri,CSE,CSE_2023_SEM5_DIV7,5,23bcp463@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp463
+23BCP464,23BCP464,Lekhraj Baniya (Gupt),CSE,CSE_2023_SEM5_DIV7,5,23bcp464@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp464
+23BCP465,23BCP465,Aadarsh Acharya,CSE,CSE_2023_SEM5_DIV7,5,23bcp465@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp465
+23BCP466,23BCP466,Prawesh Mandal,CSE,CSE_2023_SEM5_DIV7,5,23bcp466@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp466
+23BCP467,23BCP467,Mahendra Harijan,CSE,CSE_2023_SEM5_DIV7,5,23bcp467@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp467
+23BCP468,23BCP468,Issam Iddi Haji,CSE,CSE_2023_SEM5_DIV7,5,23bcp468@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp468
+23BCP469,23BCP469,Darshan Bikram Verma,CSE,CSE_2023_SEM5_DIV7,5,23bcp469@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp469
+23BCP470,23BCP470,Ankit Chaudhary,CSE,CSE_2023_SEM5_DIV7,5,23bcp470@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp470
+23BCP471,23BCP471,Kouadio Akotto Daniel,CSE,CSE_2023_SEM5_DIV7,5,23bcp471@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp471
+23BCP473,23BCP473,Nitesh Kumar Lodh,CSE,CSE_2023_SEM5_DIV7,5,23bcp473@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp473
+23BCP474,23BCP474,Edson Candistodio De Lino Macamo,CSE,CSE_2023_SEM5_DIV7,5,23bcp474@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp474
+23BCP475,23BCP475,Parag Mondal,CSE,CSE_2023_SEM5_DIV7,5,23bcp475@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp475
+23BCP476,23BCP476,Arpit Agrawal,CSE,CSE_2023_SEM5_DIV7,5,23bcp476@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp476
+23BCP477,23BCP477,Nitish Yadav,CSE,CSE_2023_SEM5_DIV7,5,23bcp477@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp477
+23BCP478,23BCP478,Abbas Suliman Suliman,CSE,CSE_2023_SEM5_DIV7,5,23bcp478@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp478
+23BCP481,23BCP481,Gobinda Bhattarai,CSE,CSE_2023_SEM5_DIV7,5,23bcp481@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp481
+23BCP482,23BCP482,Shubham Rauniyar,CSE,CSE_2023_SEM5_DIV7,5,23bcp482@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp482
+23BCP483,23BCP483,Nabin Neupane,CSE,CSE_2023_SEM5_DIV7,5,23bcp483@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp483
+23BCP484,23BCP484,Bidhan Ranjit,CSE,CSE_2023_SEM5_DIV7,5,23bcp484@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp484
+23BCP485,23BCP485,Aditya Nepal,CSE,CSE_2023_SEM5_DIV7,5,23bcp485@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp485
+23BCP486,23BCP486,Sabal Dhital,CSE,CSE_2023_SEM5_DIV7,5,23bcp486@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp486
+23BCP487,23BCP487,Ritesh Kandel,CSE,CSE_2023_SEM5_DIV7,5,23bcp487@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp487
+23BCP488,23BCP488,Binod Budha,CSE,CSE_2023_SEM5_DIV7,5,23bcp488@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp488
+23BCP489,23BCP489,Pushparaj Chaudhary,CSE,CSE_2023_SEM5_DIV7,5,23bcp489@students.scheduler.local,active,BTech,2023,Computer,Div-7,G13,23bcp489
+23BCP490,23BCP490,Raj Jaiswal,CSE,CSE_2023_SEM5_DIV7,5,23bcp490@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp490
+23BCP491,23BCP491,Ravi Kumar Sah,CSE,CSE_2023_SEM5_DIV7,5,23bcp491@students.scheduler.local,active,BTech,2023,Computer,Div-7,G14,23bcp491
+23BCP492,23BCP492,Bharti Kalwar,CSE,CSE_2023_SEM5_DIV1,5,23bcp492@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp492
+23BCP494D,23BCP494D,Ghaghda Vatsal Rajeshbhai,CSE,CSE_2023_SEM5_DIV1,5,23bcp494d@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp494d
+23BCP495D,23BCP495D,Harsh Jethava,CSE,CSE_2023_SEM5_DIV1,5,23bcp495d@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp495d
+23BCP496D,23BCP496D,Harshil Parmar,CSE,CSE_2023_SEM5_DIV1,5,23bcp496d@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp496d
+23BCP497D,23BCP497D,Jaiditya Chauhan,CSE,CSE_2023_SEM5_DIV1,5,23bcp497d@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp497d
+23BCP498D,23BCP498D,Jenish Ketanbhai Raichura,CSE,CSE_2023_SEM5_DIV1,5,23bcp498d@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp498d
+23BCP499D,23BCP499D,Tanna Bhavy,CSE,CSE_2023_SEM5_DIV1,5,23bcp499d@students.scheduler.local,active,BTech,2023,Computer,Div-1,G1,23bcp499d
+23BCP500D,23BCP500D,Prince Thakarar,CSE,CSE_2023_SEM5_DIV1,5,23bcp500d@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp500d
+23BCP501D,23BCP501D,Krish Bhatt,CSE,CSE_2023_SEM5_DIV1,5,23bcp501d@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp501d
+23BCP502D,23BCP502D,Meet Nikhil Joshi,CSE,CSE_2023_SEM5_DIV1,5,23bcp502d@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp502d
+23BCP503D,23BCP503D,Nisarg Solanki,CSE,CSE_2023_SEM5_DIV1,5,23bcp503d@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp503d
+23BCP504D,23BCP504D,Nishil R Panchal,CSE,CSE_2023_SEM5_DIV1,5,23bcp504d@students.scheduler.local,active,BTech,2023,Computer,Div-1,G2,23bcp504d
+23BCP505D,23BCP505D,Prathana Hareshbhai Harsora,CSE,CSE_2023_SEM5_DIV2,5,23bcp505d@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp505d
+23BCP506D,23BCP506D,Preet Sunilbhai Parmar,CSE,CSE_2023_SEM5_DIV2,5,23bcp506d@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp506d
+23BCP507D,23BCP507D,Priyanshi Pankhaniya,CSE,CSE_2023_SEM5_DIV2,5,23bcp507d@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp507d
+23BCP508D,23BCP508D,Raj Joshi,CSE,CSE_2023_SEM5_DIV2,5,23bcp508d@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp508d
+23BCP509D,23BCP509D,Krina Senjaliya,CSE,CSE_2023_SEM5_DIV2,5,23bcp509d@students.scheduler.local,active,BTech,2023,Computer,Div-2,G3,23bcp509d
+23BCP510D,23BCP510D,Shruja Mehta,CSE,CSE_2023_SEM5_DIV2,5,23bcp510d@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp510d
+23BCP511D,23BCP511D,Smit Joshi,CSE,CSE_2023_SEM5_DIV2,5,23bcp511d@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp511d
+23BCP512D,23BCP512D,Soni Rajkumar Vimalbhai,CSE,CSE_2023_SEM5_DIV2,5,23bcp512d@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp512d
+23BCP513D,23BCP513D,Tejas Patel,CSE,CSE_2023_SEM5_DIV2,5,23bcp513d@students.scheduler.local,active,BTech,2023,Computer,Div-2,G4,23bcp513d
+23BCP514D,23BCP514D,Tresha Bhalavat,CSE,CSE_2023_SEM5_DIV3,5,23bcp514d@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp514d
+23BCP515D,23BCP515D,Vidhyani Gandhi,CSE,CSE_2023_SEM5_DIV3,5,23bcp515d@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp515d
+23BCP516D,23BCP516D,Vraj Patel,CSE,CSE_2023_SEM5_DIV3,5,23bcp516d@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp516d
+23BCP517D,23BCP517D,Jenish Tank,CSE,CSE_2023_SEM5_DIV3,5,23bcp517d@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp517d
+23BCP518D,23BCP518D,Mihir R. Goswami,CSE,CSE_2023_SEM5_DIV3,5,23bcp518d@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp518d
+23BCP519D,23BCP519D,Rathod Dhvanit Nixankumar,CSE,CSE_2023_SEM5_DIV3,5,23bcp519d@students.scheduler.local,active,BTech,2023,Computer,Div-3,G5,23bcp519d
+23BCP520D,23BCP520D,Gabani Rahi,CSE,CSE_2023_SEM5_DIV3,5,23bcp520d@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp520d
+23BCP521D,23BCP521D,Meetrajsinh Jadeja,CSE,CSE_2023_SEM5_DIV3,5,23bcp521d@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp521d
+23BCP522D,23BCP522D,Hriday Jain,CSE,CSE_2023_SEM5_DIV3,5,23bcp522d@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp522d
+23BCP523D,23BCP523D,Pushti Jigneshbhai Shah,CSE,CSE_2023_SEM5_DIV3,5,23bcp523d@students.scheduler.local,active,BTech,2023,Computer,Div-3,G6,23bcp523d
+23BCP524D,23BCP524D,Geryani Jayesh Dwarkesh,CSE,CSE_2023_SEM5_DIV4,5,23bcp524d@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp524d
+23BCP525D,23BCP525D,Vaidehi Desai,CSE,CSE_2023_SEM5_DIV4,5,23bcp525d@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp525d
+23BCP526D,23BCP526D,Sajal Goswami,CSE,CSE_2023_SEM5_DIV4,5,23bcp526d@students.scheduler.local,active,BTech,2023,Computer,Div-4,G7,23bcp526d
+23BCP527D,23BCP527D,PARTH GURLANI,CSE,CSE_2023_SEM5_DIV4,5,23bcp527d@students.scheduler.local,active,BTech,2023,Computer,Div-4,G8,23bcp527d
+20BCP215,20BCP215,Anush Praveen Mandowara,CSE,CSE_2023_SEM5_DIV5,5,20bcp215@students.scheduler.local,active,BTech,2020,Computer,Div-5,G10,20bcp215
+22BCP114,22BCP114,Aaditya Shukla,CSE,CSE_2023_SEM5_DIV2,5,22bcp114@students.scheduler.local,active,BTech,2022,Computer,Div-2,G3,22bcp114
+22BCP340,22BCP340,Arman Gupta,CSE,CSE_2023_SEM5_DIV6,5,22bcp340@students.scheduler.local,active,BTech,2022,Computer,Div-6,G11,22bcp340
+22BCP375,22BCP375,Vasava Paulkumar Narpatbhai,CSE,CSE_2023_SEM5_DIV5,5,22bcp375@students.scheduler.local,active,BTech,2022,Computer,Div-5,G9,22bcp375
+22BCP452,22BCP452,Srabon Majumder,CSE,CSE_2023_SEM5_DIV7,5,22bcp452@students.scheduler.local,active,BTech,2022,Computer,Div-7,G14,22bcp452
+22BCP465,22BCP465,Shreyansh Jaiswal,CSE,CSE_2023_SEM5_DIV7,5,22bcp465@students.scheduler.local,active,BTech,2022,Computer,Div-7,G14,22bcp465
+22BCP487D,22BCP487D,Patel Swaraben Rohitbhai,CSE,CSE_2023_SEM5_DIV5,5,22bcp487d@students.scheduler.local,active,BTech,2022,Computer,Div-5,G10,22bcp487d

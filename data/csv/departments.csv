@@ -1,0 +1,8 @@
+department_id,department_name,department_code,active_status
+ICT,Information and Communication Technology,ICT,active
+Biotech,Biotechnology,BT,active
+ECE,Electronics and Communication,ECE,active
+ME,Mechanical Engineering,ME,active
+PE,Petroleum Engineering,PE,active
+CE,Civil Engineering,CE,active
+EE,Electrical Engineering,EE,active

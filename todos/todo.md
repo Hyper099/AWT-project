@@ -1,0 +1,11 @@
+1. right now data is not filled in the CSV files -> so fill that data according to the xlsx files and if required fill the missing data with mock data so we can complete the execution of the program
+2. if required make more mock data of professors so that we can show how the slots for a professor is filled the student who is filling will have to choose other professor and that professor cannot be chosen again
+3. now make a script which allows me to remove the selected courses of a particular studen/ all students ( useful to showcase how the course selection works )
+4. a script which allows me to de allocate everything and start again
+5. a script which allows me to allocate courses for every student
+6. now when a student is select a course a modal appears which shows which courses he can fill in that slot now when he click on the course the modal should become 2 of columns in the column right side there should be list of available professors for that course and how much seats are pending for that professor, student can only choose the professor who has pending seats
+7. now in admin dashboard there be visual representation + data about students who are yet to fill the time table or have missed the time table filling deadline or all professors are alloted and they cant choose
+8. in admin there should be a drop down whic hshould have a values for selecting semester and batch and then add a button "allot slots" and this allot slots should run an algorithm which will alot slots for the students according to courses, credits and professors
+9. now when, all the stuents have successfully selected all the subjects in their timetable, the admin run the scheduler it should allocate the buildings and class  to the student and send an email saying allocation is successful and in their student portal it should show allocated time table and it should be downloadable
+10. in the student portal in the area below their name their should be a list of course about what courses are offered in this semester and he/she should pick from them it should have a status of selected and alloted (boolean)
+11. in the timetable  flip the values of columns and rows, columns should be timings and rows should be days

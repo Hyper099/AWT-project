@@ -1,0 +1,25 @@
+professor_id,professor_code,professor_name,department_id,designation,max_weekly_load,active_status
+P1,DESW,Debabrata Swain,CSE,Assistant Professor,10,active
+P2,AZHE,Azreil Henry,CSE,Assistant Professor,12,active
+P3,AAR,Aashka Raval,CSE,Assistant Professor,12,active
+P4,HAK,Hargeet Kaur,CSE,Assistant Professor,12,active
+P5,KALG,Kalgi Gandhi,CSE,Assistant Professor,12,active
+P6,PCH,Payal Chaudhari,CSE,Assistant Professor,12,active
+P7,RUZ,Rutvij Jhaveri,CSE,Assistant Professor,12,active
+P8,PUGU,Punit Gupta,CSE,Assistant Professor,12,active
+P9,APT,Ashish Patel,CSE,Assistant Professor,12,active
+P10,ARNI,Archana Nigam,CSE,Assistant Professor,12,active
+P11,RITH,Riddhi Thakkar,CSE,Assistant Professor,12,active
+P12,SIRO,Sidheswar Routray,CSE,Assistant Professor,12,active
+P13,TABH,Tanmay Bhowmik,CSE,Assistant Professor,12,active
+P14,KASH,Kaushal Shah,CSE,Assistant Professor,12,active
+P15,KMS,Komal Singh,CSE,Assistant Professor,12,active
+P16,MAPL,Manish Paliwal,CSE,Assistant Professor,12,active
+P17,SHPA,Shilpa Pandey,CSE,Assistant Professor,12,active
+P18,UTK,Utkarsh Tiwari,CSE,Assistant Professor,12,active
+P19,DSG,Davinder Singh,CSE,Assistant Professor,12,active
+P20,PRME,Prarthana Mehta,CSE,Assistant Professor,12,active
+P21,TRP,Trishna Paul,CSE,Assistant Professor,12,active
+P22,BHT,Bhaumik Thakkar,CSE,Assistant Professor,12,active
+P23,RAGUP,Rajeev Gupta,CSE,Assistant Professor,12,active
+P24,NDM,Nandini Modi,CSE,Assistant Professor,12,active

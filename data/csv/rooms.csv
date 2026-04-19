@@ -1,0 +1,96 @@
+room_id,building_id,room_name,capacity,room_type,floor_number,has_projector,has_lab_equipment,is_accessible,active_status
+A101,A1,Management Room 101,50,lecture,1,yes,no,yes,active
+A102,A1,Management Room 102,50,lecture,1,yes,no,yes,active
+A103,A1,Management Room 103,50,lecture,1,yes,no,yes,active
+A104,A1,Management Room 104,50,lecture,1,yes,no,yes,active
+A105,A1,Management Room 105,50,lecture,1,yes,no,yes,active
+A201,A1,Management Room 201,60,lecture,2,yes,no,yes,active
+A202,A1,Management Room 202,60,lecture,2,yes,no,yes,active
+A203,A1,Management Room 203,60,lecture,2,yes,no,yes,active
+A204,A1,Management Room 204,60,lecture,2,yes,no,yes,active
+A205,A1,Management Room 205,60,lecture,2,yes,no,yes,active
+B101,B1,Auditorium Room 101,200,auditorium,1,yes,no,yes,active
+B102,B1,Auditorium Room 102,200,auditorium,1,yes,no,yes,active
+B103,B1,Auditorium Room 103,200,auditorium,1,yes,no,yes,active
+B104,B1,Auditorium Room 104,200,auditorium,1,yes,no,yes,active
+B105,B1,Auditorium Room 105,200,auditorium,1,yes,no,yes,active
+B201,B1,Auditorium Room 201,150,seminar,2,yes,no,yes,active
+B202,B1,Auditorium Room 202,150,seminar,2,yes,no,yes,active
+B203,B1,Auditorium Room 203,150,seminar,2,yes,no,yes,active
+B204,B1,Auditorium Room 204,150,seminar,2,yes,no,yes,active
+B205,B1,Auditorium Room 205,150,seminar,2,yes,no,yes,active
+C101,C1,Petroleum Lab 101,30,lab,1,yes,yes,yes,active
+C102,C1,Mechanical Lab 102,30,lab,1,yes,yes,yes,active
+C103,C1,Workshop 103,30,lab,1,yes,yes,yes,active
+C104,C1,Workshop 104,30,lab,1,yes,yes,yes,active
+C105,C1,FOET Room 105,50,lecture,1,yes,no,yes,active
+C201,C1,Petroleum Lab 201,30,lab,2,yes,yes,yes,active
+C202,C1,Mechanical Lab 202,30,lab,2,yes,yes,yes,active
+C203,C1,Workshop 203,30,lab,2,yes,yes,yes,active
+C204,C1,Workshop 204,30,lab,2,yes,yes,yes,active
+C205,C1,FOET Room 205,60,lecture,2,yes,no,yes,active
+C301,C1,FOET Room 301,70,lecture,3,yes,no,yes,active
+C302,C1,FOET Room 302,70,lecture,3,yes,no,yes,active
+C303,C1,FOET Room 303,70,lecture,3,yes,no,yes,active
+C304,C1,FOET Room 304,70,lecture,3,yes,no,yes,active
+C305,C1,FOET Room 305,70,lecture,3,yes,no,yes,active
+D101,D1,BBA Room 101,60,lecture,1,yes,no,yes,active
+D102,D1,BCom Room 102,60,lecture,1,yes,no,yes,active
+D103,D1,BBA Room 103,60,lecture,1,yes,no,yes,active
+D104,D1,BCom Room 104,60,lecture,1,yes,no,yes,active
+D105,D1,BBA Room 105,60,lecture,1,yes,no,yes,active
+D201,D1,BCom Room 201,60,lecture,2,yes,no,yes,active
+D202,D1,BBA Room 202,60,lecture,2,yes,no,yes,active
+D203,D1,BCom Room 203,60,lecture,2,yes,no,yes,active
+D204,D1,BBA Room 204,60,lecture,2,yes,no,yes,active
+D205,D1,BCom Room 205,60,lecture,2,yes,no,yes,active
+D301,D1,SLS Room 301,70,lecture,3,yes,no,yes,active
+D302,D1,SLS Room 302,70,lecture,3,yes,no,yes,active
+D303,D1,SLS Room 303,70,lecture,3,yes,no,yes,active
+D304,D1,SLS Room 304,70,lecture,3,yes,no,yes,active
+D305,D1,SLS Room 305,70,lecture,3,yes,no,yes,active
+E101,E1,Computer Lab 101,40,lab,1,yes,yes,yes,active
+E102,E1,ICT Lab 102,40,lab,1,yes,yes,yes,active
+E103,E1,Engineering Room 103,60,lecture,1,yes,no,yes,active
+E104,E1,Engineering Room 104,60,lecture,1,yes,no,yes,active
+E105,E1,Engineering Room 105,60,lecture,1,yes,no,yes,active
+E201,E1,Electrical Lab 201,35,lab,2,yes,yes,yes,active
+E202,E1,Chemical Lab 202,35,lab,2,yes,yes,yes,active
+E203,E1,Engineering Room 203,60,lecture,2,yes,no,yes,active
+E204,E1,Engineering Room 204,60,lecture,2,yes,no,yes,active
+E205,E1,Engineering Room 205,60,lecture,2,yes,no,yes,active
+E301,E1,Engineering Room 301,70,lecture,3,yes,no,yes,active
+E302,E1,Engineering Room 302,70,lecture,3,yes,no,yes,active
+E303,E1,Engineering Room 303,70,lecture,3,yes,no,yes,active
+E304,E1,Engineering Room 304,70,lecture,3,yes,no,yes,active
+E305,E1,Engineering Room 305,70,lecture,3,yes,no,yes,active
+F101,F1,Computer Lab 101,35,lab,1,yes,yes,yes,active
+F102,F1,Mechanical Lab 102,35,lab,1,yes,yes,yes,active
+F103,F1,Lab 103,35,lab,1,yes,yes,yes,active
+F104,F1,Lab 104,35,lab,1,yes,yes,yes,active
+F105,F1,Lab 105,35,lab,1,yes,yes,yes,active
+F201,F1,Computer Lab 201,35,lab,2,yes,yes,yes,active
+F202,F1,Electrical Lab 202,35,lab,2,yes,yes,yes,active
+F203,F1,Lab 203,35,lab,2,yes,yes,yes,active
+F204,F1,Lab 204,35,lab,2,yes,yes,yes,active
+F205,F1,Lab 205,35,lab,2,yes,yes,yes,active
+F301,F1,Engineering Room 301,60,lecture,3,yes,no,yes,active
+F302,F1,Engineering Room 302,60,lecture,3,yes,no,yes,active
+F303,F1,Engineering Room 303,60,lecture,3,yes,no,yes,active
+F304,F1,Engineering Room 304,60,lecture,3,yes,no,yes,active
+F305,F1,Engineering Room 305,60,lecture,3,yes,no,yes,active
+F401,F1,Engineering Room 401,60,lecture,4,yes,no,yes,active
+F402,F1,Engineering Room 402,60,lecture,4,yes,no,yes,active
+F403,F1,Engineering Room 403,60,lecture,4,yes,no,yes,active
+F404,F1,Engineering Room 404,60,lecture,4,yes,no,yes,active
+F405,F1,Engineering Room 405,60,lecture,4,yes,no,yes,active
+F501,F1,Engineering Room 501,60,lecture,5,yes,no,yes,active
+F502,F1,Engineering Room 502,60,lecture,5,yes,no,yes,active
+F503,F1,Engineering Room 503,60,lecture,5,yes,no,yes,active
+F504,F1,Engineering Room 504,60,lecture,5,yes,no,yes,active
+F505,F1,Engineering Room 505,60,lecture,5,yes,no,yes,active
+F601,F1,Engineering Room 601,60,lecture,6,yes,no,yes,active
+F602,F1,Engineering Room 602,60,lecture,6,yes,no,yes,active
+F603,F1,Engineering Room 603,60,lecture,6,yes,no,yes,active
+F604,F1,Engineering Room 604,60,lecture,6,yes,no,yes,active
+F605,F1,Engineering Room 605,60,lecture,6,yes,no,yes,active

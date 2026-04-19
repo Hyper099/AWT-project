@@ -1,0 +1,14 @@
+professor_id,term_id,slot_code,availability_type
+P1,TERM_2026_ODD,E2,preferred
+P1,TERM_2026_ODD,B1,unavailable
+P4,TERM_2026_ODD,A1,preferred
+P6,TERM_2026_ODD,F2,unavailable
+P7,TERM_2026_ODD,E1,preferred
+P10,TERM_2026_ODD,D1,preferred
+P11,TERM_2026_ODD,D1,unavailable
+P13,TERM_2026_ODD,C1,preferred
+P16,TERM_2026_ODD,F2,preferred
+P16,TERM_2026_ODD,B1,unavailable
+P19,TERM_2026_ODD,E2,preferred
+P21,TERM_2026_ODD,F2,unavailable
+P22,TERM_2026_ODD,C2,preferred

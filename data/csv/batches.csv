@@ -1,0 +1,8 @@
+batch_id,batch_name,department_id,semester,strength,program_name,section_name,academic_year,active_status,branch_name,group_set
+CSE_2023_SEM5_DIV1,Computer Sem 5 Div-1,CSE,5,72,BTech,Div-1,2023,active,Computer,G1|G2
+CSE_2023_SEM5_DIV2,Computer Sem 5 Div-2,CSE,5,70,BTech,Div-2,2023,active,Computer,G3|G4
+CSE_2023_SEM5_DIV3,Computer Sem 5 Div-3,CSE,5,70,BTech,Div-3,2023,active,Computer,G5|G6
+CSE_2023_SEM5_DIV4,Computer Sem 5 Div-4,CSE,5,65,BTech,Div-4,2023,active,Computer,G7|G8
+CSE_2023_SEM5_DIV5,Computer Sem 5 Div-5,CSE,5,63,BTech,Div-5,2023,active,Computer,G9|G10
+CSE_2023_SEM5_DIV6,Computer Sem 5 Div-6,CSE,5,63,BTech,Div-6,2023,active,Computer,G11|G12
+CSE_2023_SEM5_DIV7,Computer Sem 5 Div-7,CSE,5,69,BTech,Div-7,2023,active,Computer,G13|G14
