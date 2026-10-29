@@ -7,7 +7,7 @@ import Professor from '../models/Professor.js';
 import Student from '../models/Student.js';
 import Registration from '../models/Registration.js';
 import TimetableEntry from '../models/TimetableEntry.js';
-import { runScheduler } from './algorithm.js';
+import { runScheduler, findSelectionConflicts } from './algorithm.js';
 
 async function main() {
   const uri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/vtop_system';
@@ -28,12 +28,20 @@ async function main() {
   console.log(`  courses=${courses.length} rooms=${rooms.length} buildings=${buildings.length} profs=${professors.length}`);
   console.log(`  students=${students.length} registrations=${registrations.length}`);
 
-  const { assignments, score } = runScheduler({
+  const { studentClashes, instructorClashes } = findSelectionConflicts(registrations);
+  if (studentClashes.length || instructorClashes.length) {
+    console.warn(`[scheduler] input has ${studentClashes.length} student clashes and ${instructorClashes.length} instructor clashes`);
+  }
+
+  const { assignments, score, unplaced, sectionsTotal } = runScheduler({
     courses, rooms, buildings, professors, students, registrations, termId,
   });
 
-  console.log(`[scheduler] produced ${assignments.length} assignments. score=${score.total.toFixed(2)}`);
+  console.log(`[scheduler] placed ${assignments.length} of ${sectionsTotal} sections. score=${score.total.toFixed(2)}`);
   console.log('  components:', score.components);
+  for (const u of unplaced) {
+    console.log(`  unplaced: ${u.courseId}/${u.slotCode}/${u.professorId} (${u.studentIds.length} students): ${u.reason}`);
+  }
 
   // Persist: wipe this term's entries and insert fresh
   await TimetableEntry.deleteMany({ termId });

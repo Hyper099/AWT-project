@@ -11,7 +11,9 @@
     "reset-selections": "node src/scripts/reset-selections.js",
     "reset-allocation": "node src/scripts/reset-allocation.js",
     "allocate-all": "node src/scripts/allocate-all.js",
-    "test": "node src/tests/run.js"
+    "export-selections": "node src/scripts/export-selections.js",
+    "test": "node src/tests/run.js",
+    "audit": "node src/scripts/audit.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

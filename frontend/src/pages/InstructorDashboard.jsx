@@ -3,6 +3,7 @@ import { api } from '../api.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import TimetableGrid from '../components/TimetableGrid.jsx';
 import SlotPreferenceGrid from '../components/SlotPreferenceGrid.jsx';
+import { HOURLY_PERIODS, scheduleSpan } from '../lib/periods.js';
 
 export default function InstructorDashboard() {
   const { auth } = useAuth();
@@ -15,15 +16,18 @@ export default function InstructorDashboard() {
   const [unavailable, setUnavailable] = useState([]);
   const [teaching, setTeaching] = useState([]);
   const [saving, setSaving] = useState(false);
+  const [semesters, setSemesters] = useState([]);
+  const [semTab, setSemTab] = useState(null);
 
   useEffect(() => {
     let cancel = false;
     async function load() {
-      const [p, tt, cs, sl] = await Promise.all([
+      const [p, tt, cs, sl, sems] = await Promise.all([
         api.profMe(auth.token),
         api.profTimetable(auth.token).catch(() => []),
         api.profCourses(auth.token).catch(() => []),
         api.slots(auth.token).catch(() => []),
+        api.profSemesters(auth.token).catch(() => []),
       ]);
       if (cancel) return;
       setMe(p);
@@ -33,6 +37,8 @@ export default function InstructorDashboard() {
       setTimetable(tt);
       setCourses(cs);
       setSlots(sl);
+      setSemesters(sems);
+      setSemTab((cur) => cur ?? sems[0]?.semester ?? null);
     }
     load();
     return () => { cancel = true; };
@@ -60,6 +66,13 @@ export default function InstructorDashboard() {
     finally { setSaving(false); }
   }
 
+  // Instructors can teach in several semesters, each with its own bell schedule.
+  const activeSem = semesters.find((x) => x.semester === semTab);
+  const periods = activeSem?.periods?.length ? activeSem.periods : HOURLY_PERIODS;
+  const semSlots = useMemo(() => slots.filter((x) => semTab == null || x.semester === semTab), [slots, semTab]);
+  const semRows = useMemo(() => timetable.filter((r) => semTab == null || r.semester === semTab), [timetable, semTab]);
+  const sectionCount = (sem) => new Set(timetable.filter((r) => r.semester === sem).map((r) => `${r.courseId}|${r.slotCode}`)).size;
+
   const courseById = useMemo(
     () => Object.fromEntries(courses.map((c) => [c.courseId, c])),
     [courses],
@@ -79,6 +92,7 @@ export default function InstructorDashboard() {
           courseCode: row.courseCode,
           courseTitle: row.courseTitle,
           slotCode: row.slotCode,
+          semester: row.semester,
           roomName: row.roomName,
           buildingName: row.buildingName,
           enrolled: row.enrolled ?? 0,
@@ -109,16 +123,34 @@ export default function InstructorDashboard() {
         </div>
       </div>
 
+      {semesters.length > 1 && (
+        <div className="row tight" style={{ marginBottom: 16 }} role="tablist" aria-label="Semester">
+          {semesters.map((x) => (
+            <button
+              key={x.semester}
+              role="tab"
+              aria-selected={semTab === x.semester}
+              className={semTab === x.semester ? 'sm' : 'secondary sm'}
+              onClick={() => setSemTab(x.semester)}
+            >
+              {x.name} · {sectionCount(x.semester)} {sectionCount(x.semester) === 1 ? 'section' : 'sections'}
+            </button>
+          ))}
+        </div>
+      )}
+
       <div className="card">
-        <h2>Your weekly schedule</h2>
-        <p className="muted" style={{ marginBottom: 16 }}>Rooms and timings as published for the current term.</p>
-        {timetable.length === 0 ? (
+        <h2>Your weekly schedule{activeSem ? ` · ${activeSem.name}` : ''}</h2>
+        <p className="muted" style={{ marginBottom: 16 }}>
+          Rooms and timings as published for the current term · {scheduleSpan(periods)}
+        </p>
+        {semRows.length === 0 ? (
           <div className="empty">
-            <div className="title">Timetable not yet published</div>
+            <div className="title">{timetable.length ? 'No classes in this semester' : 'Timetable not yet published'}</div>
             <div>Once the academic office runs the scheduler your sessions will appear here.</div>
           </div>
         ) : (
-          <TimetableGrid rows={timetable.map((r) => ({ ...r, state: 'allotted' }))} readOnly />
+          <TimetableGrid periods={periods} rows={semRows.map((r) => ({ ...r, state: 'allotted' }))} readOnly />
         )}
       </div>
 
@@ -129,6 +161,7 @@ export default function InstructorDashboard() {
           <table>
             <thead>
               <tr>
+                <th>Sem</th>
                 <th>Code</th>
                 <th>Title</th>
                 <th>Credits</th>
@@ -144,6 +177,7 @@ export default function InstructorDashboard() {
                 const c = courseById[s.courseId];
                 return (
                   <tr key={`${s.courseId}-${s.slotCode}`}>
+                    <td>{s.semester ?? c?.semester ?? '—'}</td>
                     <td className="mono">{s.courseCode || c?.code || s.courseId}</td>
                     <td>{s.courseTitle || c?.title || '—'}</td>
                     <td>{c?.credits ?? '—'}</td>
@@ -173,6 +207,7 @@ export default function InstructorDashboard() {
             <thead>
               <tr>
                 <th>Teach</th>
+                <th>Sem</th>
                 <th>Code</th>
                 <th>Title</th>
                 <th>Department</th>
@@ -194,6 +229,7 @@ export default function InstructorDashboard() {
                         style={{ width: 'auto' }}
                       />
                     </td>
+                    <td>{c?.semester ?? '—'}</td>
                     <td className="mono">{c?.code || cid}</td>
                     <td>{c?.title || '—'}</td>
                     <td>{c?.department || '—'}</td>
@@ -209,13 +245,14 @@ export default function InstructorDashboard() {
       </div>
 
       <div className="card">
-        <h2>Preferred time slots</h2>
+        <h2>Preferred time slots{activeSem ? ` · ${activeSem.name}` : ''}</h2>
         <p className="muted" style={{ marginBottom: 12 }}>
           Tap a chip to indicate a slot you would prefer to teach in. The scheduler will treat this as a soft preference.
           {preferred.length > 0 && <> · <strong>{preferred.length} selected</strong></>}
         </p>
         <SlotPreferenceGrid
-          slots={slots}
+          slots={semSlots}
+          periods={periods}
           selected={preferred}
           locked={unavailable}
           onToggle={togglePreferred}
@@ -224,13 +261,14 @@ export default function InstructorDashboard() {
       </div>
 
       <div className="card">
-        <h2>Unavailable time slots</h2>
+        <h2>Unavailable time slots{activeSem ? ` · ${activeSem.name}` : ''}</h2>
         <p className="muted" style={{ marginBottom: 12 }}>
           A hard constraint — the scheduler will not place you at these times. Slots you marked as preferred are disabled here.
           {unavailable.length > 0 && <> · <strong>{unavailable.length} selected</strong></>}
         </p>
         <SlotPreferenceGrid
-          slots={slots}
+          slots={semSlots}
+          periods={periods}
           selected={unavailable}
           locked={preferred}
           onToggle={toggleUnavailable}

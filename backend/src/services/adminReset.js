@@ -1,25 +1,20 @@
 import Registration from '../models/Registration.js';
 import TimetableEntry from '../models/TimetableEntry.js';
 import ProfessorCapacity from '../models/ProfessorCapacity.js';
+import Student from '../models/Student.js';
 
-/**
- * Clear Registration (selection) rows. Scope can be:
- *   { studentId } — one student's selections
- *   { batchId }   — cohort-wide
- *   {}            — every student in the term
- * Seat counters are recomputed from what remains.
- */
-export async function resetSelections({ termId = 'TERM_2026_ODD', studentId = null, batchId = null } = {}) {
-  const q = { termId };
-  if (studentId) q.studentId = studentId;
-  if (batchId) {
-    const Student = (await import('../models/Student.js')).default;
-    const ids = (await Student.find({ batchId }).lean()).map((s) => s.studentId);
-    q.studentId = { $in: ids };
-  }
-  const deleted = await Registration.deleteMany(q);
+/** Student ids in scope, or null for the whole term. */
+async function scopedStudentIds({ studentId = null, batchId = null, semester = null }) {
+  if (studentId) return [studentId];
+  if (!batchId && !semester) return null;
+  const q = {};
+  if (batchId) q.batchId = batchId;
+  if (semester) q.semester = Number(semester);
+  return (await Student.find(q, { studentId: 1 }).lean()).map((s) => s.studentId);
+}
 
-  // Recompute seat usage from remaining regs
+/** Recomputes every seat counter in the term from the registrations left. */
+async function recountSeats(termId) {
   const remaining = await Registration.find({ termId }).lean();
   const usage = {};
   for (const r of remaining) {
@@ -35,14 +30,39 @@ export async function resetSelections({ termId = 'TERM_2026_ODD', studentId = nu
       { $set: { seatsUsed: used } },
     );
   }));
-  return { deleted: deleted.deletedCount, scope: { termId, studentId, batchId } };
 }
 
 /**
- * Reset both selections AND timetable allotments. Seats reset to zero.
- * Leaves courses, offerings, slots, and professor records intact.
+ * Clear Registration (selection) rows. Scope can be:
+ *   { studentId } — one student's selections
+ *   { batchId }   — one batch
+ *   { semester }  — one semester's students
+ *   {}            — every student in the term
+ * Seat counters are recomputed from what remains.
  */
-export async function resetAllocation({ termId = 'TERM_2026_ODD' } = {}) {
+export async function resetSelections({ termId = 'TERM_2026_ODD', studentId = null, batchId = null, semester = null } = {}) {
+  const q = { termId };
+  const ids = await scopedStudentIds({ studentId, batchId, semester });
+  if (ids) q.studentId = { $in: ids };
+  const deleted = await Registration.deleteMany(q);
+  await recountSeats(termId);
+  return { deleted: deleted.deletedCount, scope: { termId, studentId, batchId, semester } };
+}
+
+/**
+ * Reset both selections AND timetable allotments, for the whole term or one
+ * semester. Leaves courses, offerings, slots, and professor records intact.
+ */
+export async function resetAllocation({ termId = 'TERM_2026_ODD', semester = null } = {}) {
+  if (semester) {
+    const ids = await scopedStudentIds({ semester });
+    const [regs, entries] = await Promise.all([
+      Registration.deleteMany({ termId, studentId: { $in: ids } }),
+      TimetableEntry.deleteMany({ termId, semester: Number(semester) }),
+    ]);
+    await recountSeats(termId);
+    return { selectionsDeleted: regs.deletedCount, entriesDeleted: entries.deletedCount, scope: { termId, semester } };
+  }
   const [regs, entries] = await Promise.all([
     Registration.deleteMany({ termId }),
     TimetableEntry.deleteMany({ termId }),

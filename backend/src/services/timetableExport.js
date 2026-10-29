@@ -44,9 +44,10 @@ export async function buildTimetableRows(studentId, termId = 'TERM_2026_ODD') {
   let scheduledCount = 0;
   for (const reg of regs) {
     const slot = slotByCode[reg.slotCode];
-    const entry =
-      entries.find((e) => e.courseId === reg.courseId && e.slotCode === reg.slotCode) ||
-      entries.find((e) => e.courseId === reg.courseId);
+    // Only the student's own section counts; another section of the same
+    // course has a different room and instructor.
+    const entry = entries.find((e) => e.courseId === reg.courseId
+      && e.slotCode === reg.slotCode && e.professorId === reg.professorId);
     const course = courseById[reg.courseId];
     const room = entry ? roomById[entry.roomId] : null;
     const bld = room ? bldById[room.buildingId] : null;

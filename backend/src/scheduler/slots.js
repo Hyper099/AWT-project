@@ -21,7 +21,7 @@ const FALLBACK = [
   { slotCode: 'F1', family: 'THEORY_2', type: 'theory', meetings: [['TUE', 11], ['THU', 11]] },
   { slotCode: 'L1', family: 'LAB_2', type: 'lab', meetings: [['MON', 14, 2], ['WED', 14, 2]] },
 ].map(({ slotCode, family, type, meetings }) => ({
-  slotCode, family, type,
+  slotCode, family, type, semester: 5,
   meetings: meetings.map(([day, h, dur = 1]) => ({ day, startMinute: h * 60, endMinute: (h + dur) * 60 })),
 }));
 
@@ -45,6 +45,7 @@ function loadCatalog() {
         slotCode: code,
         family: r.slot_family || 'THEORY_3',
         type: (r.slot_family || '').startsWith('LAB') ? 'lab' : 'theory',
+        semester: Number(r.semester) || 5,
         meetings: [],
       };
     }

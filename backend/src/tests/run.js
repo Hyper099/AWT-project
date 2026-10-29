@@ -8,16 +8,22 @@
 import 'dotenv/config';
 import { connectDB, disconnectDB } from '../config/db.js';
 
+process.env.JWT_SECRET ||= 'test-secret';
+process.env.MAIL_LOG ||= 'off';
+
 const TEST_URI = process.env.TEST_MONGO_URI
   || 'mongodb://127.0.0.1:27017/vtop_system_test';
 
 const testFiles = [
   './suites/seed.test.js',
   './suites/selection.test.js',
+  './suites/planner.test.js',
   './suites/allotSlots.test.js',
   './suites/scheduler.test.js',
   './suites/reset.test.js',
   './suites/export.test.js',
+  './suites/semester.test.js',
+  './suites/api.test.js',
 ];
 
 let pass = 0, fail = 0;

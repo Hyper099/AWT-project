@@ -1,49 +1,45 @@
-const DAYS = ['MON', 'TUE', 'WED', 'THU', 'FRI'];
-const HOURS = [9, 10, 11, 12, 13, 14, 15, 16, 17];
+import { DAYS, HOURLY_PERIODS, periodLabel, periodsCovered } from '../lib/periods.js';
 
 /**
- * Weekly grid where each cell contains one small chip per slot that meets at
- * that (day, hour). Clicking a chip toggles its slotCode in `selected`.
+ * Weekly grid where each cell contains one small chip per slot that meets in
+ * that (day, period). Clicking a chip toggles its slotCode in `selected`.
  *
  * Props:
- *   slots       — all slots from /api/courses/slots
+ *   slots       — the slots of one semester (from /api/courses/slots?semester=N)
+ *   periods     — that semester's bell schedule
  *   selected    — array of slotCodes currently in the active list
  *   locked      — array of slotCodes that cannot be toggled (already in the other list)
  *   onToggle    — (slotCode) => void
  *   variant     — 'preferred' | 'unavailable' — changes selected-chip style
  */
-export default function SlotPreferenceGrid({ slots, selected = [], locked = [], onToggle, variant = 'preferred' }) {
-  // Build (day|hour) → [{ slotCode, family }, …]
+export default function SlotPreferenceGrid({ slots, periods = HOURLY_PERIODS, selected = [], locked = [], onToggle, variant = 'preferred' }) {
+  // Build (day|period) → [{ slotCode, family }, …]
   const map = {};
   for (const slot of slots) {
     for (const m of slot.meetings || []) {
-      const startH = Math.floor(m.startMinute / 60);
-      const endH = Math.ceil(m.endMinute / 60);
-      for (let h = startH; h < endH; h++) {
-        const key = `${m.day}|${h}`;
-        (map[key] ||= []).push({ slotCode: slot.slotCode, family: slot.family });
+      for (const i of periodsCovered(m, periods)) {
+        const key = `${m.day}|${i}`;
+        if (!(map[key] ||= []).some((c) => c.slotCode === slot.slotCode)) {
+          map[key].push({ slotCode: slot.slotCode, family: slot.family });
+        }
       }
     }
-  }
-  // Dedupe within each cell
-  for (const key of Object.keys(map)) {
-    const seen = new Set();
-    map[key] = map[key].filter((c) => seen.has(c.slotCode) ? false : (seen.add(c.slotCode), true));
   }
 
   const selectedSet = new Set(selected);
   const lockedSet = new Set(locked);
 
   return (
-    <div className="pref-grid">
+    <div className="pref-grid" style={{ gridTemplateColumns: `60px repeat(${periods.length}, minmax(0, 1fr))` }}>
       <div className="header corner">Day</div>
-      {HOURS.map((h) => (
-        <div key={h} className="header time-col">{String(h).padStart(2, '0')}:00</div>
+      {periods.map((p) => (
+        <div key={p.startMinute} className="header time-col">{periodLabel(p)}</div>
       ))}
       {DAYS.map((d) => (
         <Row
           key={d}
           day={d}
+          periods={periods}
           map={map}
           selectedSet={selectedSet}
           lockedSet={lockedSet}
@@ -55,15 +51,15 @@ export default function SlotPreferenceGrid({ slots, selected = [], locked = [], 
   );
 }
 
-function Row({ day, map, selectedSet, lockedSet, onToggle, variant }) {
+function Row({ day, periods, map, selectedSet, lockedSet, onToggle, variant }) {
   return (
     <>
       <div className="day-label">{day}</div>
-      {HOURS.map((h) => {
-        const chips = map[`${day}|${h}`] || [];
-        const isLunch = h === 13;
+      {periods.map((p, i) => {
+        const chips = map[`${day}|${i}`] || [];
+        const isLunch = p.kind === 'lunch';
         return (
-          <div key={`${day}-${h}`} className={`cell ${isLunch ? 'lunch' : ''}`}>
+          <div key={`${day}-${i}`} className={`cell ${isLunch ? 'lunch' : ''}`}>
             {isLunch && chips.length === 0
               ? <span className="muted" style={{ fontSize: 10 }}>Lunch</span>
               : chips.map((c) => {

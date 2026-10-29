@@ -15,6 +15,7 @@ const TimetableEntrySchema = new mongoose.Schema(
     professorId: { type: String, required: true, index: true },
     enrolled: { type: Number, default: 0 },
     capacity: { type: Number, default: 0 },
+    semester: { type: Number, index: true },
   },
   { timestamps: true }
 );

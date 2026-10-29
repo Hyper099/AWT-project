@@ -16,6 +16,14 @@ const CourseOfferingSchema = new mongoose.Schema(
     maxSections: { type: Number, default: 1 },
     specialRoomRequirement: { type: String, default: 'Lecture' },
     status: { type: String, enum: ['open', 'closed', 'full'], default: 'open' },
+    /**
+     * Elective basket. A student takes every offering without a group, and
+     * exactly one option (a theory course plus its lab) from each group.
+     */
+    electiveGroup: { type: String, default: null },
+    electiveOption: { type: String, default: null },
+    /** Slots this course runs in. Empty means any slot of its family and semester. */
+    allowedSlots: { type: [String], default: [] },
   },
   { timestamps: true }
 );

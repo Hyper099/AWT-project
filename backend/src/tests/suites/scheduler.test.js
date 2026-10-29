@@ -6,7 +6,7 @@ import Student from '../../models/Student.js';
 import Registration from '../../models/Registration.js';
 import Slot from '../../models/Slot.js';
 import TimetableEntry from '../../models/TimetableEntry.js';
-import { runScheduler } from '../../scheduler/algorithm.js';
+import { runScheduler, findSelectionConflicts } from '../../scheduler/algorithm.js';
 
 function assert(cond, msg) { if (!cond) throw new Error(msg); }
 
@@ -28,6 +28,33 @@ async function assignsRoomsToSections() {
   }
   await TimetableEntry.deleteMany({});
   await TimetableEntry.insertMany(assignments);
+}
+
+async function placesEverySection() {
+  const { unplaced, sectionsTotal, assignments } = await runWithFixture();
+  assert(unplaced.length === 0,
+    `${unplaced.length} sections unplaced, e.g. ${JSON.stringify(unplaced[0] && { ...unplaced[0], studentIds: undefined })}`);
+  assert(assignments.length === sectionsTotal, `placed ${assignments.length} of ${sectionsTotal}`);
+}
+
+async function selectionsHaveNoClashes() {
+  const regs = await Registration.find({ termId: 'TERM_2026_ODD' }).lean();
+  const { studentClashes, instructorClashes } = findSelectionConflicts(regs);
+  assert(studentClashes.length === 0, `${studentClashes.length} student clashes`);
+  assert(instructorClashes.length === 0, `${instructorClashes.length} instructor clashes`);
+}
+
+async function reportsSectionsWithoutRoom() {
+  // Shrink every lab to 5 seats: lab sections must be reported, not dropped silently.
+  const [courses, rooms, buildings, professors, students, regs] = await Promise.all([
+    Course.find().lean(), Room.find().lean(), Building.find().lean(),
+    Professor.find().lean(), Student.find().lean(),
+    Registration.find({ termId: 'TERM_2026_ODD' }).lean(),
+  ]);
+  const tinyLabs = rooms.map((r) => (r.type === 'lab' ? { ...r, capacity: 5 } : r));
+  const { unplaced } = runScheduler({ courses, rooms: tinyLabs, buildings, professors, students, registrations: regs, termId: 'TERM_2026_ODD' });
+  assert(unplaced.length > 0, 'expected lab sections to be reported as unplaced');
+  assert(unplaced.every((u) => /lab room/.test(u.reason)), 'unplaced reason should name the missing lab room');
 }
 
 async function roomCapacityHoldsEnrollment() {
@@ -65,6 +92,9 @@ export default {
   name: 'scheduler',
   cases: [
     ['phase-2 assigns rooms', assignsRoomsToSections],
+    ['every section gets a room', placesEverySection],
+    ['phase-1 selections have no student or instructor clashes', selectionsHaveNoClashes],
+    ['sections without a room are reported', reportsSectionsWithoutRoom],
     ['capacity ≥ enrollment', roomCapacityHoldsEnrollment],
     ['room near-fit produces reasonable waste', roomNearFitPreferred],
     ['slot-family honored in final timetable', slotFamilyConstraintHonored],

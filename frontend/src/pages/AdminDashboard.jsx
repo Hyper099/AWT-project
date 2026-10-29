@@ -3,12 +3,23 @@ import { api } from '../api.js';
 import { DEFAULT_TERM_ID } from '../constants/term.js';
 import { useAuth } from '../context/AuthContext.jsx';
 
+function publishSummary(r) {
+  const scope = r.semester ? `Semester ${r.semester} timetable` : 'Timetable';
+  if (r.complete) {
+    return `${scope} published. All ${r.assigned} sections have rooms; ${r.notifications.sent} students notified.`;
+  }
+  return `Timetable incomplete: ${r.unplacedSections} of ${r.sections} sections (${r.unplacedRegistrations} registrations) `
+    + `could not get a room. ${r.studentsComplete} students with a complete timetable were notified; `
+    + `${r.studentsIncomplete} were not. See the run summary below.`;
+}
+
 export default function AdminDashboard() {
   const { auth } = useAuth();
   const [termId, setTermId] = useState(DEFAULT_TERM_ID);
   const [batchId, setBatchId] = useState('');
   const [semester, setSemester] = useState('');
   const [batches, setBatches] = useState([]);
+  const [semesters, setSemesters] = useState([]);
   const [status, setStatus] = useState(null);
   const [busy, setBusy] = useState(null);
   const [err, setErr] = useState('');
@@ -19,21 +30,23 @@ export default function AdminDashboard() {
   const load = useCallback(async () => {
     setErr('');
     try {
-      const [b, s] = await Promise.all([
+      const [b, s, sems] = await Promise.all([
         api.adminBatches(auth.token),
         api.adminStatus(auth.token, { termId, batchId: batchId || null, semester: semester || null }),
+        api.adminSemesters(auth.token, termId),
       ]);
       setBatches(b);
       setStatus(s);
+      setSemesters(sems);
     } catch (e) { setErr(e.message); }
   }, [auth.token, termId, batchId, semester]);
 
   useEffect(() => { load(); }, [load]);
 
   const semesterOptions = useMemo(() => {
-    const sem = [...new Set(batches.map((b) => b.semester).filter(Boolean))].sort((a, b) => a - b);
-    return sem;
-  }, [batches]);
+    if (semesters.length) return semesters.map((x) => x.semester);
+    return [...new Set(batches.map((b) => b.semester).filter(Boolean))].sort((a, b) => a - b);
+  }, [batches, semesters]);
   const filteredBatches = useMemo(() => {
     if (!semester) return batches;
     return batches.filter((b) => String(b.semester) === String(semester));
@@ -43,7 +56,7 @@ export default function AdminDashboard() {
     setBusy(action); setErr(''); setMsg(''); setLastRun(null);
     try {
       const r = await fn();
-      setMsg(label);
+      setMsg(typeof label === 'function' ? label(r) : label);
       setLastRun(r);
       await load();
     } catch (e) { setErr(e.message); }
@@ -51,17 +64,54 @@ export default function AdminDashboard() {
   }
 
   const totals = status?.totals;
+  const incompleteRun = lastRun && lastRun.complete === false;
 
   return (
     <div className="container">
       <div className="section-label">Academic Operations</div>
       <h1>Timetable control centre</h1>
       <p className="muted" style={{ marginBottom: 24 }}>
-        Stage 1 — <strong>Make Slots</strong> applies the semester programme
-        (AI &amp; AWT for every student, a pair of core electives, one open elective, and
-        the matching lab sessions) and places each student into an instructor and time slot.
-        Stage 2 — <strong>Run Scheduler</strong> allocates rooms and buildings, then emails each student their timetable.
+        Stage 1 — <strong>Make Slots</strong> applies each semester's programme (every core course,
+        one option from each elective basket, and the matching lab sessions) and places each student
+        into an instructor and time slot. Stage 2 — <strong>Publish Timetable</strong> allocates rooms
+        and buildings, then emails each student whose timetable is complete. Semesters share rooms and
+        faculty, so a semester can be published on its own and the others are worked around.
       </p>
+
+      {semesters.length > 0 && (
+        <div className="card">
+          <h2>Semesters this term</h2>
+          <p className="muted" style={{ marginBottom: 12 }}>Pick a row to scope everything below to that semester.</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Semester</th><th>Batches</th><th>Students</th><th>Registered</th>
+                <th>Timetable issued</th><th>Sections</th><th>Credits</th><th>Source</th><th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {semesters.map((x) => (
+                <tr key={x.semester} style={String(semester) === String(x.semester) ? { background: 'var(--bg-soft)' } : undefined}>
+                  <td><strong>{x.name}</strong></td>
+                  <td>{x.batches.length}</td>
+                  <td>{x.totals.students}</td>
+                  <td>{x.totals.fullySelected} / {x.totals.students}</td>
+                  <td>{x.totals.studentsAllotted} / {x.totals.students}</td>
+                  <td>{x.totals.sections}</td>
+                  <td>{x.creditsRequired}</td>
+                  <td className="faint" style={{ fontSize: 12 }}>{x.timetableSource || '—'}</td>
+                  <td style={{ textAlign: 'right' }}>
+                    <button
+                      className={String(semester) === String(x.semester) ? 'sm' : 'secondary sm'}
+                      onClick={() => { setSemester(String(semester) === String(x.semester) ? '' : String(x.semester)); setBatchId(''); }}
+                    >{String(semester) === String(x.semester) ? 'Show all' : 'Select'}</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       <div className="card pad-lg">
         <div className="row" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
@@ -92,7 +142,7 @@ export default function AdminDashboard() {
               disabled={Boolean(busy)}
             >Make Slots</button>
             <button
-              onClick={() => setConfirm({ type: 'schedule', scope: `term ${termId}` })}
+              onClick={() => setConfirm({ type: 'schedule', scope: publishScope() })}
               disabled={Boolean(busy) || !scheduleReady()}
               title={scheduleReady() ? undefined : 'All students must be fully selected before running the scheduler.'}
             >{busy === 'schedule' ? 'Publishing…' : 'Publish Timetable'}</button>
@@ -107,7 +157,7 @@ export default function AdminDashboard() {
             <div style={{ marginTop: 12 }}>
               <button
                 className="secondary sm"
-                onClick={() => setConfirm({ type: 'schedule', scope: `term ${termId}`, force: true })}
+                onClick={() => setConfirm({ type: 'schedule', scope: publishScope(), force: true })}
                 disabled={Boolean(busy)}
               >Run anyway (force)</button>
               <span className="muted" style={{ marginLeft: 10, fontSize: 12 }}>
@@ -117,7 +167,9 @@ export default function AdminDashboard() {
           )}
         </div>
       )}
-      {msg && <div className="muted" style={{ marginBottom: 12 }}>{msg}</div>}
+      {msg && (
+        <div className={incompleteRun ? 'error' : 'muted'} style={{ marginBottom: 12 }} role="status">{msg}</div>
+      )}
 
       {totals && (
         <>
@@ -198,10 +250,10 @@ export default function AdminDashboard() {
           <button className="secondary" onClick={() => setConfirm({ type: 'resetSel', scope: scopeLabel() })} disabled={Boolean(busy)}>
             Clear selections
           </button>
-          <button className="secondary" onClick={() => setConfirm({ type: 'resetAll', scope: `term ${termId}` })} disabled={Boolean(busy)}>
-            Reset term
+          <button className="secondary" onClick={() => setConfirm({ type: 'resetAll', scope: publishScope() })} disabled={Boolean(busy)}>
+            {semester ? `Reset semester ${semester}` : 'Reset term'}
           </button>
-          <button className="secondary" onClick={() => setConfirm({ type: 'allocateAll', scope: `term ${termId}` })} disabled={Boolean(busy)}>
+          <button className="secondary" onClick={() => setConfirm({ type: 'allocateAll', scope: publishScope() })} disabled={Boolean(busy)}>
             Auto-allocate cohort
           </button>
         </div>
@@ -226,13 +278,13 @@ export default function AdminDashboard() {
             if (confirm.type === 'allot')
               await runAction('allot', () => api.adminAllotSlots(auth.token, opts), 'Slots generated.');
             if (confirm.type === 'schedule')
-              await runAction('schedule', () => api.generate(auth.token, termId, { force: confirm.force }), 'Timetable published.');
+              await runAction('schedule', () => api.generate(auth.token, termId, { force: confirm.force, semester: semester || null }), publishSummary);
             if (confirm.type === 'resetSel')
               await runAction('resetSel', () => api.adminResetSelections(auth.token, opts), 'Selections cleared.');
             if (confirm.type === 'resetAll')
-              await runAction('resetAll', () => api.adminResetAllocation(auth.token, { termId }), 'Term reset.');
+              await runAction('resetAll', () => api.adminResetAllocation(auth.token, { termId, semester: semester || undefined }), semester ? `Semester ${semester} reset.` : 'Term reset.');
             if (confirm.type === 'allocateAll')
-              await runAction('allocateAll', () => api.adminAllocateAll(auth.token, { termId }), 'Cohort allocated.');
+              await runAction('allocateAll', () => api.adminAllocateAll(auth.token, { termId, semester: semester || undefined }), 'Cohort allocated.');
           }}
         />
       )}
@@ -243,6 +295,10 @@ export default function AdminDashboard() {
     if (batchId) return `batch ${batchId}`;
     if (semester) return `semester ${semester}`;
     return `term ${termId}`;
+  }
+  /** Publishing and resets work on a whole semester (or the term), never a single batch. */
+  function publishScope() {
+    return semester ? `semester ${semester}` : `term ${termId}`;
   }
   function scheduleReady() {
     const t = status?.totals;
@@ -261,10 +317,10 @@ function ConfirmDialog({ confirm, busy, onCancel, onRun }) {
   };
   const details = {
     allot: 'Every student without a complete selection will be auto-placed into the remaining eligible sections, respecting professor seat caps.',
-    schedule: 'Assigns rooms & buildings to every section and emails each student their final timetable.',
+    schedule: 'Assigns rooms & buildings to every section in scope and emails each student their final timetable. Other semesters keep their published timetable.',
     resetSel: 'Removes selection records in scope. Seat counters are recomputed automatically.',
-    resetAll: 'Removes all selections and timetable entries for the term and resets every professor seat counter to zero.',
-    allocateAll: 'Resets the term and runs the slot-making routine for every student in the cohort.',
+    resetAll: 'Removes all selections and timetable entries in scope and recomputes every professor seat counter.',
+    allocateAll: 'Resets the scope and runs the slot-making routine for every student in it, around the other semesters.',
   };
   return (
     <div className="picker-backdrop" onClick={onCancel}>

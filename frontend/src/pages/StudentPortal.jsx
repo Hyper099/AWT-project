@@ -3,12 +3,9 @@ import { api } from '../api.js';
 import TimetableGrid from '../components/TimetableGrid.jsx';
 import { DEFAULT_TERM_ID } from '../constants/term.js';
 import { useAuth } from '../context/AuthContext.jsx';
-
-function fmt(min) {
-  const h = Math.floor(min / 60);
-  const m = min % 60;
-  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
-}
+import {
+  HOURLY_PERIODS, fmtMinutes as fmt, periodLabel, periodsCovered, scheduleSpan, slotCoversCell,
+} from '../lib/periods.js';
 
 function slotsOverlap(a, b) {
   for (const m1 of a.meetings || []) {
@@ -20,15 +17,6 @@ function slotsOverlap(a, b) {
   return false;
 }
 
-function slotCoversCell(slot, day, hour) {
-  return (slot.meetings || []).some((m) => {
-    if (m.day !== day) return false;
-    const startH = Math.floor(m.startMinute / 60);
-    const endH = Math.ceil(m.endMinute / 60);
-    return hour >= startH && hour < endH;
-  });
-}
-
 export default function StudentPortal() {
   const { auth } = useAuth();
   const [me, setMe] = useState(null);
@@ -36,8 +24,9 @@ export default function StudentPortal() {
   const [regs, setRegs] = useState([]);
   const [status, setStatus] = useState(null);
   const [timetable, setTimetable] = useState([]);
-  const [slots, setSlots] = useState([]);
-  const [picker, setPicker] = useState(null); // { day, hour, combos, stage, selected }
+  const [grid, setGrid] = useState(null); // { semester: { periods, … }, slots }
+  const [programme, setProgramme] = useState(null);
+  const [picker, setPicker] = useState(null); // { day, period, combos, stage, selected }
   const [dropTarget, setDropTarget] = useState(null);
   const [err, setErr] = useState('');
   const [msg, setMsg] = useState('');
@@ -46,26 +35,33 @@ export default function StudentPortal() {
   const loadAll = useCallback(async () => {
     setErr('');
     try {
-      const [m, o, r, s, tt, sl] = await Promise.all([
+      const [m, o, r, s, tt, g, p] = await Promise.all([
         api.studentMe(auth.token),
         api.studentOfferings(auth.token),
         api.studentRegs(auth.token),
         api.studentTimetableStatus(auth.token),
         api.studentTimetable(auth.token),
-        api.slots(auth.token),
+        api.studentGrid(auth.token),
+        api.studentProgramme(auth.token),
       ]);
-      setMe(m); setOfferings(o); setRegs(r); setStatus(s); setTimetable(tt); setSlots(sl);
+      setMe(m); setOfferings(o); setRegs(r); setStatus(s); setTimetable(tt); setGrid(g); setProgramme(p);
     } catch (e) { setErr(e.message); }
   }, [auth.token]);
 
   useEffect(() => { loadAll(); }, [loadAll]);
 
+  const slots = useMemo(() => grid?.slots || [], [grid]);
+  const periods = grid?.semester?.periods?.length ? grid.semester.periods : HOURLY_PERIODS;
   const slotByCode = useMemo(
     () => Object.fromEntries(slots.map((s) => [s.slotCode, s])),
     [slots],
   );
   const regByCourse = useMemo(() => Object.fromEntries(regs.map((r) => [r.courseId, r])), [regs]);
-  const allottedCourseIds = useMemo(() => new Set(timetable.map((t) => t.courseId)), [timetable]);
+  // Rows exist for every registration; only those with a room are allotted.
+  const allottedCourseIds = useMemo(
+    () => new Set(timetable.filter((t) => t.allotted).map((t) => t.courseId)),
+    [timetable],
+  );
   const allotted = status?.allotted;
   const registeredSlots = useMemo(
     () => regs.map((r) => slotByCode[r.slotCode]).filter(Boolean),
@@ -75,18 +71,24 @@ export default function StudentPortal() {
     () => Object.fromEntries(offerings.map((o) => [o.offering.courseId, o])),
     [offerings],
   );
+  // Elective basket → option already chosen (other options are hidden from the picker).
+  const chosenOption = useMemo(() => {
+    const out = {};
+    for (const o of offerings) {
+      if (o.selected && o.offering.electiveGroup) out[o.offering.electiveGroup] = o.offering.electiveOption;
+    }
+    return out;
+  }, [offerings]);
 
-  /** (day|hour) → cell descriptor */
+  /** (day|periodIndex) → cell descriptor */
   const cells = useMemo(() => {
     const map = {};
 
     // baseline: any slot covering this cell is "available"
     for (const slot of slots) {
       for (const m of slot.meetings || []) {
-        const startH = Math.floor(m.startMinute / 60);
-        const endH = Math.ceil(m.endMinute / 60);
-        for (let h = startH; h < endH; h++) {
-          const key = `${m.day}|${h}`;
+        for (const i of periodsCovered(m, periods)) {
+          const key = `${m.day}|${i}`;
           if (!map[key]) map[key] = { state: 'available', code: slot.slotCode, slotCode: slot.slotCode };
         }
       }
@@ -98,10 +100,8 @@ export default function StudentPortal() {
       const course = entry?.course;
       if (!slot) continue;
       for (const m of slot.meetings || []) {
-        const startH = Math.floor(m.startMinute / 60);
-        const endH = Math.ceil(m.endMinute / 60);
-        for (let h = startH; h < endH; h++) {
-          const key = `${m.day}|${h}`;
+        for (const i of periodsCovered(m, periods)) {
+          const key = `${m.day}|${i}`;
           map[key] = {
             state: 'selected',
             code: slot.slotCode,
@@ -127,10 +127,8 @@ export default function StudentPortal() {
     // allotted overlay from timetable
     if (allotted) {
       for (const row of timetable) {
-        const startH = Math.floor(row.startMinute / 60);
-        const endH = Math.ceil(row.endMinute / 60);
-        for (let h = startH; h < endH; h++) {
-          const key = `${row.day}|${h}`;
+        for (const i of periodsCovered(row, periods)) {
+          const key = `${row.day}|${i}`;
           map[key] = {
             state: 'allotted',
             title: row.courseCode,
@@ -142,9 +140,9 @@ export default function StudentPortal() {
       }
     }
     return map;
-  }, [slots, regs, slotByCode, offeringsByCourse, registeredSlots, timetable, allotted]);
+  }, [slots, periods, regs, slotByCode, offeringsByCourse, registeredSlots, timetable, allotted]);
 
-  function handleCellClick(day, hour, cell) {
+  function handleCellClick(day, period, cell) {
     if (!cell) return;
     if (cell.state === 'allotted') return;
     if (cell.state === 'selected') {
@@ -153,27 +151,29 @@ export default function StudentPortal() {
     }
     if (cell.state !== 'available') return;
 
-    // Offerings available for this cell. A course is available here iff the
-    // cell is covered by a slot whose family matches the course family.
-    const coveringSlots = slots.filter((s) => slotCoversCell(s, day, hour));
+    // Offerings available for this cell: the cell is covered by a slot the
+    // course runs in (its fixed slots, or any slot of its family), and the
+    // course is not an unchosen option of a basket the student already chose in.
+    const coveringSlots = slots.filter((s) => slotCoversCell(s, day, period, periods));
     const combos = [];
     for (const slot of coveringSlots) {
       const clashes = registeredSlots.some((r) => r.slotCode !== slot.slotCode && slotsOverlap(r, slot));
       if (clashes) continue;
       for (const o of offerings) {
         if (o.selected) continue;
-        const family = o.course?.slotFamily || 'THEORY_3';
-        if (family !== slot.family) continue;
+        const { allowedSlots = [], electiveGroup, electiveOption } = o.offering;
+        if (allowedSlots.length ? !allowedSlots.includes(slot.slotCode) : (o.course?.slotFamily || 'THEORY_3') !== slot.family) continue;
+        if (electiveGroup && chosenOption[electiveGroup] && chosenOption[electiveGroup] !== electiveOption) continue;
         combos.push({ offering: o.offering, course: o.course, slot });
       }
     }
-    setPicker({ day, hour, combos, stage: 'course', selected: null, professors: null, loading: false });
+    setPicker({ day, period: periods[period], combos, stage: 'course', selected: null, professors: null, loading: false });
   }
 
   async function onPickCourse(combo) {
     setPicker((p) => ({ ...p, stage: 'professor', selected: combo, professors: null, loading: true }));
     try {
-      const profs = await api.studentProfessors(auth.token, combo.course.courseId);
+      const profs = await api.studentProfessors(auth.token, combo.course.courseId, combo.slot.slotCode);
       setPicker((p) => p && p.selected?.course.courseId === combo.course.courseId
         ? { ...p, professors: profs, loading: false } : p);
     } catch (e) { setErr(e.message); setPicker(null); }
@@ -218,6 +218,8 @@ export default function StudentPortal() {
   const selectedCount = offerings.filter((o) => o.selected).length;
   const allottedCount = offerings.filter((o) => allottedCourseIds.has(o.offering.courseId)).length;
   const creditsSelected = offerings.filter((o) => o.selected).reduce((sum, o) => sum + (o.course?.credits || 0), 0);
+  const titleOf = (courseId) => offeringsByCourse[courseId]?.course?.title || courseId;
+  const baskets = programme?.groups || [];
 
   return (
     <div className="container">
@@ -233,7 +235,10 @@ export default function StudentPortal() {
           <div className="stat"><div className="label">Term</div><div className="value" style={{ fontSize: 14 }}>{termId}</div></div>
           <div className="stat"><div className="label">Offered</div><div className="value">{offerings.length}</div></div>
           <div className="stat"><div className="label">Selected</div><div className="value">{selectedCount}</div></div>
-          <div className="stat"><div className="label">Credits</div><div className="value">{creditsSelected}</div></div>
+          <div className="stat">
+            <div className="label">Credits</div>
+            <div className="value">{creditsSelected}{programme?.creditsRequired ? <span className="faint" style={{ fontSize: 14 }}> / {programme.creditsRequired}</span> : null}</div>
+          </div>
         </div>
       </div>
 
@@ -261,9 +266,22 @@ export default function StudentPortal() {
 
       <div className="card">
         <h2 style={{ marginBottom: 4 }}>Courses on offer this semester</h2>
-        <p className="muted" style={{ marginBottom: 16 }}>
-          {selectedCount} of {offerings.length} chosen · {allottedCount} finalised
+        <p className="muted" style={{ marginBottom: baskets.length ? 8 : 16 }}>
+          {programme ? `${programme.selectedCount} of ${programme.requiredCount} required courses chosen` : `${selectedCount} of ${offerings.length} chosen`}
+          {' · '}{allottedCount} finalised
+          {programme?.complete && <> · <strong>programme complete</strong></>}
         </p>
+        {baskets.length > 0 && (
+          <p className="muted" style={{ marginBottom: 16, fontSize: 12.5 }}>
+            Take every core course and one option, with its lab, from each elective basket:{' '}
+            {baskets.map((b, i) => (
+              <span key={b.group}>
+                {i > 0 && ' · '}
+                <strong>{b.group}</strong> {b.chosen ? `— ${titleOf(b.chosen)}` : '— not chosen yet'}
+              </span>
+            ))}
+          </p>
+        )}
         {offerings.length === 0 ? (
           <div className="empty">
             <div className="title">No courses configured</div>
@@ -272,7 +290,7 @@ export default function StudentPortal() {
         ) : (
           <table>
             <thead>
-              <tr><th>Code</th><th>Title</th><th>Department</th><th>Credits</th><th>Kind</th><th>Status</th><th style={{ textAlign: 'right' }}></th></tr>
+              <tr><th>Code</th><th>Title</th><th>{baskets.length ? 'Basket' : 'Department'}</th><th>Credits</th><th>Kind</th><th>Status</th><th style={{ textAlign: 'right' }}></th></tr>
             </thead>
             <tbody>
               {offerings.map((o) => {
@@ -286,7 +304,7 @@ export default function StudentPortal() {
                   <tr key={o.offering.courseOfferingId}>
                     <td className="mono">{o.course?.code || o.offering.courseId}</td>
                     <td>{o.course?.title || '—'}</td>
-                    <td>{o.course?.department || '—'}</td>
+                    <td>{baskets.length ? (o.offering.electiveGroup || 'Core') : (o.course?.department || '—')}</td>
                     <td>{o.course?.credits ?? '—'}</td>
                     <td style={{ textTransform: 'capitalize' }}>{o.course?.type || '—'}</td>
                     <td><span className={`tag ${state.cls}`}>{state.label}</span></td>
@@ -307,17 +325,19 @@ export default function StudentPortal() {
         <div className="spread" style={{ marginBottom: 16, flexWrap: 'wrap' }}>
           <div>
             <h2 style={{ marginBottom: 2 }}>Weekly schedule</h2>
-            <p className="muted" style={{ margin: 0 }}>Monday to Friday · 09:00 – 18:00</p>
+            <p className="muted" style={{ margin: 0 }}>
+              {grid?.semester?.name || `Semester ${me.semester}`} bell schedule · Monday to Friday · {scheduleSpan(periods)}
+            </p>
           </div>
           <Legend />
         </div>
-        <TimetableGrid cells={cells} onCellClick={handleCellClick} readOnly={allotted} />
+        <TimetableGrid periods={periods} cells={cells} onCellClick={handleCellClick} readOnly={allotted} />
       </div>
 
       {picker && (
         <Picker
           day={picker.day}
-          hour={picker.hour}
+          period={picker.period}
           stage={picker.stage}
           combos={picker.combos}
           selected={picker.selected}
@@ -356,7 +376,7 @@ function LegendSwatch({ className }) {
   return <span style={{ display: 'inline-block', width: 14, height: 14, marginRight: 4, verticalAlign: 'middle', border: '1px solid var(--border-strong)' }} className={`slot-cell ${className}`} />;
 }
 
-function Picker({ day, hour, stage, combos, selected, professors, loading, onPickCourse, onPickProfessor, onBack, onClose }) {
+function Picker({ day, period, stage, combos, selected, professors, loading, onPickCourse, onPickProfessor, onBack, onClose }) {
   const grouped = {};
   for (const c of combos) {
     if (!grouped[c.slot.slotCode]) grouped[c.slot.slotCode] = { slot: c.slot, items: [] };
@@ -367,14 +387,14 @@ function Picker({ day, hour, stage, combos, selected, professors, loading, onPic
   return (
     <div className="picker-backdrop" onClick={onClose}>
       <div className="picker picker-wide" onClick={(e) => e.stopPropagation()}>
-        <div className="section-label">{day} · {String(hour).padStart(2, '0')}:00</div>
+        <div className="section-label">{day} · {period ? `${periodLabel(period)}–${fmt(period.endMinute)}` : ''}</div>
         {stage === 'course' && (
           <>
             <h3>Add a course</h3>
             {slotCodes.length === 0 ? (
               <div className="empty">
                 <div className="title">Nothing fits here</div>
-                <div>No offering in your batch has a slot covering this cell (or all would clash).</div>
+                <div>No course you still need runs in a slot covering this cell (or all would clash).</div>
               </div>
             ) : (
               slotCodes.map((code) => {
@@ -441,22 +461,31 @@ function Picker({ day, hour, stage, combos, selected, professors, loading, onPic
                   <div className="picker-list" style={{ maxHeight: 340 }}>
                     {professors.map((p) => {
                       const full = p.seatsRemaining === 0;
+                      const blocked = full || p.available === false;
                       return (
                         <button
                           key={p.professorId}
                           type="button"
                           className="picker-item picker-button"
-                          disabled={full}
+                          disabled={blocked}
                           onClick={() => onPickProfessor(p.professorId)}
-                          style={full ? { cursor: 'not-allowed', opacity: 0.55 } : undefined}
+                          title={p.unavailableReason || undefined}
+                          style={blocked ? { cursor: 'not-allowed', opacity: 0.55 } : undefined}
                         >
                           <div style={{ textAlign: 'left' }}>
                             <div style={{ fontWeight: 500 }}>{p.name}</div>
                             <div className="faint"><span className="mono">{p.professorId}</span> · {p.department}</div>
                           </div>
                           <div style={{ textAlign: 'right' }}>
-                            <div className={`tag ${full ? '' : 'solid'}`}>{p.maxStudents} seats</div>
+                            <div className={`tag ${blocked ? '' : 'solid'}`}>
+                              {p.seatsRemaining} of {p.maxStudents} left
+                            </div>
                             {full && <div className="faint" style={{ fontSize: 10.5, marginTop: 4 }}>Full</div>}
+                            {!full && p.available === false && (
+                              <div className="faint" style={{ fontSize: 10.5, marginTop: 4, maxWidth: 160 }}>
+                                {p.unavailableReason}
+                              </div>
+                            )}
                           </div>
                         </button>
                       );
