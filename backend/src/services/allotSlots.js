@@ -9,6 +9,7 @@ import Room from '../models/Room.js';
 import { slotsClash } from '../scheduler/slots.js';
 import { createSectionPlanner } from '../scheduler/sectionPlanner.js';
 import { programmeStructure, slotsForOffering } from './programme.js';
+import { studentsInTerm } from './enrolment.js';
 
 /**
  * Phase-1 allocator. For every student in scope, creates a Registration for
@@ -45,10 +46,7 @@ import { programmeStructure, slotsForOffering } from './programme.js';
  * (theory and lab); a student who already chose one has it completed.
  */
 export async function allotSlots({ termId = 'TERM_2026_ODD', semester = null, batchId = null } = {}) {
-  const studentQ = {};
-  if (batchId) studentQ.batchId = batchId;
-  if (semester) studentQ.semester = Number(semester);
-  const students = await Student.find(studentQ).lean();
+  const students = await studentsInTerm(termId, { semester, batchId });
   if (students.length === 0) return { created: 0, skipped: 0, failures: [], byCourse: {} };
 
   const batchIds = [...new Set(students.map((s) => s.batchId))];

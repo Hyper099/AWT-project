@@ -11,17 +11,15 @@ import Term from '../models/Term.js';
 import TimetableEntry from '../models/TimetableEntry.js';
 import { getLiveSeatUsageMap } from './seatStatus.js';
 import { programmeProgress } from './programme.js';
+import { studentsInTerm } from './enrolment.js';
 
 /**
  * Cohort status: per-student selection completeness + professor seat status.
  * `batchId` and `semester` are optional filters; default scope is the whole term.
  */
 export async function cohortStatus({ termId = DEFAULT_TERM_ID, batchId = null, semester = null } = {}) {
-  const studentQ = {};
-  if (batchId) studentQ.batchId = batchId;
-  if (semester) studentQ.semester = Number(semester);
   const [students, offerings, regs, allCaps, entries, term, professors, semCourses] = await Promise.all([
-    Student.find(studentQ).lean(),
+    studentsInTerm(termId, { semester, batchId }),
     CourseOffering.find({ termId }).lean(),
     Registration.find({ termId }).lean(),
     ProfessorCapacity.find({ termId }).lean(),
@@ -134,14 +132,14 @@ export async function listBatches() {
  * One row per semester running in the term: cohort size, programme,
  * registration progress and how much of its timetable is published.
  */
-export async function semesterSummaries({ termId = DEFAULT_TERM_ID } = {}) {
+export async function semesterSummaries() {
   const [semesters, batches] = await Promise.all([
     Semester.find().sort({ semester: 1 }).lean(),
     Batch.find().lean(),
   ]);
   const rows = [];
   for (const sem of semesters) {
-    const status = await cohortStatus({ termId, semester: sem.semester });
+    const status = await cohortStatus({ termId: sem.termId, semester: sem.semester });
     rows.push({
       semester: sem.semester,
       name: sem.name,

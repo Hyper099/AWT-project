@@ -150,10 +150,13 @@ export async function loadData({
   }));
   await Professor.insertMany(professors);
 
+  // Seat limits apply in the term the course's semester runs in.
+  const termOfSemester = Object.fromEntries(semesters.map((x) => [x.semester, x.termId]));
+  const termOfCourse = Object.fromEntries(courses.map((c) => [c.courseId, termOfSemester[c.semester] || DEFAULT_TERM_ID]));
   const capDocs = readCsv(DIR, 'professor_capacity_rules.csv').map((r) => ({
     professorId: r.professor_id,
     courseId: r.course_id,
-    termId: DEFAULT_TERM_ID,
+    termId: termOfCourse[r.course_id] || DEFAULT_TERM_ID,
     maxStudents: numOr(r.max_students_per_section, 40) * numOr(r.max_sections, 1),
     seatsUsed: 0,
     maxSections: numOr(r.max_sections, 1),
@@ -189,6 +192,13 @@ export async function loadData({
     })));
   }
 
+  // students.csv holds each student's first batch; student_enrolments.csv adds later terms.
+  const laterEnrolments = {};
+  for (const e of readCsv(DIR, 'student_enrolments.csv')) {
+    (laterEnrolments[e.student_id] ||= []).push({
+      termId: e.term_id, semester: numOr(e.semester, 0), batchId: e.batch_id, division: e.division_name, group: e.group_name,
+    });
+  }
   const studentDocs = readCsv(DIR, 'students.csv').filter(keepStudent).map((r) => ({
     studentId: r.student_id,
     name: r.student_name,
@@ -201,7 +211,14 @@ export async function loadData({
     branch: r.branch_name || '',
     email: r.email || `${String(r.student_id).toLowerCase()}@students.scheduler.local`,
     status: r.status || 'active',
-  }));
+    enrolments: [
+      { termId: termOfSemester[numOr(r.semester, 5)] || DEFAULT_TERM_ID, semester: numOr(r.semester, 5), batchId: r.batch_id, division: r.division_name, group: r.group_name },
+      ...(laterEnrolments[r.student_id] || []),
+    ].sort((a, b) => a.semester - b.semester),
+  })).map((s) => {
+    const latest = s.enrolments[s.enrolments.length - 1];
+    return { ...s, semester: latest.semester, batchId: latest.batchId, division: latest.division, group: latest.group };
+  });
   if (studentDocs.length) await Student.insertMany(studentDocs);
   const inScope = new Set(studentDocs.map((s) => s.studentId));
   log(`students=${studentDocs.length} batches=${batchRows.length}`);
@@ -272,7 +289,7 @@ export async function loadData({
         status: 'confirmed',
       });
       if (r.professor_id) {
-        const key = `${r.professor_id}|${r.course_id}`;
+        const key = `${r.professor_id}|${r.course_id}|${r.term_id}`;
         seatCount[key] = (seatCount[key] || 0) + 1;
       }
     }
@@ -282,8 +299,8 @@ export async function loadData({
       });
     }
     await Promise.all(Object.entries(seatCount).map(([key, used]) => {
-      const [professorId, courseId] = key.split('|');
-      return ProfessorCapacity.updateOne({ professorId, courseId, termId: DEFAULT_TERM_ID }, { $set: { seatsUsed: used } });
+      const [professorId, courseId, termId] = key.split('|');
+      return ProfessorCapacity.updateOne({ professorId, courseId, termId }, { $set: { seatsUsed: used } });
     }));
     log(`registrations=${regs.length} seats-updated=${Object.keys(seatCount).length}`);
   }

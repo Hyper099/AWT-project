@@ -1,2 +1,3 @@
 term_id,term_name,start_date,end_date,status,registration_open,scheduling_locked
+TERM_2025_ODD,Odd Semester 2025,2025-07-01,2025-11-30,completed,yes,no
 TERM_2026_ODD,Odd Semester 2026,2026-07-01,2026-11-30,planning,yes,no

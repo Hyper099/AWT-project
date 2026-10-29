@@ -17,8 +17,16 @@ What the spreadsheet provides, and what it becomes:
   - Courses running in parallel, and the "LUNCH BREAK for X Students" notes
         -> elective baskets (choose one option per basket)
 
+Students are not invented: the cohort two semesters below (the 23BCP
+batch in semester 5) moves up, division by division, and every division gets
+the sheet's timetable (only Div-5's is published). Their enrolments are
+written to student_enrolments.csv; their selections come from the allocator
+(see README).
+
 What the spreadsheet does not provide, so is generated as sample data:
-  - the student list, logins and each student's elective choices
+  - extra instructors per course, so seven divisions fit at the sheet's times
+    (the sheet's instructor first, then others in rotation; every instructor
+    may take a lab section)
   - per-instructor seat limits
   - credits (taken as weekly lectures for theory, 1 for a lab)
   - lab duration (each lab is taken to run two periods, as the period after
@@ -54,6 +62,7 @@ DEPARTMENT = "CSE"
 STUDENTS_PER_GROUP = 32
 THEORY_SEATS_PER_SECTION = 70
 LAB_SEATS_PER_SECTION = 35
+THEORY_POOL = 9  # extra instructors per theory course (sample data)
 NEW_ROOM_CAPACITY = {"lab": 35, "lecture": 60}
 
 
@@ -301,14 +310,18 @@ def main():
     term_id = term["term_id"]
 
     _, batches = read_csv("batches.csv")
-    others = [b for b in batches if int(b["semester"]) != sem]
-    # Cohorts move up one semester a year, so semester N joined N/2 years
-    # before the reference cohort already in the system.
-    ref = others[0]
-    joined = int(ref["academic_year"]) - (sem - int(ref["semester"])) // 2
-    batch_id = f"{DEPARTMENT}_{joined}_SEM{sem}_DIV{div}"
-    groups = sorted({g for c in sheet["classes"] for g in c["groups"]}, key=lambda g: int(g[1:]))
-    strength = STUDENTS_PER_GROUP * len(groups)
+    # The cohort two semesters below moves up into this semester.
+    ref_batches = [b for b in batches if int(b["semester"]) == sem - 2]
+    if not ref_batches:
+        raise SystemExit(f"no semester {sem - 2} batches to move up into semester {sem}")
+    new_batches = []
+    for b in ref_batches:
+        new_batches.append(dict(b, batch_id=b["batch_id"].replace(f"_SEM{sem - 2}_", f"_SEM{sem}_"),
+                                batch_name=b["batch_name"].replace(f"Sem {sem - 2}", f"Sem {sem}"), semester=sem,
+                                _from=b["batch_id"]))
+    batch_ids = {b["batch_id"] for b in new_batches}
+    strength = sum(int(b["strength"]) for b in new_batches)
+    batch_id = f"{len(new_batches)} batches"
     in_sem = lambda r: str(r.get("semester", "")) == str(sem)
 
     # ---- semesters and periods
@@ -390,7 +403,8 @@ def main():
 
     # ---- offerings
     off_rows = []
-    for code in sorted(model["kind_of"]):
+    for b, code in [(b, c) for b in new_batches for c in sorted(model["kind_of"])]:
+        batch_id = b["batch_id"]
         theory = model["theory_of"].get(code, code)
         basket = model["basket_of"].get(theory)
         n_sections = len(model["course_sections"][code])
@@ -402,15 +416,23 @@ def main():
             special_room_requirement="Lab" if model["kind_of"][code] == "lab" else "Lecture", status="open",
             elective_group=basket or "", elective_option=course_id[theory] if basket else "",
             allowed_slots="|".join(sorted(model["course_slots"][code]))))
-    replace_rows("course_offerings.csv", lambda r: r["batch_id"] != batch_id, off_rows)
+    replace_rows("course_offerings.csv", lambda r: r["batch_id"] not in batch_ids, off_rows)
 
     # ---- instructor eligibility and seat limits
     elig, caps = [], []
-    for code, secs in sorted(model["course_sections"].items()):
+    all_profs = [p["professor_id"] for p in profs]
+    for n, (code, secs) in enumerate(sorted(model["course_sections"].items())):
         per_prof = defaultdict(set)
         for s in secs:
             per_prof[by_code[s["faculty"]]].add(s["slot"])
-        for pid, slots_taught in sorted(per_prof.items()):
+        n_slots = len(model["course_slots"][code])
+        if model["kind_of"][code] == "lab":
+            extra = all_profs
+        else:
+            extra = [all_profs[(n * 5 + k) % len(all_profs)] for k in range(THEORY_POOL)]
+        for pid in extra:
+            per_prof.setdefault(pid, set(model["course_slots"][code]))
+        for pid, slots_taught in sorted(per_prof.items(), key=lambda kv: int(kv[0][1:])):
             seats = LAB_SEATS_PER_SECTION if model["kind_of"][code] == "lab" else THEORY_SEATS_PER_SECTION
             elig.append(dict(professor_id=pid, course_id=course_id[code], eligibility_type="primary",
                              max_sections=len(slots_taught)))
@@ -436,68 +458,23 @@ def main():
         known.add(rid)
     write_csv("rooms.csv", rfields, rooms)
 
-    # ---- batch, students, logins (sample data)
-    replace_rows("batches.csv", lambda r: r["batch_id"] != batch_id, [dict(
-        batch_id=batch_id, batch_name=f"Computer Sem {sem} Div-{div}", department_id=DEPARTMENT, semester=sem,
-        strength=strength, program_name="BTech", section_name=f"Div-{div}", academic_year=joined,
-        active_status="active", branch_name="Computer", group_set="|".join(groups))])
+    # ---- batches and enrolments: the cohort below moves up
+    replace_rows("batches.csv", lambda r: r["batch_id"] not in batch_ids,
+                 [{k: v for k, v in b.items() if k != "_from"} for b in new_batches])
+    move = {b["_from"]: b["batch_id"] for b in new_batches}
+    _, students = read_csv("students.csv")
+    enrol = [dict(student_id=st["student_id"], term_id=term_id, semester=sem, batch_id=move[st["batch_id"]],
+                  division_name=st["division_name"], group_name=st["group_name"])
+             for st in students if st["batch_id"] in move]
+    replace_rows("student_enrolments.csv", lambda r: not in_sem(r), enrol,
+                 ["student_id", "term_id", "semester", "batch_id", "division_name", "group_name"])
 
-    rng = random.Random(f"{batch_id}")
-    _, existing = read_csv("students.csv")
-    taken = {s["student_id"] for s in existing if s["batch_id"] != batch_id}
-    prefix = f"{str(joined)[2:]}BCP"
-    students, number = [], 600 + 1
-    used_names = set()
-    for g in groups:
-        for _ in range(STUDENTS_PER_GROUP):
-            while f"{prefix}{number:03d}" in taken:
-                number += 1
-            sid = f"{prefix}{number:03d}"
-            number += 1
-            while True:
-                name = f"{rng.choice(FIRST)} {rng.choice(LAST)}"
-                if name not in used_names:
-                    used_names.add(name)
-                    break
-            students.append(dict(student_id=sid, student_code=sid, student_name=name, department_id=DEPARTMENT,
-                                 batch_id=batch_id, semester=sem, email=f"{sid.lower()}@students.scheduler.local",
-                                 status="active", program_name="BTech", year_of_joining=joined,
-                                 branch_name="Computer", division_name=f"Div-{div}", group_name=g,
-                                 username=sid.lower()))
-    replace_rows("students.csv", lambda r: r["batch_id"] != batch_id, students)
-    replace_rows("student_credentials.csv", lambda r: r["batch_id"] != batch_id, [dict(
-        student_id=s["student_id"], student_name=s["student_name"], batch_id=batch_id,
-        division_name=s["division_name"], group_name=s["group_name"], username=s["username"],
-        password=f"ts@{s['username']}") for s in students])
-
-    # ---- selections (sample data): core courses in the student's group
-    # section, and electives spread evenly across each basket's options.
-    sel_rows = []
-    group_index = {g: i for i, g in enumerate(groups)}
-    for n, s in enumerate(students):
-        picks = list(core)
-        for b, codes in enumerate(model["baskets"]):
-            theory = codes[(n + b) % len(codes)]
-            picks += [theory] + [l for l, t in model["theory_of"].items() if t == theory]
-        for k, code in enumerate(sorted(picks, key=lambda c: course_id[c])):
-            sec = next(x for x in model["course_sections"][code] if s["group_name"] in x["groups"])
-            minute = n * len(picks) + k
-            sel_rows.append(dict(
-                student_id=s["student_id"], term_id=term_id,
-                course_offering_id=f"OFF_{term_id}_{batch_id}_{course_id[code]}", course_id=course_id[code],
-                professor_id=by_code[sec["faculty"]], slot_code=sec["slot"], selection_type="student_choice",
-                priority_rank=1,
-                submission_timestamp=f"2026-07-1{group_index[s['group_name']]}T{9 + minute // 3600:02d}:{minute // 60 % 60:02d}:{minute % 60:02d}"))
-    sem_students = {s["student_id"] for s in students}
-    replace_rows("student_course_selections.csv",
-                 lambda r: r["student_id"] not in sem_students and r["course_id"] not in sem_course_ids, sel_rows)
-
-    print(f"semester {sem} division {div} -> term {term_id}, batch {batch_id}")
+    print(f"semester {sem} (timetable of division {div}) -> term {term_id}, {len(new_batches)} batches")
     print(f"  slots {len(model['slots'])}, courses {len(course_rows)}, baskets "
           + ", ".join(f"{model['basket_of'][c[0]]}: {'/'.join(c)}" for c in model["baskets"]))
     for a in contradicted:
         print(f"  dropped sample availability: {a['professor_id']} unavailable in {a['slot_code']} (teaches then per the sheet)")
-    print(f"  students {len(students)} (sample), selections {len(sel_rows)}, credits required {required}")
+    print(f"  students {len(enrol)} enrolled from semester {sem - 2}, credits required {required}")
 
 
 if __name__ == "__main__":

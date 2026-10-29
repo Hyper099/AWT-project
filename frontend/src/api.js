@@ -15,6 +15,8 @@ async function request(path, { method = 'GET', body, token } = {}) {
   return data;
 }
 
+const tq = (termId) => (termId ? `?termId=${encodeURIComponent(termId)}` : '');
+
 export const api = {
   signup: (payload) => request('/auth/signup', { method: 'POST', body: payload }),
   login: (payload) => request('/auth/login', { method: 'POST', body: payload }),
@@ -24,19 +26,20 @@ export const api = {
   semesters: (token) => request('/semesters', { token }),
 
   studentMe: (token) => request('/student/me', { token }),
-  studentOfferings: (token) => request('/student/offerings', { token }),
-  studentGrid: (token) => request('/student/grid', { token }),
-  studentProgramme: (token) => request('/student/programme', { token }),
-  studentRegs: (token) => request('/student/registrations', { token }),
-  studentTimetable: (token) => request('/student/timetable', { token }),
-  studentTimetableStatus: (token) => request('/student/timetable/status', { token }),
-  studentProfessors: (token, courseId, slotCode) => {
+  studentOfferings: (token, termId) => request(`/student/offerings${tq(termId)}`, { token }),
+  studentGrid: (token, termId) => request(`/student/grid${tq(termId)}`, { token }),
+  studentProgramme: (token, termId) => request(`/student/programme${tq(termId)}`, { token }),
+  studentRegs: (token, termId) => request(`/student/registrations${tq(termId)}`, { token }),
+  studentTimetable: (token, termId) => request(`/student/timetable${tq(termId)}`, { token }),
+  studentTimetableStatus: (token, termId) => request(`/student/timetable/status${tq(termId)}`, { token }),
+  studentProfessors: (token, courseId, slotCode, termId) => {
     const q = new URLSearchParams({ courseId });
+    if (termId) q.set('termId', termId);
     if (slotCode) q.set('slotCode', slotCode);
     return request(`/student/professors?${q.toString()}`, { token });
   },
   register: (token, body) => request('/student/register', { method: 'POST', body, token }),
-  unregister: (token, courseId) => request(`/student/register/${courseId}`, { method: 'DELETE', token }),
+  unregister: (token, courseId, termId) => request(`/student/register/${courseId}${tq(termId)}`, { method: 'DELETE', token }),
 
   profMe: (token) => request('/professor/me', { token }),
   profCourses: (token) => request('/professor/courses', { token }),

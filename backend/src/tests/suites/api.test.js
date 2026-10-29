@@ -2,13 +2,12 @@ import { createApp } from '../../app.js';
 import Course from '../../models/Course.js';
 import CourseOffering from '../../models/CourseOffering.js';
 import Registration from '../../models/Registration.js';
-import Student from '../../models/Student.js';
 import TimetableEntry from '../../models/TimetableEntry.js';
 import { seedFixture } from '../harness/seedFixture.js';
 
 /**
  * End-to-end checks over HTTP for all three roles, against the fixture
- * (60 Semester 5 students + the Semester 7 division, with logins).
+ * (the 60 Div-1 students, enrolled in Semester 5 last year and Semester 7 now).
  */
 
 function assert(cond, msg) { if (!cond) throw new Error(msg); }
@@ -39,8 +38,8 @@ async function login(username, password) {
   return expectStatus(r, 200, `login ${username}`).token;
 }
 
-const SEM7_STUDENT = '22bcp601'; // G9
-const SEM5_STUDENT = '23bcp001';
+const STUDENT = '23bcp001'; // Div-1, G1: Semester 5 (2025) and Semester 7 (2026)
+const SEM5 = '?termId=TERM_2025_ODD';
 const SHARED_INSTRUCTOR = 'p12'; // Sidheswar Routray: Semester 5 and Semester 7 (ML, IR)
 
 async function setUp() {
@@ -48,8 +47,8 @@ async function setUp() {
   server = createApp().listen(0);
   await new Promise((r) => server.once('listening', r));
   base = `http://127.0.0.1:${server.address().port}`;
-  tokens.sem7 = await login(SEM7_STUDENT, `ts@${SEM7_STUDENT}`);
-  tokens.sem5 = await login(SEM5_STUDENT, `ts@${SEM5_STUDENT}`);
+  tokens.sem7 = await login(STUDENT, `ts@${STUDENT}`);
+  tokens.sem5 = tokens.sem7; // same student; Semester 5 calls pass TERM_2025_ODD
   tokens.prof = await login(SHARED_INSTRUCTOR, 'welcome@P12');
   tokens.admin = await login('admin', 'admin@123');
 }
@@ -63,7 +62,9 @@ async function authAndRoleGuards() {
   expectStatus(await call('GET', '/professor/me', { token: tokens.sem7 }), 403, 'student on instructor route');
   expectStatus(await call('GET', '/student/me', { token: tokens.admin }), 403, 'admin on student route');
   const sems = expectStatus(await call('GET', '/semesters', { token: tokens.sem5 }), 200, 'list semesters');
-  assert(sems.length === 2 && sems[1].batches[0].batchId === 'CSE_2022_SEM7_DIV5', 'semesters list both cohorts');
+  assert(sems.length === 2 && sems[1].batches.length === 7 && sems[0].termId === 'TERM_2025_ODD', 'semesters list both');
+  const me = expectStatus(await call('GET', '/student/me', { token: tokens.sem7 }), 200, 'me');
+  assert(me.semester === 7 && me.enrolments.length === 2, 'student is in semester 7 now and was in semester 5');
 }
 
 // ---------------------------------------------------------------- student
@@ -71,7 +72,7 @@ async function studentSeesOwnSemesterGrid() {
   const g7 = expectStatus(await call('GET', '/student/grid', { token: tokens.sem7 }), 200, 'sem 7 grid');
   assert(g7.semester.semester === 7 && g7.semester.periods.length === 9, 'semester 7 student gets the 9-period sheet grid');
   assert(g7.slots.length === 13 && g7.slots.every((s) => s.semester === 7), 'only semester 7 slots');
-  const g5 = expectStatus(await call('GET', '/student/grid', { token: tokens.sem5 }), 200, 'sem 5 grid');
+  const g5 = expectStatus(await call('GET', `/student/grid${SEM5}`, { token: tokens.sem5 }), 200, 'sem 5 grid');
   assert(g5.semester.semester === 5 && g5.slots.every((s) => s.semester === 5), 'semester 5 student gets the semester 5 grid');
   const offs = expectStatus(await call('GET', '/student/offerings', { token: tokens.sem7 }), 200, 'sem 7 offerings');
   assert(offs.length === 17 && offs.every((o) => o.course.semester === 7), 'semester 7 offerings only');
@@ -89,7 +90,7 @@ async function studentRegistersWithinTheRules() {
   assert(r.status === 409, 'a semester 5 slot must be refused for a semester 7 course');
 
   expectStatus(await call('POST', '/student/register', { token: t, body: { courseId: ml, slotCode: '7T4', professorId: 'P12' } }), 201, 'register ML');
-  expectStatus(await call('POST', '/student/register', { token: t, body: { courseId: mlLab, slotCode: '7L6', professorId: 'P12' } }), 201, 'register ML lab (G9, Friday)');
+  expectStatus(await call('POST', '/student/register', { token: t, body: { courseId: mlLab, slotCode: '7L6', professorId: 'P12' } }), 201, 'register ML lab (Friday)');
   expectStatus(await call('POST', '/student/register', { token: t, body: { courseId: nlp, slotCode: '7T1', professorId: 'P27' } }), 201, 'register NLP');
   r = await call('POST', '/student/register', { token: t, body: { courseId: bc, slotCode: '7T1', professorId: 'P14' } });
   assert(r.status === 409, 'second option in the same basket must be refused');
@@ -105,18 +106,19 @@ async function studentRegistersWithinTheRules() {
   expectStatus(await call('POST', '/student/register', { token: t, body: { courseId: bc, slotCode: '7T1', professorId: 'P14' } }), 201, 'switch basket option after dropping');
 
   const profs = expectStatus(await call('GET', `/student/professors?courseId=${ml}&slotCode=7T4`, { token: t }), 200, 'instructor list');
-  assert(profs.length === 1 && profs[0].professorId === 'P12' && profs[0].seatsRemaining === 69, 'ML seat counter reflects one registration');
+  const sheetProf = profs.find((p) => p.professorId === 'P12');
+  assert(sheetProf && sheetProf.seatsRemaining === 69, 'ML seat counter reflects one registration');
 }
 
 async function semester5StudentUnaffected() {
-  const offs = expectStatus(await call('GET', '/student/offerings', { token: tokens.sem5 }), 200, 'sem 5 offerings');
+  const offs = expectStatus(await call('GET', `/student/offerings${SEM5}`, { token: tokens.sem5 }), 200, 'sem 5 offerings');
   assert(offs.length === 9 && offs.every((o) => o.course.semester === 5 && !o.offering.electiveGroup), 'semester 5 keeps its 9 assigned courses');
   const ai = offs.find((o) => o.course.code === '23CP307T');
-  const profs = expectStatus(await call('GET', `/student/professors?courseId=${ai.course.courseId}&slotCode=A1`, { token: tokens.sem5 }), 200, 'AI instructors');
+  const profs = expectStatus(await call('GET', `/student/professors?courseId=${ai.course.courseId}&slotCode=A1&termId=TERM_2025_ODD`, { token: tokens.sem5 }), 200, 'AI instructors');
   const free = profs.find((p) => p.available && p.seatsRemaining > 0);
   assert(free, 'some AI instructor is free at A1');
-  expectStatus(await call('POST', '/student/register', { token: tokens.sem5, body: { courseId: ai.course.courseId, slotCode: 'A1', professorId: free.professorId } }), 201, 'register AI at A1');
-  const r = await call('POST', '/student/register', { token: tokens.sem5, body: { courseId: ai.course.courseId, slotCode: '7T2', professorId: free.professorId } });
+  expectStatus(await call('POST', '/student/register', { token: tokens.sem5, body: { courseId: ai.course.courseId, slotCode: 'A1', professorId: free.professorId, termId: 'TERM_2025_ODD' } }), 201, 'register AI at A1');
+  const r = await call('POST', '/student/register', { token: tokens.sem5, body: { courseId: ai.course.courseId, slotCode: '7T2', professorId: free.professorId, termId: 'TERM_2025_ODD' } });
   assert(r.status === 409, 'semester 7 slot refused for a semester 5 course');
 }
 
@@ -125,9 +127,10 @@ async function adminSeesSemesters() {
   const rows = expectStatus(await call('GET', '/admin/semesters', { token: tokens.admin }), 200, 'admin semesters');
   assert(rows.length === 2, 'two semesters');
   const s7 = rows.find((r) => r.semester === 7);
-  assert(s7.totals.students === 64 && s7.creditsRequired === 14, 'semester 7 summary');
+  const s5 = rows.find((r) => r.semester === 5);
+  assert(s7.totals.students === 60 && s5.totals.students === 60 && s7.creditsRequired === 14, 'both semesters have the same 60 students');
   const st = expectStatus(await call('GET', '/admin/status?semester=7', { token: tokens.admin }), 200, 'status sem 7');
-  assert(st.totals.students === 64 && Object.keys(st.byBatch).join() === 'CSE_2022_SEM7_DIV5', 'status filtered to semester 7');
+  assert(st.termId === 'TERM_2026_ODD' && Object.keys(st.byBatch).join() === 'CSE_2023_SEM7_DIV1', 'status filtered to semester 7');
   assert(st.professorCourseStatus.every((c) => c.courseId >= 'CS031'), 'seat table filtered to semester 7 courses');
 }
 
@@ -136,12 +139,11 @@ async function adminPublishesSemesterBySemester() {
   expectStatus(a, 200, 'make slots sem 7');
   assert(a.data.failures.length === 0, `make slots sem 7 failures: ${JSON.stringify(a.data.failures.slice(0, 2))}`);
 
-  // Semester 5 is incomplete, so a term-wide publish is refused…
-  const refused = await call('POST', '/scheduler/generate-timetable', { token: tokens.admin, body: {} });
-  assert(refused.status === 409, 'term-wide publish refused while semester 5 is incomplete');
-  // …but semester 7 can go on its own.
+  // Semester 5 (last year's term) is still incomplete, which does not block semester 7.
+  const refused = await call('POST', '/scheduler/generate-timetable', { token: tokens.admin, body: { semester: 5 } });
+  assert(refused.status === 409, 'semester 5 publish refused while it is incomplete');
   const p7 = expectStatus(await call('POST', '/scheduler/generate-timetable', { token: tokens.admin, body: { semester: 7 } }), 200, 'publish sem 7');
-  assert(p7.complete && p7.semester === 7 && p7.studentsComplete === 64, `publish sem 7: ${JSON.stringify({ ...p7, unplaced: undefined })}`);
+  assert(p7.complete && p7.semester === 7 && p7.studentsComplete === 60, `publish sem 7: ${JSON.stringify({ ...p7, unplaced: undefined })}`);
   const sem7Entries = await TimetableEntry.find({ semester: 7 }).lean();
   assert(sem7Entries.length === p7.assigned, 'semester 7 entries saved');
 
@@ -153,8 +155,10 @@ async function adminPublishesSemesterBySemester() {
     && after7.every((e) => sem7Entries.some((x) => x.sectionId === e.sectionId && x.roomId === e.roomId)),
   'publishing semester 5 leaves semester 7 untouched');
 
-  const st = expectStatus(await call('GET', '/admin/status', { token: tokens.admin }), 200, 'status');
-  assert(st.totals.studentsAllotted === st.totals.students, `every student allotted: ${st.totals.studentsAllotted}/${st.totals.students}`);
+  for (const semester of [5, 7]) {
+    const st = expectStatus(await call('GET', `/admin/status?semester=${semester}`, { token: tokens.admin }), 200, 'status');
+    assert(st.totals.studentsAllotted === st.totals.students, `sem ${semester}: every student allotted: ${st.totals.studentsAllotted}/${st.totals.students}`);
+  }
 }
 
 async function studentAndInstructorSeePublishedTimetable() {
@@ -174,11 +178,12 @@ async function studentAndInstructorSeePublishedTimetable() {
   const tt = expectStatus(await call('GET', '/professor/timetable', { token: tokens.prof }), 200, 'instructor timetable');
   const s7 = tt.filter((r) => r.semester === 7);
   assert(s7.some((r) => r.courseCode === '20CP417T' || r.courseCode === '20CP401T'), 'instructor sees semester 7 classes');
-  // No two of the instructor's meetings overlap, across both semesters.
+  assert(tt.some((r) => r.semester === 5), 'instructor also sees last year\'s semester 5 classes');
+  // No two of the instructor's meetings in the same semester overlap.
   for (let i = 0; i < tt.length; i++) {
     for (let j = i + 1; j < tt.length; j++) {
       const a = tt[i]; const b = tt[j];
-      if (a.day === b.day && a.startMinute < b.endMinute && b.startMinute < a.endMinute && a.slotCode !== b.slotCode) {
+      if (a.semester === b.semester && a.day === b.day && a.startMinute < b.endMinute && b.startMinute < a.endMinute && a.slotCode !== b.slotCode) {
         throw new Error(`instructor double-booked: ${a.courseCode} ${a.slotCode} / ${b.courseCode} ${b.slotCode}`);
       }
     }
@@ -196,13 +201,12 @@ async function instructorSavesPreferences() {
 
 async function adminResetsOneSemester() {
   const r = expectStatus(await call('POST', '/admin/reset-allocation', { token: tokens.admin, body: { semester: 7 } }), 200, 'reset sem 7');
-  assert(r.selectionsDeleted === 64 * 9, `expected 576 semester 7 selections removed, got ${r.selectionsDeleted}`);
-  const sem7Ids = (await Student.find({ semester: 7 }).lean()).map((s) => s.studentId);
-  assert(await Registration.countDocuments({ studentId: { $in: sem7Ids } }) === 0, 'semester 7 selections gone');
-  assert(await Registration.countDocuments() > 0, 'semester 5 selections kept');
+  assert(r.selectionsDeleted === 60 * 9, `expected 540 semester 7 selections removed, got ${r.selectionsDeleted}`);
+  assert(await Registration.countDocuments({ termId: 'TERM_2026_ODD' }) === 0, 'semester 7 selections gone');
+  assert(await Registration.countDocuments({ termId: 'TERM_2025_ODD' }) > 0, 'semester 5 selections kept');
   assert(await TimetableEntry.countDocuments({ semester: 7 }) === 0 && await TimetableEntry.countDocuments({ semester: 5 }) > 0,
     'only semester 7 timetable cleared');
-  const offs = await CourseOffering.countDocuments({ batchId: 'CSE_2022_SEM7_DIV5' });
+  const offs = await CourseOffering.countDocuments({ batchId: 'CSE_2023_SEM7_DIV1' });
   assert(offs === 17, 'offerings are not touched by a reset');
 }
 

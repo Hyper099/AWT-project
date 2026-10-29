@@ -48,8 +48,10 @@ router.get('/semesters', async (req, res) => {
 });
 
 router.get('/timetable', async (req, res) => {
-  const termId = req.query.termId || 'TERM_2026_ODD';
-  const entries = await TimetableEntry.find({ termId, professorId: req.user.professorId }).lean();
+  // Without a termId: every term, so the instructor can switch between semesters.
+  const q = { professorId: req.user.professorId };
+  if (req.query.termId) q.termId = req.query.termId;
+  const entries = await TimetableEntry.find(q).lean();
 
   const [slots, courses, rooms, buildings] = await Promise.all([
     Slot.find().lean(),

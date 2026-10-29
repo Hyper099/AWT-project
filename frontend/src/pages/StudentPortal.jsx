@@ -27,26 +27,38 @@ export default function StudentPortal() {
   const [grid, setGrid] = useState(null); // { semester: { periods, … }, slots }
   const [programme, setProgramme] = useState(null);
   const [picker, setPicker] = useState(null); // { day, period, combos, stage, selected }
+  // Semester toggle: the student's enrolments (Semester 5 last year, Semester 7 now); latest by default.
+  const [semesterList, setSemesterList] = useState([]);
+  const [termId, setTermId] = useState(null);
   const [dropTarget, setDropTarget] = useState(null);
   const [err, setErr] = useState('');
   const [msg, setMsg] = useState('');
   const [downloading, setDownloading] = useState(false);
 
+  useEffect(() => {
+    Promise.all([api.studentMe(auth.token), api.semesters(auth.token)]).then(([m, sems]) => {
+      const mine = (m.enrolments || []).map((e) => ({ ...e, name: sems.find((x) => x.semester === e.semester)?.name || `Semester ${e.semester}` }));
+      setSemesterList(mine);
+      setTermId((cur) => cur || mine[mine.length - 1]?.termId || DEFAULT_TERM_ID);
+    }).catch((e) => setErr(e.message));
+  }, [auth.token]);
+
   const loadAll = useCallback(async () => {
+    if (!termId) return;
     setErr('');
     try {
       const [m, o, r, s, tt, g, p] = await Promise.all([
         api.studentMe(auth.token),
-        api.studentOfferings(auth.token),
-        api.studentRegs(auth.token),
-        api.studentTimetableStatus(auth.token),
-        api.studentTimetable(auth.token),
-        api.studentGrid(auth.token),
-        api.studentProgramme(auth.token),
+        api.studentOfferings(auth.token, termId),
+        api.studentRegs(auth.token, termId),
+        api.studentTimetableStatus(auth.token, termId),
+        api.studentTimetable(auth.token, termId),
+        api.studentGrid(auth.token, termId),
+        api.studentProgramme(auth.token, termId),
       ]);
       setMe(m); setOfferings(o); setRegs(r); setStatus(s); setTimetable(tt); setGrid(g); setProgramme(p);
     } catch (e) { setErr(e.message); }
-  }, [auth.token]);
+  }, [auth.token, termId]);
 
   useEffect(() => { loadAll(); }, [loadAll]);
 
@@ -173,7 +185,7 @@ export default function StudentPortal() {
   async function onPickCourse(combo) {
     setPicker((p) => ({ ...p, stage: 'professor', selected: combo, professors: null, loading: true }));
     try {
-      const profs = await api.studentProfessors(auth.token, combo.course.courseId, combo.slot.slotCode);
+      const profs = await api.studentProfessors(auth.token, combo.course.courseId, combo.slot.slotCode, termId);
       setPicker((p) => p && p.selected?.course.courseId === combo.course.courseId
         ? { ...p, professors: profs, loading: false } : p);
     } catch (e) { setErr(e.message); setPicker(null); }
@@ -187,6 +199,7 @@ export default function StudentPortal() {
         courseId: picker.selected.course.courseId,
         slotCode: picker.selected.slot.slotCode,
         professorId,
+        termId,
       });
       setMsg(`Added ${picker.selected.course.code} · ${picker.selected.slot.slotCode}`);
       setPicker(null);
@@ -198,7 +211,7 @@ export default function StudentPortal() {
     if (!dropTarget) return;
     setErr(''); setMsg('');
     try {
-      await api.unregister(auth.token, dropTarget.courseId);
+      await api.unregister(auth.token, dropTarget.courseId, termId);
       setMsg(`Removed ${dropTarget.courseId}`);
       setDropTarget(null);
       await loadAll();
@@ -207,13 +220,13 @@ export default function StudentPortal() {
 
   async function download(format) {
     setDownloading(true); setErr('');
-    try { await api.downloadTimetable(auth.token, format); }
+    try { await api.downloadTimetable(auth.token, format, termId); }
     catch (e) { setErr(e.message); }
     finally { setDownloading(false); }
   }
 
-  if (!me) return <div className="container"><p className="muted">Loading…</p></div>;
-  const termId = status?.termId || DEFAULT_TERM_ID;
+  if (!me || !grid) return <div className="container"><p className="muted">Loading…</p></div>;
+  const viewing = grid.semester?.semester ?? me.semester;
 
   const selectedCount = offerings.filter((o) => o.selected).length;
   const allottedCount = offerings.filter((o) => allottedCourseIds.has(o.offering.courseId)).length;
@@ -228,8 +241,22 @@ export default function StudentPortal() {
           <div className="section-label">My semester</div>
           <h1 style={{ marginBottom: 4 }}>{me.name}</h1>
           <div className="muted mono" style={{ fontSize: 13 }}>
-            {me.studentId} · {[me.program, me.branch].filter(Boolean).join(' · ')} · Semester {me.semester}
+            {me.studentId} · {[me.program, me.branch].filter(Boolean).join(' · ')} · Semester {viewing}
           </div>
+          {semesterList.length > 1 && (
+            <div className="row tight" style={{ marginTop: 12, flex: 'unset' }} role="tablist" aria-label="Semester">
+              {semesterList.map((e) => (
+                <button
+                  key={e.termId}
+                  role="tab"
+                  aria-selected={e.termId === termId}
+                  className={e.termId === termId ? 'sm' : 'secondary sm'}
+                  style={{ flex: 'unset' }}
+                  onClick={() => { setPicker(null); setMsg(''); setTermId(e.termId); }}
+                >{e.name}</button>
+              ))}
+            </div>
+          )}
         </div>
         <div className="stat-grid" style={{ minWidth: 440 }}>
           <div className="stat"><div className="label">Term</div><div className="value" style={{ fontSize: 14 }}>{termId}</div></div>

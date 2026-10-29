@@ -13,16 +13,17 @@ import 'dotenv/config';
 import { connectDB, disconnectDB } from '../config/db.js';
 import { resetAllocation } from '../services/adminReset.js';
 import { allotSlots } from '../services/allotSlots.js';
+import { resolveTerm } from '../services/enrolment.js';
 
 async function main() {
   const args = process.argv.slice(2);
   const termIdx = args.indexOf('--term');
-  const termId = termIdx >= 0 ? args[termIdx + 1] : 'TERM_2026_ODD';
   const noReset = args.includes('--no-reset');
   const semIdx = args.indexOf('--semester');
   const semester = semIdx >= 0 ? Number(args[semIdx + 1]) : null;
   const uri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/vtop_system';
   await connectDB(uri);
+  const termId = await resolveTerm({ termId: termIdx >= 0 ? args[termIdx + 1] : null, semester });
   if (!noReset) {
     const r = await resetAllocation({ termId, semester });
     console.log('[allocate-all] reset ->', r);

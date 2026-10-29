@@ -15,11 +15,12 @@ function publishSummary(r) {
 
 export default function AdminDashboard() {
   const { auth } = useAuth();
-  const [termId, setTermId] = useState(DEFAULT_TERM_ID);
   const [batchId, setBatchId] = useState('');
-  const [semester, setSemester] = useState('');
+  const [semester, setSemester] = useState('7');
   const [batches, setBatches] = useState([]);
   const [semesters, setSemesters] = useState([]);
+  // Each semester runs in its own term (Semester 5 last year, Semester 7 now).
+  const termId = semesters.find((x) => String(x.semester) === String(semester))?.termId || DEFAULT_TERM_ID;
   const [status, setStatus] = useState(null);
   const [busy, setBusy] = useState(null);
   const [err, setErr] = useState('');
@@ -74,19 +75,18 @@ export default function AdminDashboard() {
         Stage 1 — <strong>Make Slots</strong> applies each semester's programme (every core course,
         one option from each elective basket, and the matching lab sessions) and places each student
         into an instructor and time slot. Stage 2 — <strong>Publish Timetable</strong> allocates rooms
-        and buildings, then emails each student whose timetable is complete. Semesters share rooms and
-        faculty, so a semester can be published on its own and the others are worked around.
+        and buildings, then emails each student whose timetable is complete. Each semester is published in its own term.
       </p>
 
       {semesters.length > 0 && (
         <div className="card">
           <h2>Semesters this term</h2>
-          <p className="muted" style={{ marginBottom: 12 }}>Pick a row to scope everything below to that semester.</p>
+          <p className="muted" style={{ marginBottom: 12 }}>Pick a semester; everything below works on it.</p>
           <table>
             <thead>
               <tr>
                 <th>Semester</th><th>Batches</th><th>Students</th><th>Registered</th>
-                <th>Timetable issued</th><th>Sections</th><th>Credits</th><th>Source</th><th></th>
+                <th>Timetable issued</th><th>Sections</th><th>Credits</th><th></th>
               </tr>
             </thead>
             <tbody>
@@ -99,12 +99,11 @@ export default function AdminDashboard() {
                   <td>{x.totals.studentsAllotted} / {x.totals.students}</td>
                   <td>{x.totals.sections}</td>
                   <td>{x.creditsRequired}</td>
-                  <td className="faint" style={{ fontSize: 12 }}>{x.timetableSource || '—'}</td>
                   <td style={{ textAlign: 'right' }}>
                     <button
                       className={String(semester) === String(x.semester) ? 'sm' : 'secondary sm'}
-                      onClick={() => { setSemester(String(semester) === String(x.semester) ? '' : String(x.semester)); setBatchId(''); }}
-                    >{String(semester) === String(x.semester) ? 'Show all' : 'Select'}</button>
+                      onClick={() => { setSemester(String(x.semester)); setBatchId(''); }}
+                    >{String(semester) === String(x.semester) ? 'Selected' : 'Select'}</button>
                   </td>
                 </tr>
               ))}
@@ -117,12 +116,11 @@ export default function AdminDashboard() {
         <div className="row" style={{ alignItems: 'flex-end', flexWrap: 'wrap' }}>
           <div className="form-row" style={{ marginBottom: 0, flex: '1 1 180px' }}>
             <label>Term</label>
-            <input value={termId} onChange={(e) => setTermId(e.target.value)} />
+            <input value={termId} readOnly />
           </div>
           <div className="form-row" style={{ marginBottom: 0, flex: '1 1 140px' }}>
             <label>Semester</label>
             <select value={semester} onChange={(e) => { setSemester(e.target.value); setBatchId(''); }}>
-              <option value="">All</option>
               {semesterOptions.map((s) => <option key={s} value={s}>Sem {s}</option>)}
             </select>
           </div>

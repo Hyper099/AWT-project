@@ -6,6 +6,7 @@ import ProfessorCapacity from '../models/ProfessorCapacity.js';
 import Registration from '../models/Registration.js';
 import Student from '../models/Student.js';
 import { getLiveSeatUsageMap } from './seatStatus.js';
+import { inTerm } from './enrolment.js';
 
 function seatsUsedFor(liveUsage, professorId, courseId) {
   return liveUsage[`${professorId}|${courseId}`] || 0;
@@ -16,7 +17,7 @@ function seatsUsedFor(liveUsage, professorId, courseId) {
  * Returns rows of { offering, course, selected, allotted, registration }.
  */
 export async function offeringsForStudent(studentId, termId = DEFAULT_TERM_ID) {
-  const student = await Student.findOne({ studentId }).lean();
+  const student = inTerm(await Student.findOne({ studentId }).lean(), termId);
   if (!student) return [];
 
   const [offerings, regs] = await Promise.all([
