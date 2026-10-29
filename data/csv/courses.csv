@@ -29,20 +29,20 @@ CS027,20IF201P,Mechanical Lab,ME,Industry - 4.0,1,2,yes,Lab,lab,LAB_1,30,active,
 CS028,20IF201P,ICT Lab,ICT,Industry - 4.0,1,2,yes,Lab,lab,LAB_1,30,active,5
 CS029,20IF201P,Chemical Lab,CE,Industry - 4.0,1,2,yes,Lab,lab,LAB_1,30,active,5
 CS030,20IF201P,Electrical Lab,EE,Industry - 4.0,1,2,yes,Lab,lab,LAB_1,30,active,5
-CS031,20CP401P,Machine Learning Lab,CSE,Core,1,2,yes,Lab,lab,LAB_1,64,active,7
-CS032,20CP401T,Machine Learning,CSE,Core,2,2,no,Lecture,theory,THEORY_2,64,active,7
-CS033,20CP405P,Natural Language Processing Lab,CSE,Program Elective,1,2,yes,Lab,lab,LAB_1,22,active,7
-CS034,20CP405T,Natural Language Processing,CSE,Program Elective,2,2,no,Lecture,theory,THEORY_2,22,active,7
-CS035,20CP406P,BlockChain Technology Lab,CSE,Program Elective,1,2,yes,Lab,lab,LAB_1,22,active,7
-CS036,20CP406T,BlockChain Technology,CSE,Program Elective,2,2,no,Lecture,theory,THEORY_2,22,active,7
-CS037,20CP408P,Agile Methodology & DevOps Lab,CSE,Program Elective,1,2,yes,Lab,lab,LAB_1,22,active,7
-CS038,20CP408T,Agile Methodology & DevOps,CSE,Program Elective,2,2,no,Lecture,theory,THEORY_2,22,active,7
-CS039,20CP411P,Digital Forensics Lab,CSE,Program Elective,1,2,yes,Lab,lab,LAB_1,32,active,7
-CS040,20CP411T,Digital Forensics,CSE,Program Elective,2,2,no,Lecture,theory,THEORY_2,32,active,7
-CS041,20CP412P,Pattern Recognition Lab,CSE,Program Elective,1,2,yes,Lab,lab,LAB_1,32,active,7
-CS042,20CP412T,Pattern Recognition,CSE,Program Elective,2,2,no,Lecture,theory,THEORY_2,32,active,7
-CS043,20CP415T,Service-Oriented Architecture,CSE,Program Elective,3,3,no,Lecture,theory,THEORY_3,22,active,7
-CS044,20CP417T,Information Retrieval,CSE,Program Elective,3,3,no,Lecture,theory,THEORY_3,22,active,7
-CS045,23CP402T,Data Intelligence & Modelling,CSE,Program Elective,3,3,no,Lecture,theory,THEORY_3,22,active,7
-CS046,23CP403P,Internet of Things Lab,CSE,Core,1,2,yes,Lab,lab,LAB_1,64,active,7
-CS047,23CP403T,Internet of Things,CSE,Core,1,1,no,Lecture,theory,THEORY_1,64,active,7
+CS031,20CP401P,Machine Learning Lab,CSE,Core,1,2,yes,Lab,lab,LAB_1,472,active,7
+CS032,20CP401T,Machine Learning,CSE,Core,2,2,no,Lecture,theory,THEORY_2,472,active,7
+CS033,20CP405P,Natural Language Processing Lab,CSE,Program Elective,1,2,yes,Lab,lab,LAB_1,158,active,7
+CS034,20CP405T,Natural Language Processing,CSE,Program Elective,2,2,no,Lecture,theory,THEORY_2,158,active,7
+CS035,20CP406P,BlockChain Technology Lab,CSE,Program Elective,1,2,yes,Lab,lab,LAB_1,158,active,7
+CS036,20CP406T,BlockChain Technology,CSE,Program Elective,2,2,no,Lecture,theory,THEORY_2,158,active,7
+CS037,20CP408P,Agile Methodology & DevOps Lab,CSE,Program Elective,1,2,yes,Lab,lab,LAB_1,158,active,7
+CS038,20CP408T,Agile Methodology & DevOps,CSE,Program Elective,2,2,no,Lecture,theory,THEORY_2,158,active,7
+CS039,20CP411P,Digital Forensics Lab,CSE,Program Elective,1,2,yes,Lab,lab,LAB_1,236,active,7
+CS040,20CP411T,Digital Forensics,CSE,Program Elective,2,2,no,Lecture,theory,THEORY_2,236,active,7
+CS041,20CP412P,Pattern Recognition Lab,CSE,Program Elective,1,2,yes,Lab,lab,LAB_1,236,active,7
+CS042,20CP412T,Pattern Recognition,CSE,Program Elective,2,2,no,Lecture,theory,THEORY_2,236,active,7
+CS043,20CP415T,Service-Oriented Architecture,CSE,Program Elective,3,3,no,Lecture,theory,THEORY_3,158,active,7
+CS044,20CP417T,Information Retrieval,CSE,Program Elective,3,3,no,Lecture,theory,THEORY_3,158,active,7
+CS045,23CP402T,Data Intelligence & Modelling,CSE,Program Elective,3,3,no,Lecture,theory,THEORY_3,158,active,7
+CS046,23CP403P,Internet of Things Lab,CSE,Core,1,2,yes,Lab,lab,LAB_1,472,active,7
+CS047,23CP403T,Internet of Things,CSE,Core,1,1,no,Lecture,theory,THEORY_1,472,active,7

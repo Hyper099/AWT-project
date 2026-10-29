@@ -1,16 +1,13 @@
 import Registration from '../models/Registration.js';
 import TimetableEntry from '../models/TimetableEntry.js';
 import ProfessorCapacity from '../models/ProfessorCapacity.js';
-import Student from '../models/Student.js';
+import { studentsInTerm } from './enrolment.js';
 
 /** Student ids in scope, or null for the whole term. */
-async function scopedStudentIds({ studentId = null, batchId = null, semester = null }) {
+async function scopedStudentIds({ termId, studentId = null, batchId = null, semester = null }) {
   if (studentId) return [studentId];
   if (!batchId && !semester) return null;
-  const q = {};
-  if (batchId) q.batchId = batchId;
-  if (semester) q.semester = Number(semester);
-  return (await Student.find(q, { studentId: 1 }).lean()).map((s) => s.studentId);
+  return (await studentsInTerm(termId, { semester, batchId })).map((s) => s.studentId);
 }
 
 /** Recomputes every seat counter in the term from the registrations left. */
@@ -42,7 +39,7 @@ async function recountSeats(termId) {
  */
 export async function resetSelections({ termId = 'TERM_2026_ODD', studentId = null, batchId = null, semester = null } = {}) {
   const q = { termId };
-  const ids = await scopedStudentIds({ studentId, batchId, semester });
+  const ids = await scopedStudentIds({ termId, studentId, batchId, semester });
   if (ids) q.studentId = { $in: ids };
   const deleted = await Registration.deleteMany(q);
   await recountSeats(termId);
@@ -55,7 +52,7 @@ export async function resetSelections({ termId = 'TERM_2026_ODD', studentId = nu
  */
 export async function resetAllocation({ termId = 'TERM_2026_ODD', semester = null } = {}) {
   if (semester) {
-    const ids = await scopedStudentIds({ semester });
+    const ids = await scopedStudentIds({ termId, semester });
     const [regs, entries] = await Promise.all([
       Registration.deleteMany({ termId, studentId: { $in: ids } }),
       TimetableEntry.deleteMany({ termId, semester: Number(semester) }),

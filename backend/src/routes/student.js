@@ -13,6 +13,7 @@ import { requireAuth, requireRole } from '../middleware/auth.js';
 import { slotsClash, SLOT_BY_CODE } from '../scheduler/slots.js';
 import { offeringsForStudent, professorsForCourse } from '../services/offerings.js';
 import { programmeProgress, slotsForOffering } from '../services/programme.js';
+import { studentInTerm } from '../services/enrolment.js';
 import {
   buildTimetableRows,
   timetableStatus,
@@ -38,7 +39,7 @@ router.get('/me', async (req, res) => {
 
 /** The student's semester: bell schedule (periods) and the slots of its grid. */
 router.get('/grid', async (req, res) => {
-  const student = await Student.findOne({ studentId: req.user.studentId }).lean();
+  const student = await studentInTerm(req.user.studentId, req.query.termId || 'TERM_2026_ODD');
   if (!student) return res.status(404).json({ error: 'student not found' });
   const [semester, slots] = await Promise.all([
     Semester.findOne({ semester: student.semester }).lean(),
@@ -50,7 +51,7 @@ router.get('/grid', async (req, res) => {
 /** Compulsory courses, elective baskets, and how far the student has got. */
 router.get('/programme', async (req, res) => {
   const termId = req.query.termId || 'TERM_2026_ODD';
-  const student = await Student.findOne({ studentId: req.user.studentId }).lean();
+  const student = await studentInTerm(req.user.studentId, termId);
   if (!student) return res.status(404).json({ error: 'student not found' });
   const [offerings, regs, semester] = await Promise.all([
     CourseOffering.find({ termId, batchId: student.batchId }).lean(),
@@ -102,7 +103,8 @@ router.post('/register', async (req, res) => {
   const professorId = requireString(body, 'professorId');
   const termId = optionalString(body, 'termId') || 'TERM_2026_ODD';
 
-  const student = await Student.findOne({ studentId: req.user.studentId }).lean();
+  const student = await studentInTerm(req.user.studentId, termId);
+  if (!student) return res.status(403).json({ error: 'you are not enrolled in this term' });
   const [course, offering, slot, batchOfferings] = await Promise.all([
     Course.findOne({ courseId }).lean(),
     CourseOffering.findOne({ termId, courseId, batchId: student?.batchId }).lean(),

@@ -79,8 +79,7 @@ export default function Login() {
             </button>
             {showDemo && (
               <div className="demo-creds">
-                <div><span className="faint">Student · Sem 5</span> <span className="mono">23bcp332</span> · <span className="mono">ts@23bcp332</span></div>
-                <div><span className="faint">Student · Sem 7</span> <span className="mono">22bcp601</span> · <span className="mono">ts@22bcp601</span></div>
+                <div><span className="faint">Student · Sem 5 &amp; 7</span> <span className="mono">23bcp001</span> · <span className="mono">ts@23bcp001</span></div>
                 <div><span className="faint">Instructor</span> <span className="mono">p12</span> · <span className="mono">welcome@P12</span></div>
                 <div><span className="faint">Admin</span> <span className="mono">admin</span> · <span className="mono">admin@123</span></div>
               </div>

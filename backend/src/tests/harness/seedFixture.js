@@ -3,7 +3,7 @@ import { loadData } from '../../seed/loadData.js';
 /**
  * Loads the project CSVs into the connected test database through the same
  * loader `npm run seed` uses, scoped to keep the suite fast: the first 60
- * Semester 5 students (Div-1) and the whole Semester 7 division. Selections
+ * students (Div-1), enrolled in Semester 5 last year and Semester 7 now. Selections
  * are left out; suites create them with the allocator or the API.
  */
 export const FIXTURE_SEM5_STUDENTS = 60;

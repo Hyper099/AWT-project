@@ -16,7 +16,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { connectDB, disconnectDB } from '../config/db.js';
 import Registration from '../models/Registration.js';
-import Student from '../models/Student.js';
+import { resolveTerm, studentsInTerm } from '../services/enrolment.js';
 import { dataDir, readCsv } from '../seed/csvLoader.js';
 
 const HEADER = [
@@ -27,15 +27,15 @@ const HEADER = [
 async function main() {
   const args = process.argv.slice(2);
   const termIdx = args.indexOf('--term');
-  const termId = termIdx >= 0 ? args[termIdx + 1] : 'TERM_2026_ODD';
   const semIdx = args.indexOf('--semester');
   const semester = semIdx >= 0 ? Number(args[semIdx + 1]) : null;
   await connectDB(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/vtop_system');
+  const termId = await resolveTerm({ termId: termIdx >= 0 ? args[termIdx + 1] : null, semester });
 
   // Keep the seed's order: students as listed in students.csv, then their
   // registrations in creation order.
   const [students, allRegs] = await Promise.all([
-    Student.find(semester ? { semester } : {}).lean(),
+    studentsInTerm(termId, { semester }),
     Registration.find({ termId }).sort({ _id: 1 }).lean(),
   ]);
   const order = new Map(students.map((s, i) => [s.studentId, i]));
@@ -43,7 +43,9 @@ async function main() {
   regs.sort((a, b) => (order.get(a.studentId) ?? 0) - (order.get(b.studentId) ?? 0));
 
   const file = path.join(dataDir(), 'student_course_selections.csv');
-  const kept = semester ? readCsv(dataDir(), 'student_course_selections.csv').filter((r) => !order.has(r.student_id)) : [];
+  // Rows of other terms (or of other students in this term) stay as they are.
+  const kept = readCsv(dataDir(), 'student_course_selections.csv')
+    .filter((r) => r.term_id !== termId || (semester && !order.has(r.student_id)));
   const start = Date.parse('2026-04-15T09:00:00Z');
   const lines = [HEADER.join(',')];
   regs.forEach((r, i) => {

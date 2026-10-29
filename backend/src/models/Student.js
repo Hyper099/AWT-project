@@ -14,8 +14,17 @@ const StudentSchema = new mongoose.Schema(
     email: String,
     status: { type: String, default: 'active' },
     creditsRequired: { type: Number, default: 20 },
+    /** One batch per term: Semester 5 last year, Semester 7 now. `batchId`/`semester` above are the latest. */
+    enrolments: {
+      type: [{
+        termId: String, semester: Number, batchId: String, division: String, group: String, _id: false,
+      }],
+      default: [],
+    },
   },
   { timestamps: true }
 );
+
+StudentSchema.index({ 'enrolments.termId': 1 });
 
 export default mongoose.model('Student', StudentSchema);

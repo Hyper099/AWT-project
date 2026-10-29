@@ -11,6 +11,7 @@ import { requireAuth, requireRole } from '../middleware/auth.js';
 import { runScheduler, findSelectionConflicts } from '../scheduler/algorithm.js';
 import { notifyStudents } from '../services/notifyStudents.js';
 import { cohortStatus } from '../services/adminStatus.js';
+import { resolveTerm, studentsInTerm } from '../services/enrolment.js';
 
 const router = asyncRouter();
 const plural = (n, one, many) => `${n} ${n === 1 ? one : many}`;
@@ -25,9 +26,9 @@ router.use(requireAuth, requireRole('admin'));
  * room are notified; the response lists what could not be placed.
  */
 router.post('/generate-timetable', async (req, res) => {
-  const termId = typeof req.body?.termId === 'string' ? req.body.termId : 'TERM_2026_ODD';
   const force = req.body?.force === true;
   const semester = req.body?.semester == null || req.body.semester === '' ? null : Number(req.body.semester);
+  const termId = await resolveTerm({ termId: typeof req.body?.termId === 'string' ? req.body.termId : null, semester });
   if (semester !== null && !(await Semester.exists({ semester }))) {
     return res.status(404).json({ error: `semester ${req.body.semester} not found` });
   }
@@ -37,7 +38,7 @@ router.post('/generate-timetable', async (req, res) => {
     Room.find().lean(),
     Building.find().lean(),
     Professor.find().lean(),
-    Student.find(semester ? { semester } : {}).lean(),
+    studentsInTerm(termId, { semester }),
     Registration.find({ termId }).lean(),
     semester ? TimetableEntry.find({ termId, semester: { $ne: semester } }).lean() : [],
   ]);

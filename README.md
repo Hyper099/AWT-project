@@ -57,13 +57,16 @@ Open http://localhost:5173.
 
 ## Semesters
 
-The odd term runs two semester cohorts side by side. They share rooms and
-faculty, so the scheduler works across both.
+The 23BCP cohort did Semester 5 last year (term `TERM_2025_ODD`) and is in
+Semester 7 now (`TERM_2026_ODD`). Each student has an enrolment per term; the
+portal opens on Semester 7 and has a toggle for Semester 5. Each semester is
+scheduled in its own term.
 
 | | Semester 5 | Semester 7 |
 |---|---|---|
 | Source | `todos/todo3.md` rules | `B.Tech_CE_2023_Sem 7_Div_5.xlsx` (published timetable) |
-| Cohort | 7 divisions, 472 students (`23BCP…`) | Div-5 (G9, G10), 64 sample students (`22BCP601`–`22BCP664`) |
+| Term | `TERM_2025_ODD` | `TERM_2026_ODD` (current) |
+| Cohort | 7 divisions, 472 students (`23BCP…`) | the same 472 students and divisions |
 | Bell schedule | on the hour, 09:00–18:00, lunch 13:00 | the sheet's periods: 09:00, 10:00, 11:10, 12:10, 13:10, 14:10, 15:10, 16:15, 17:15 |
 | Slots | `A1`…`LR`, any slot of the course's family | `7T1`–`7T7`, `7L1`–`7L6`, each course at its fixed time |
 | Programme | 9 courses assigned per division (17 credits) | ML + IoT with labs, and one option from each of three elective baskets (14 credits) |
@@ -79,17 +82,18 @@ The importer reads the header, periods, timetable cells, faculty and subject tab
 `semesters.csv`, `semester_periods.csv`, and the semester's rows in `time_slots.csv`, `courses.csv`,
 `course_offerings.csv`, `professors.csv`, instructor eligibility/capacity and `rooms.csv`. Elective
 baskets come from courses that run in parallel plus the sheet's "LUNCH BREAK for X Students" notes.
-What the sheet lacks is generated as sample data and listed at the top of the script: students and
-logins, their elective choices, seat limits, credits (weekly lectures; 1 per lab) and lab length (two
-periods). The 08:00 minor column is not imported. Re-running it replaces the semester's rows.
+The Semester 5 batches move up into Semester 7 batches (all seven divisions use the published Div-5
+timetable) and `student_enrolments.csv` records each student's Semester 7 batch. What the sheet lacks
+is generated as sample data and listed at the top of the script: extra instructors per course so seven
+divisions fit at the sheet's times, seat limits, credits (weekly lectures; 1 per lab) and lab length
+(two periods). The 08:00 minor column is not imported. Re-running it replaces the semester's rows.
 
-Semester 5 selections were rebuilt around Semester 7's fixed times, because seven instructors teach
-in both semesters:
+Semester 7 selections come from the allocator:
 
 ```bash
 npm --prefix backend run seed
-node backend/src/scripts/allocate-all.js --semester 5
-node backend/src/scripts/export-selections.js --semester 5
+node backend/src/scripts/allocate-all.js --semester 7
+node backend/src/scripts/export-selections.js --semester 7
 npm --prefix backend run audit     # programmes complete, no clashes, every section gets a room
 ```
 
@@ -97,7 +101,7 @@ npm --prefix backend run audit     # programmes complete, no clashes, every sect
 
 ### Student (single-page portal)
 
-Login with `23bcp001` / `ts@23bcp001` (Semester 5) or `22bcp601` / `ts@22bcp601` (Semester 7). Everything — profile, registration, timetable preview, and the final allotment — lives on one page (`/student`). The grid uses the student's own semester's periods and slots.
+Login with `23bcp001` / `ts@23bcp001`. The portal opens on Semester 7; the Semester 5 button shows last year's courses. Everything — profile, registration, timetable preview, and the final allotment — lives on one page (`/student`). The grid uses the student's own semester's periods and slots.
 
 - Click an **available** slot in the weekly grid to add a course.
 - **Selected** cells show courses you have registered. Click to drop.
@@ -141,8 +145,7 @@ Additional new endpoints:
 
 ## Default accounts
 
-- Student (Semester 5): `23bcp001` / `ts@23bcp001`
-- Student (Semester 7): `22bcp601` / `ts@22bcp601`
+- Student (Semesters 5 and 7): `23bcp001` / `ts@23bcp001`
 - Instructor: `p1` / `welcome@P1` (Semester 5), `p12` / `welcome@P12` (Semesters 5 and 7)
 - Admin: `admin` / `admin@123`
 

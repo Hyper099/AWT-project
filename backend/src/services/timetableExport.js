@@ -7,6 +7,7 @@ import TimetableEntry from '../models/TimetableEntry.js';
 import Room from '../models/Room.js';
 import Building from '../models/Building.js';
 import Professor from '../models/Professor.js';
+import { inTerm } from './enrolment.js';
 
 const DAY_ORDER = { MON: 1, TUE: 2, WED: 3, THU: 4, FRI: 5, SAT: 6, SUN: 7 };
 
@@ -25,7 +26,7 @@ export async function buildTimetableRows(studentId, termId = 'TERM_2026_ODD') {
   const courseIds = regs.map((r) => r.courseId);
 
   const [student, courses, slots, entries, rooms, buildings, professors] = await Promise.all([
-    Student.findOne({ studentId }).lean(),
+    Student.findOne({ studentId }).lean().then((s) => inTerm(s, termId) || s),
     Course.find({ courseId: { $in: courseIds } }).lean(),
     Slot.find().lean(),
     TimetableEntry.find({ termId, courseId: { $in: courseIds } }).lean(),
