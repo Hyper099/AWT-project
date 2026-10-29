@@ -12,7 +12,7 @@ const MeetingSchema = new mongoose.Schema(
 /**
  * A Slot is a named bundle of meeting times. `family` drives the hard
  * credit→slot compatibility rule (a 3-credit theory course can only use
- * slots in THEORY_3).
+ * slots in THEORY_3) within the course's semester.
  */
 const SlotSchema = new mongoose.Schema(
   {
@@ -24,6 +24,8 @@ const SlotSchema = new mongoose.Schema(
       index: true,
     },
     meetings: { type: [MeetingSchema], required: true },
+    /** Each semester has its own timetable grid; a slot belongs to one. */
+    semester: { type: Number, default: 5, index: true },
   },
   { timestamps: true }
 );

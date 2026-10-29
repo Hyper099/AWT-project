@@ -18,9 +18,10 @@ function buildTransport() {
     return { transport, mode: 'smtp' };
   }
 
-  // Dev fallback: log-only transport. Returns a resolved "info" so callers don't break.
+  // Dev fallback: log-only transport (MAIL_LOG=off silences it, e.g. in tests). Returns a resolved "info" so callers don't break.
   const transport = {
     sendMail: async (opts) => {
+      if (process.env.MAIL_LOG === 'off') return { messageId: `dev-${Date.now()}` };
       const line = `[mail:dev] to=${opts.to} subject="${opts.subject}"`;
       console.log(line);
       if (opts.text) console.log(`[mail:dev]   ${opts.text.replace(/\n/g, '\n[mail:dev]   ')}`);

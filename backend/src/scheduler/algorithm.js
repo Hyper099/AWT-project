@@ -16,8 +16,12 @@ import { buildingDistance } from './distance.js';
  *     - Room near-fit: prefer the smallest feasible room (within +50% tolerance).
  *     - Student travel distance (from building_distances.csv).
  *     - Professor preferred slot hit.
+ *
+ * `preBooked` holds timetable entries that stay as they are (another
+ * semester's published sections): their rooms and instructors are treated as
+ * busy at those times, since semesters share both.
  */
-export function runScheduler({ courses, rooms, buildings, professors, students, registrations, termId }) {
+export function runScheduler({ courses, rooms, buildings, professors, students, registrations, termId, preBooked = [] }) {
   const clashIdx = buildClashIndex();
   const courseById = Object.fromEntries(courses.map((c) => [c.courseId, c]));
   const roomsByType = { theory: [], lab: [] };
@@ -25,12 +29,20 @@ export function runScheduler({ courses, rooms, buildings, professors, students, 
   const buildingsById = Object.fromEntries(buildings.map((b) => [b.buildingId, b]));
 
   // Group registrations into sections keyed by (courseId|slotCode|professorId).
-  // Registrations without an assigned professor are not schedulable here
-  // (phase-1 failed to allot them); we skip them and surface them in status.
+  // Every section that cannot be placed is recorded in `unplaced` with a
+  // reason, so callers can report an incomplete timetable instead of hiding it.
   const sectionMap = new Map();
-  let skippedNoProf = 0;
+  const unplaced = [];
+  const noProf = registrations.filter((r) => !r.professorId);
+  if (noProf.length) {
+    unplaced.push({
+      courseId: null, slotCode: null, professorId: null,
+      studentIds: noProf.map((r) => r.studentId),
+      reason: 'registration has no instructor',
+    });
+  }
   for (const reg of registrations) {
-    if (!reg.professorId) { skippedNoProf += 1; continue; }
+    if (!reg.professorId) continue;
     const key = `${reg.courseId}|${reg.slotCode}|${reg.professorId}`;
     if (!sectionMap.has(key)) {
       sectionMap.set(key, {
@@ -42,7 +54,6 @@ export function runScheduler({ courses, rooms, buildings, professors, students, 
     }
     sectionMap.get(key).studentIds.push(reg.studentId);
   }
-  if (skippedNoProf) console.warn(`[scheduler] ${skippedNoProf} registrations skipped (no professor assigned)`);
   const sections = [...sectionMap.values()];
 
   // Hardest-first ordering: largest cohorts and lab courses get rooms first.
@@ -54,6 +65,10 @@ export function runScheduler({ courses, rooms, buildings, professors, students, 
     return b.studentIds.length - a.studentIds.length;
   });
 
+  // Instructor occupancy: a second section for the same instructor in the
+  // same or an overlapping slot is rejected (stage 1 should prevent this, but
+  // data imported from CSV is not guaranteed to be clean).
+  const profSlotBusy = new Set(); // `${professorId}|${slotCode}`
   const roomSlotBusy = new Map(); // `${roomId}|${slotCode}` → true (plus clashers)
   const markBusy = (key) => roomSlotBusy.set(key, true);
   const isBusy = (key) => roomSlotBusy.has(key);
@@ -62,17 +77,28 @@ export function runScheduler({ courses, rooms, buildings, professors, students, 
     for (const c of clashIdx[slotCode] || []) markBusy(`${roomId}|${c}`);
   };
 
+  for (const e of preBooked) {
+    markSlotGroup(e.roomId, e.slotCode);
+    profSlotBusy.add(`${e.professorId}|${e.slotCode}`);
+    for (const c of clashIdx[e.slotCode] || []) profSlotBusy.add(`${e.professorId}|${c}`);
+  }
+
   const assignments = [];
 
   for (const sec of sections) {
+    const skip = (reason) => unplaced.push({ ...sec, reason });
     const course = courseById[sec.courseId];
-    if (!course) continue;
+    if (!course) { skip('unknown course'); continue; }
     const slot = SLOT_BY_CODE[sec.slotCode];
-    if (!slot) continue;
+    if (!slot) { skip('unknown slot'); continue; }
 
     // Slot-family hard constraint: course.slotFamily must match slot.family.
     if (course.slotFamily && slot.family && course.slotFamily !== slot.family) {
-      console.warn(`[scheduler] slot-family mismatch: ${course.courseId} (${course.slotFamily}) ≠ slot ${slot.slotCode} (${slot.family})`);
+      skip(`slot ${slot.slotCode} (${slot.family}) does not match course family ${course.slotFamily}`);
+      continue;
+    }
+    if (profSlotBusy.has(`${sec.professorId}|${sec.slotCode}`)) {
+      skip('instructor already teaching at this time');
       continue;
     }
 
@@ -101,13 +127,15 @@ export function runScheduler({ courses, rooms, buildings, professors, students, 
       cands.push({ room, cost, waste, travel });
     }
     if (!cands.length) {
-      console.warn(`[scheduler] no feasible room for ${sec.courseId}/${sec.slotCode} (enrolled=${enrolled})`);
+      skip(`no free ${wantLab ? 'lab' : 'lecture'} room with ${enrolled}+ seats`);
       continue;
     }
     cands.sort((a, b) => a.cost - b.cost);
     const pick = cands[0];
 
     markSlotGroup(pick.room.roomId, sec.slotCode);
+    profSlotBusy.add(`${sec.professorId}|${sec.slotCode}`);
+    for (const c of clashIdx[sec.slotCode] || []) profSlotBusy.add(`${sec.professorId}|${c}`);
     const asg = {
       termId,
       courseId: sec.courseId,
@@ -118,6 +146,7 @@ export function runScheduler({ courses, rooms, buildings, professors, students, 
       professorId: sec.professorId,
       enrolled,
       capacity: pick.room.capacity,
+      semester: course.semester,
       _studentIds: sec.studentIds,
     };
     assignments.push(asg);
@@ -128,5 +157,53 @@ export function runScheduler({ courses, rooms, buildings, professors, students, 
   const score = scoreTimetable({
     assignments: cleanAssignments, students, registrations, rooms, buildings, professors,
   });
-  return { assignments: cleanAssignments, score };
+  if (unplaced.length) {
+    const regs = unplaced.reduce((n, u) => n + u.studentIds.length, 0);
+    console.warn(`[scheduler] ${unplaced.length} sections (${regs} registrations) could not be placed`);
+  }
+  return { assignments: cleanAssignments, score, unplaced, sectionsTotal: sections.length };
+}
+
+/**
+ * Hard-constraint violations already present in stage-1 selections: pairs of
+ * a student's courses whose slots overlap, and instructors booked into
+ * overlapping slots for different sections.
+ */
+export function findSelectionConflicts(registrations) {
+  const clashIdx = buildClashIndex();
+  const overlaps = (a, b) => a === b || clashIdx[a]?.has(b);
+
+  const byStudent = {};
+  for (const r of registrations) (byStudent[r.studentId] ||= []).push(r);
+  const studentClashes = [];
+  for (const [studentId, regs] of Object.entries(byStudent)) {
+    for (let i = 0; i < regs.length; i++) {
+      for (let j = i + 1; j < regs.length; j++) {
+        if (overlaps(regs[i].slotCode, regs[j].slotCode)) {
+          studentClashes.push({ studentId, courses: [regs[i].courseId, regs[j].courseId], slots: [regs[i].slotCode, regs[j].slotCode] });
+        }
+      }
+    }
+  }
+
+  const sectionsByProf = {};
+  const seen = new Set();
+  for (const r of registrations) {
+    if (!r.professorId) continue;
+    const key = `${r.courseId}|${r.slotCode}|${r.professorId}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    (sectionsByProf[r.professorId] ||= []).push(r);
+  }
+  const instructorClashes = [];
+  for (const [professorId, secs] of Object.entries(sectionsByProf)) {
+    for (let i = 0; i < secs.length; i++) {
+      for (let j = i + 1; j < secs.length; j++) {
+        if (overlaps(secs[i].slotCode, secs[j].slotCode)) {
+          instructorClashes.push({ professorId, courses: [secs[i].courseId, secs[j].courseId], slots: [secs[i].slotCode, secs[j].slotCode] });
+        }
+      }
+    }
+  }
+  return { studentClashes, instructorClashes };
 }

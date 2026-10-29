@@ -14,6 +14,9 @@ Rules (semester 5 CSE):
   - Every student gets: 2 compulsory theory + 2 compulsory labs
     + 2 core-elective theory + 2 core-elective labs + 1 open elective = 9 courses.
 
+This script only knows semester 5 and rewrites the files below whole; run
+import_semester_timetable.py afterwards to restore the semester 7 rows.
+
 Produces:
   - data/csv/course_offerings.csv
   - data/csv/professor_capacity_rules.csv
@@ -80,6 +83,25 @@ def load_slots(path):
     return by_family
 
 
+def load_slot_meetings(path):
+    """slot_code -> [(day, start_minute, end_minute)] for overlap checks."""
+    meetings = defaultdict(list)
+    for r in read_csv(path):
+        h1, m1 = map(int, r["start_time"].split(":"))
+        h2, m2 = map(int, r["end_time"].split(":"))
+        meetings[r["slot_code"]].append((r["day_of_week"], h1 * 60 + m1, h2 * 60 + m2))
+    return meetings
+
+
+def slots_overlap(meetings, a, b):
+    """Two slots clash if any of their meetings overlap on the same day.
+    Comparing slot codes alone misses clashes such as C1 (Wed 11-12) and LJ (Wed 11-13)."""
+    if a == b:
+        return True
+    return any(d1 == d2 and s1 < e2 and s2 < e1
+               for d1, s1, e1 in meetings[a] for d2, s2, e2 in meetings[b])
+
+
 def main():
     students = read_csv(os.path.join(CSV_DIR, "students.csv"))
     courses = read_csv(os.path.join(CSV_DIR, "courses.csv"))
@@ -87,6 +109,9 @@ def main():
     profs = read_csv(os.path.join(CSV_DIR, "professors.csv"))
     elig = read_csv(os.path.join(CSV_DIR, "professor_course_eligibility.csv"))
     slots_by_family = load_slots(os.path.join(CSV_DIR, "time_slots.csv"))
+    slot_meetings = load_slot_meetings(os.path.join(CSV_DIR, "time_slots.csv"))
+    rooms = read_csv(os.path.join(CSV_DIR, "rooms.csv"))
+    max_lab_room = max(int(r["capacity"]) for r in rooms if r["room_type"] == "lab")
 
     courses_by_id = {c["course_id"]: c for c in courses}
     students_by_batch = defaultdict(list)
@@ -181,7 +206,8 @@ def main():
         per_prof = max(min_per_prof, math.ceil(target_total / len(pool)))
         # Cap per-prof so small-demand courses don't balloon
         if is_lab:
-            per_prof = min(per_prof, 45)
+            # A lab section must fit in one lab room.
+            per_prof = min(per_prof, max_lab_room)
         else:
             per_prof = min(per_prof, max(60, math.ceil(d / 2)))
         # Add extra profs if pool too small
@@ -220,6 +246,12 @@ def main():
     # Track (slot, prof) commitments per course — an assignment of a prof to a
     # slot for one course blocks that prof for any other course at the same slot.
     prof_slot_course = {}  # (pid, slot_code) -> course_id
+
+    def prof_busy(pid, slot_code, cid):
+        """Instructor already teaches a different section at an overlapping time."""
+        return any(p2 == pid and (s2, c2) != (slot_code, cid)
+                   and slots_overlap(slot_meetings, s2, slot_code)
+                   for (p2, s2), c2 in prof_slot_course.items())
     # Track (slot, prof) uses per course so we don't duplicate.
     section_keys = set()   # {(course, slot, pid)}
 
@@ -257,14 +289,13 @@ def main():
             ordered_slots = slot_pool[rot_s:] + slot_pool[:rot_s]
             ordered_profs = pool[rot_p:] + pool[:rot_p]
             for slot_code in ordered_slots:
-                if slot_code in batch_slots_used:
+                if any(slots_overlap(slot_meetings, slot_code, u) for u in batch_slots_used):
                     continue
                 attempt = []
                 for pid in ordered_profs:
                     if len(attempt) >= num_sections:
                         break
-                    if (pid, slot_code) in prof_slot_course and \
-                       prof_slot_course[(pid, slot_code)] != cid:
+                    if prof_busy(pid, slot_code, cid):
                         continue
                     if (cid, slot_code, pid) in section_keys:
                         continue
@@ -278,14 +309,13 @@ def main():
             # Fallback: relax the seat-check
             if len(chosen) < num_sections:
                 for slot_code in ordered_slots:
-                    if slot_code in batch_slots_used:
+                    if any(slots_overlap(slot_meetings, slot_code, u) for u in batch_slots_used):
                         continue
                     attempt = []
                     for pid in ordered_profs:
                         if len(attempt) >= num_sections:
                             break
-                        if (pid, slot_code) in prof_slot_course and \
-                           prof_slot_course[(pid, slot_code)] != cid:
+                        if prof_busy(pid, slot_code, cid):
                             continue
                         if (cid, slot_code, pid) in section_keys:
                             continue
@@ -295,7 +325,9 @@ def main():
                         break
             # Ultimate fallback so we always have at least 1 section
             if not chosen:
-                slot_code = next((s for s in ordered_slots if s not in batch_slots_used), ordered_slots[0])
+                slot_code = next((s for s in ordered_slots
+                                  if not any(slots_overlap(slot_meetings, s, u) for u in batch_slots_used)),
+                                 ordered_slots[0])
                 chosen = [(slot_code, ordered_profs[0])]
 
             # Commit slot and (slot, prof) occupancy

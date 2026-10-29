@@ -1,26 +1,23 @@
-const DAYS = ['MON', 'TUE', 'WED', 'THU', 'FRI'];
-const HOURS = [9, 10, 11, 12, 13, 14, 15, 16, 17];
-
-function fmt(h) { return `${String(h).padStart(2, '0')}:00`; }
+import { DAYS, HOURLY_PERIODS, periodLabel, periodsCovered } from '../lib/periods.js';
 
 /**
- * Renders a weekly timetable grid with DAYS as rows and HOURS as columns.
+ * Renders a weekly timetable grid with DAYS as rows and the semester's
+ * periods as columns.
  *
  * Props:
- *  - cells: (day|hour) → { state, title, code, meta, extra, … }
- *  - rows: legacy meeting rows; painted as allotted cells
- *  - onCellClick(day, hour, cell)
+ *  - periods: [{ startMinute, endMinute, kind }] — defaults to 09:00–18:00 hourly
+ *  - cells: (day|periodIndex) → { state, title, code, meta, extra, … }
+ *  - rows: meeting rows; painted as allotted cells
+ *  - onCellClick(day, periodIndex, cell)
  *  - readOnly: disables clicks
  */
-export default function TimetableGrid({ cells, rows, onCellClick, readOnly }) {
+export default function TimetableGrid({ periods = HOURLY_PERIODS, cells, rows, onCellClick, readOnly }) {
   const map = {};
   if (cells) for (const [k, v] of Object.entries(cells)) map[k] = v;
   if (rows) {
     for (const r of rows) {
-      const startH = Math.floor(r.startMinute / 60);
-      const endH = Math.ceil(r.endMinute / 60);
-      for (let h = startH; h < endH; h++) {
-        const key = `${r.day}|${h}`;
+      for (const i of periodsCovered(r, periods)) {
+        const key = `${r.day}|${i}`;
         if (!map[key]) {
           map[key] = {
             state: r.state || 'allotted',
@@ -35,38 +32,37 @@ export default function TimetableGrid({ cells, rows, onCellClick, readOnly }) {
   }
 
   return (
-    <div className="grid-tt-flipped">
+    <div className="grid-tt-flipped" style={{ gridTemplateColumns: `60px repeat(${periods.length}, minmax(0, 1fr))` }}>
       <div className="header corner">Day</div>
-      {HOURS.map((h) => (
-        <div key={h} className="header time-col">{fmt(h)}</div>
+      {periods.map((p) => (
+        <div key={p.startMinute} className="header time-col">{periodLabel(p)}</div>
       ))}
       {DAYS.map((d) => (
-        <Row key={d} day={d} map={map} onCellClick={onCellClick} readOnly={readOnly} />
+        <Row key={d} day={d} periods={periods} map={map} onCellClick={onCellClick} readOnly={readOnly} />
       ))}
     </div>
   );
 }
 
-function Row({ day, map, onCellClick, readOnly }) {
+function Row({ day, periods, map, onCellClick, readOnly }) {
   return (
     <>
       <div className="day-label">{day}</div>
-      {HOURS.map((h) => {
-        const isLunch = h === 13;
-        if (isLunch) {
+      {periods.map((p, i) => {
+        const cell = map[`${day}|${i}`];
+        if (p.kind === 'lunch' && !cell) {
           return (
-            <div key={`${day}-${h}`} className="cell lunch">
+            <div key={`${day}-${i}`} className="cell lunch">
               <span className="slot-code">Lunch</span>
             </div>
           );
         }
-        const cell = map[`${day}|${h}`];
         const state = cell?.state || 'available';
         const clickable = !readOnly && onCellClick && state !== 'locked' && state !== 'conflict';
         const className = `cell slot-cell ${state}`;
-        const onClick = clickable ? () => onCellClick(day, h, cell) : undefined;
+        const onClick = clickable ? () => onCellClick(day, i, cell) : undefined;
         return (
-          <div key={`${day}-${h}`} className={className} onClick={onClick} role={clickable ? 'button' : undefined} tabIndex={clickable ? 0 : -1}>
+          <div key={`${day}-${i}`} className={className} onClick={onClick} role={clickable ? 'button' : undefined} tabIndex={clickable ? 0 : -1}>
             {cell?.title && <span className="slot-title">{cell.title}</span>}
             {cell?.code && <span className="slot-code">{cell.code}</span>}
             {cell?.meta && <span className="slot-meta">{cell.meta}</span>}

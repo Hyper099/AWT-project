@@ -3,12 +3,17 @@ import Registration from '../models/Registration.js';
 import { sendMail, mailerMode } from './mailer.js';
 
 /**
- * Sends a "timetable allotted" notification to every student who has at least
- * one registration in the given term. Returns counts (sent/failed/skipped).
+ * Sends a "timetable allotted" notification. Pass `studentIds` to limit it to
+ * students whose timetable is complete; otherwise every student with at least
+ * one registration in the term is notified. Returns counts (sent/failed/skipped).
  */
-export async function notifyStudents(termId = 'TERM_2026_ODD') {
+export async function notifyStudents(termId = 'TERM_2026_ODD', { studentIds: only = null } = {}) {
   const regs = await Registration.find({ termId }).lean();
-  const studentIds = [...new Set(regs.map((r) => r.studentId))];
+  let studentIds = [...new Set(regs.map((r) => r.studentId))];
+  if (only) {
+    const allowed = new Set(only);
+    studentIds = studentIds.filter((id) => allowed.has(id));
+  }
   if (studentIds.length === 0) return { sent: 0, failed: 0, skipped: 0, mode: mailerMode() };
 
   const students = await Student.find({ studentId: { $in: studentIds } }).lean();

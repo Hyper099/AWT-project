@@ -1,8 +1,8 @@
-import { Router } from 'express';
+import { asyncRouter } from '../middleware/asyncRouter.js';
 import Course from '../models/Course.js';
 import Slot from '../models/Slot.js';
 
-const router = Router();
+const router = asyncRouter();
 
 router.get('/', async (req, res) => {
   const { department, semester } = req.query;
@@ -13,8 +13,9 @@ router.get('/', async (req, res) => {
   res.json(courses);
 });
 
-router.get('/slots', async (_req, res) => {
-  const slots = await Slot.find().lean();
+router.get('/slots', async (req, res) => {
+  const q = req.query.semester ? { semester: Number(req.query.semester) } : {};
+  const slots = await Slot.find(q).sort({ slotCode: 1 }).lean();
   res.json(slots);
 });
 

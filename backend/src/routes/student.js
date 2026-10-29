@@ -1,13 +1,18 @@
-import { Router } from 'express';
+import { asyncRouter, optionalString, requireString } from '../middleware/asyncRouter.js';
+import Professor from '../models/Professor.js';
+import Room from '../models/Room.js';
+import { createSectionPlanner } from '../scheduler/sectionPlanner.js';
 import Student from '../models/Student.js';
 import Registration from '../models/Registration.js';
 import Course from '../models/Course.js';
 import CourseOffering from '../models/CourseOffering.js';
 import ProfessorCapacity from '../models/ProfessorCapacity.js';
+import Semester from '../models/Semester.js';
 import Slot from '../models/Slot.js';
 import { requireAuth, requireRole } from '../middleware/auth.js';
 import { slotsClash, SLOT_BY_CODE } from '../scheduler/slots.js';
 import { offeringsForStudent, professorsForCourse } from '../services/offerings.js';
+import { programmeProgress, slotsForOffering } from '../services/programme.js';
 import {
   buildTimetableRows,
   timetableStatus,
@@ -15,12 +20,53 @@ import {
   renderPdfToStream,
 } from '../services/timetableExport.js';
 
-const router = Router();
+const router = asyncRouter();
 router.use(requireAuth, requireRole('student'));
+
+async function plannerForTerm(termId) {
+  const [courses, rooms, professors, registrations] = await Promise.all([
+    Course.find().lean(), Room.find().lean(), Professor.find().lean(),
+    Registration.find({ termId }).lean(),
+  ]);
+  return createSectionPlanner({ courses, rooms, professors, registrations });
+}
 
 router.get('/me', async (req, res) => {
   const s = await Student.findOne({ studentId: req.user.studentId }).lean();
   res.json(s);
+});
+
+/** The student's semester: bell schedule (periods) and the slots of its grid. */
+router.get('/grid', async (req, res) => {
+  const student = await Student.findOne({ studentId: req.user.studentId }).lean();
+  if (!student) return res.status(404).json({ error: 'student not found' });
+  const [semester, slots] = await Promise.all([
+    Semester.findOne({ semester: student.semester }).lean(),
+    Slot.find({ semester: student.semester }).sort({ slotCode: 1 }).lean(),
+  ]);
+  res.json({ semester: semester || { semester: student.semester, name: `Semester ${student.semester}`, periods: [] }, slots });
+});
+
+/** Compulsory courses, elective baskets, and how far the student has got. */
+router.get('/programme', async (req, res) => {
+  const termId = req.query.termId || 'TERM_2026_ODD';
+  const student = await Student.findOne({ studentId: req.user.studentId }).lean();
+  if (!student) return res.status(404).json({ error: 'student not found' });
+  const [offerings, regs, semester] = await Promise.all([
+    CourseOffering.find({ termId, batchId: student.batchId }).lean(),
+    Registration.find({ termId, studentId: student.studentId }).lean(),
+    Semester.findOne({ semester: student.semester }).lean(),
+  ]);
+  const courses = await Course.find({ courseId: { $in: offerings.map((o) => o.courseId) } }).lean();
+  const creditsOf = Object.fromEntries(courses.map((c) => [c.courseId, c.credits]));
+  const progress = programmeProgress(offerings, regs);
+  res.json({
+    termId,
+    semester: student.semester,
+    creditsRequired: semester?.creditsRequired ?? null,
+    creditsSelected: regs.reduce((n, r) => n + (creditsOf[r.courseId] || 0), 0),
+    ...progress,
+  });
 });
 
 router.get('/offerings', async (req, res) => {
@@ -30,11 +76,18 @@ router.get('/offerings', async (req, res) => {
 });
 
 router.get('/professors', async (req, res) => {
-  const { courseId } = req.query;
-  if (!courseId) return res.status(400).json({ error: 'courseId required' });
-  const termId = req.query.termId || 'TERM_2026_ODD';
+  const courseId = requireString(req.query, 'courseId');
+  const slotCode = optionalString(req.query, 'slotCode');
+  const termId = optionalString(req.query, 'termId') || 'TERM_2026_ODD';
   const profs = await professorsForCourse(courseId, termId);
-  res.json(profs);
+  if (!slotCode) return res.json(profs);
+  // Flag instructors the student cannot pick for this particular slot.
+  const planner = await plannerForTerm(termId);
+  res.json(profs.map((p) => {
+    const reason = planner.instructorConflict(p.professorId, courseId, slotCode)
+      || (planner.roomsFit(courseId, slotCode, p.professorId) ? null : 'no room free for this section at this time');
+    return { ...p, available: !reason, unavailableReason: reason };
+  }));
 });
 
 /**
@@ -42,13 +95,19 @@ router.get('/professors', async (req, res) => {
  * Enforces slot-family match, no slot clash, and decrements professor seats.
  */
 router.post('/register', async (req, res) => {
-  const { courseId, slotCode, professorId, termId = 'TERM_2026_ODD' } = req.body || {};
-  if (!courseId || !slotCode) return res.status(400).json({ error: 'courseId and slotCode required' });
+  const body = req.body || {};
+  const courseId = requireString(body, 'courseId');
+  const slotCode = requireString(body, 'slotCode');
+  // Without an instructor the section can never be scheduled, so require one.
+  const professorId = requireString(body, 'professorId');
+  const termId = optionalString(body, 'termId') || 'TERM_2026_ODD';
 
-  const [course, offering, slot] = await Promise.all([
+  const student = await Student.findOne({ studentId: req.user.studentId }).lean();
+  const [course, offering, slot, batchOfferings] = await Promise.all([
     Course.findOne({ courseId }).lean(),
-    CourseOffering.findOne({ termId, courseId, batchId: (await Student.findOne({ studentId: req.user.studentId }).lean())?.batchId }).lean(),
+    CourseOffering.findOne({ termId, courseId, batchId: student?.batchId }).lean(),
     Slot.findOne({ slotCode }).lean(),
+    CourseOffering.find({ termId, batchId: student?.batchId }).lean(),
   ]);
   if (!course) return res.status(404).json({ error: 'course not found' });
   if (!slot) return res.status(400).json({ error: 'invalid slotCode' });
@@ -60,9 +119,28 @@ router.post('/register', async (req, res) => {
       error: `slot ${slotCode} (${slot.family}) is incompatible with course family ${course.slotFamily}`,
     });
   }
+  // Hard: the slot must be on this semester's grid and one the course runs in.
+  if (!slotsForOffering(offering, course, [slot]).length) {
+    const where = offering.allowedSlots?.length ? offering.allowedSlots.join(', ') : `Semester ${course.semester} slots`;
+    return res.status(409).json({ error: `${course.code} does not run in slot ${slotCode}; choose one of ${where}` });
+  }
 
   // Clash check
   const existing = await Registration.find({ studentId: req.user.studentId, termId }).lean();
+
+  // One option per elective basket.
+  if (offering.electiveGroup) {
+    const offeringByCourse = Object.fromEntries(batchOfferings.map((o) => [o.courseId, o]));
+    const other = existing
+      .map((r) => offeringByCourse[r.courseId])
+      .find((o) => o?.electiveGroup === offering.electiveGroup && o.electiveOption !== offering.electiveOption);
+    if (other) {
+      const otherCourse = await Course.findOne({ courseId: other.electiveOption }).lean();
+      return res.status(409).json({
+        error: `you already chose ${otherCourse?.title || other.electiveOption} for ${offering.electiveGroup}; drop it first to switch`,
+      });
+    }
+  }
   const newSlot = SLOT_BY_CODE[slotCode];
   for (const r of existing) {
     if (r.courseId === courseId) return res.status(409).json({ error: 'already registered' });
@@ -72,15 +150,21 @@ router.post('/register', async (req, res) => {
     }
   }
 
-  // Seat claim — atomic decrement if professorId provided.
-  if (professorId) {
-    const claim = await ProfessorCapacity.findOneAndUpdate(
-      { professorId, courseId, termId, $expr: { $lt: ['$seatsUsed', '$maxStudents'] } },
-      { $inc: { seatsUsed: 1 } },
-      { new: true },
-    );
-    if (!claim) return res.status(409).json({ error: 'no seats remaining for that instructor' });
+  // Instructor must be free at this time, and the section must still fit a room.
+  const planner = await plannerForTerm(termId);
+  const conflict = planner.instructorConflict(professorId, courseId, slotCode);
+  if (conflict) return res.status(409).json({ error: `${conflict}; choose another instructor or slot` });
+  if (!planner.roomsFit(courseId, slotCode, professorId)) {
+    return res.status(409).json({ error: 'no room large enough is free for this section at this time; choose another instructor or slot' });
   }
+
+  // Seat claim — atomic decrement.
+  const claim = await ProfessorCapacity.findOneAndUpdate(
+    { professorId, courseId, termId, $expr: { $lt: ['$seatsUsed', '$maxStudents'] } },
+    { $inc: { seatsUsed: 1 } },
+    { new: true },
+  );
+  if (!claim) return res.status(409).json({ error: 'no seats remaining for that instructor' });
 
   try {
     const reg = await Registration.create({
@@ -92,12 +176,10 @@ router.post('/register', async (req, res) => {
     return res.status(201).json(reg);
   } catch (err) {
     // Refund seat on unique-index or other failure
-    if (professorId) {
-      await ProfessorCapacity.updateOne(
-        { professorId, courseId, termId },
-        { $inc: { seatsUsed: -1 } },
-      );
-    }
+    await ProfessorCapacity.updateOne(
+      { professorId, courseId, termId },
+      { $inc: { seatsUsed: -1 } },
+    );
     if (err.code === 11000) return res.status(409).json({ error: 'already registered' });
     throw err;
   }
